@@ -18,8 +18,8 @@ type Info struct {
 
 // Collection represents a Postman Collection.
 type Collection struct {
-	Info Info          `json:"info"`
-	Item []interface{} `json:"item"`
+	Info Info    `json:"info"`
+	Item []Items `json:"item"`
 }
 
 // CreateCollection returns a new Collection.
@@ -31,8 +31,23 @@ func CreateCollection(name string, desc string) *Collection {
 			Description: desc,
 			Schema:      fmt.Sprintf("https://schema.getpostman.com/json/collection/%s/", version),
 		},
-		Item: make([]interface{}, 0),
+		Item: make([]Items, 0),
 	}
+}
+
+func (c *Collection) AddItem(item Items) {
+	c.Item = append(c.Item, item)
+}
+
+func (c *Collection) AddFolder(name string) (f *Folder) {
+	f = &Folder{
+		Name: name,
+		Item: make([]Items, 0),
+	}
+
+	c.Item = append(c.Item, f)
+
+	return
 }
 
 // Write the collection to a file named by filename.
