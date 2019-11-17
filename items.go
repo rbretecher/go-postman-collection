@@ -10,12 +10,12 @@ type Items interface {
 type Item struct {
 	ID                      string      `json:"id"`
 	Name                    string      `json:"name"`
-	Description             string      `json:"description"`
-	Variable                interface{} `json:"variable"`
-	Event                   interface{} `json:"event"`
-	Request                 *Request    `json:"request"`
-	Response                interface{} `json:"response"`
-	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior"`
+	Description             string      `json:"description,omitempty"`
+	Variable                interface{} `json:"variable,omitempty"`
+	Event                   interface{} `json:"event,omitempty"`
+	Request                 *Request    `json:"request,omitempty"`
+	Response                interface{} `json:"response,omitempty"`
+	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 }
 
 func (i *Item) getName() string {
@@ -25,12 +25,12 @@ func (i *Item) getName() string {
 // A ItemGroup is an ordered set of requests.
 type ItemGroup struct {
 	Name                    string      `json:"name"`
-	Description             string      `json:"description"`
-	Variable                interface{} `json:"variable"`
+	Description             string      `json:"description,omitempty"`
+	Variable                interface{} `json:"variable,omitempty"`
 	Item                    []Items     `json:"item"`
-	Event                   interface{} `json:"event"`
-	Auth                    interface{} `json:"auth"`
-	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior"`
+	Event                   interface{} `json:"event,omitempty"`
+	Auth                    interface{} `json:"auth,omitempty"`
+	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 }
 
 func (f *ItemGroup) getName() string {
