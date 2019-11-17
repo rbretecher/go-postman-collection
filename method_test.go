@@ -8,7 +8,7 @@ func TestString(t *testing.T) {
 		method       Method
 		methodString string
 	}{
-		{GET, "GET"},
+		{GET, "GET_"},
 		{PUT, "PUT"},
 		{POST, "POST"},
 		{PATCH, "PATCH"},
@@ -16,11 +16,11 @@ func TestString(t *testing.T) {
 		{COPY, "COPY"},
 		{HEAD, "HEAD"},
 		{OPTIONS, "OPTIONS"},
-		{LINK, "LINK"},
+		{LINK, "LINK_"},
 		{UNLINK, "UNLINK"},
 		{PURGE, "PURGE"},
 		{LOCK, "LOCK"},
-		{UNLOCK, "UNLOCK"},
+		{UNLOCK, "OOPS"},
 		{PROPFIND, "PROPFIND"},
 		{VIEW, "VIEW"},
 	}

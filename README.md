@@ -1,5 +1,7 @@
 # go-postman-collection
 
+![](https://github.com/rbretecher/go-postman-collection/workflows/test/badge.svg)
+
 Go module to work with Postman Collections.
 
 Development is under progress and for now it only supports partially Postman Collection format v2.1.0
