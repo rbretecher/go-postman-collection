@@ -7,7 +7,7 @@ type Request struct {
 	Certificate interface{} `json:"certificate,omitempty"`
 	Method      string      `json:"method"`
 	Description interface{} `json:"description,omitempty"`
-	Header      interface{} `json:"header,omitempty"`
+	Header      []*Header   `json:"header,omitempty"`
 	Body        interface{} `json:"body,omitempty"`
 }
 
