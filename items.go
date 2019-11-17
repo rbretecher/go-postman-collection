@@ -1,7 +1,7 @@
 package postman
 
 // Items are the basic unit for a Postman collection.
-// It can either be a request or a folder.
+// It can either be a request (Item) or a folder (ItemGroup).
 type Items interface {
 	getName() string
 }
