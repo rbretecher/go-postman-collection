@@ -11,7 +11,7 @@ func main() {
 
 	c.AddItem(&postman.Item{
 		Name:    "This is a request",
-		Request: postman.NewRequest("http://www.google.fr", "GET"),
+		Request: postman.NewRequest("http://www.google.fr", postman.GET),
 	})
 
 	c.AddItemGroup("Empty folder")

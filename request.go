@@ -11,9 +11,9 @@ type Request struct {
 	Body        interface{} `json:"body,omitempty"`
 }
 
-func NewRequest(URL string, method string) *Request {
+func NewRequest(URL string, method Method) *Request {
 	return &Request{
 		URL:    URL,
-		Method: method,
+		Method: method.String(),
 	}
 }
