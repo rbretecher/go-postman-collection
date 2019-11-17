@@ -22,8 +22,8 @@ func (i *Item) getName() string {
 	return i.Name
 }
 
-// A Folder is an ordered set of requests.
-type Folder struct {
+// A ItemGroup is an ordered set of requests.
+type ItemGroup struct {
 	Name                    string      `json:"name"`
 	Description             string      `json:"description"`
 	Variable                interface{} `json:"variable"`
@@ -33,16 +33,16 @@ type Folder struct {
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior"`
 }
 
-func (f *Folder) getName() string {
+func (f *ItemGroup) getName() string {
 	return f.Name
 }
 
-func (f *Folder) AddItem(item Items) {
+func (f *ItemGroup) AddItem(item Items) {
 	f.Item = append(f.Item, item)
 }
 
-func (c *Folder) AddFolder(name string) (f *Folder) {
-	f = &Folder{
+func (c *ItemGroup) AddItemGroup(name string) (f *ItemGroup) {
+	f = &ItemGroup{
 		Name: name,
 		Item: make([]Items, 0),
 	}

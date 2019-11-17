@@ -39,8 +39,8 @@ func (c *Collection) AddItem(item Items) {
 	c.Item = append(c.Item, item)
 }
 
-func (c *Collection) AddFolder(name string) (f *Folder) {
-	f = &Folder{
+func (c *Collection) AddItemGroup(name string) (f *ItemGroup) {
+	f = &ItemGroup{
 		Name: name,
 		Item: make([]Items, 0),
 	}

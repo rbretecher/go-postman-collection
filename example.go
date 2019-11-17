@@ -3,7 +3,7 @@ package main
 func main() {
 	c := CreateCollection("Go Collection", "Awesome description")
 
-	c.AddFolder("This is a folder").AddItem(&Item{
+	c.AddItemGroup("This is a folder").AddItem(&Item{
 		Name: "An item inside a folder",
 	})
 
@@ -11,7 +11,7 @@ func main() {
 		Name: "This is a request",
 	})
 
-	c.AddFolder("Empty folder")
+	c.AddItemGroup("Empty folder")
 
 	c.Write("postman_collection.json")
 }
