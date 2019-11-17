@@ -8,7 +8,7 @@ type Request struct {
 	Method      string      `json:"method"`
 	Description interface{} `json:"description,omitempty"`
 	Header      []*Header   `json:"header,omitempty"`
-	Body        interface{} `json:"body,omitempty"`
+	Body        *Body       `json:"body,omitempty"`
 }
 
 func NewRequest(URL string, method Method) *Request {

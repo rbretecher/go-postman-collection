@@ -25,6 +25,10 @@ func main() {
 				Value: "application/json",
 			},
 		},
+		Body: &postman.Body{
+			Mode: "raw",
+			Raw:  "{\"aKey\":\"a-value\"}",
+		},
 	}
 
 	c.AddItem(&postman.Item{
