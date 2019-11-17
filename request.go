@@ -1,4 +1,4 @@
-package main
+package postman
 
 type Request struct {
 	URL         interface{} `json:"url"`

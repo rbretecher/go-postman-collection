@@ -1,4 +1,4 @@
-package main
+package postman
 
 // Items are the basic unit for a Postman collection.
 // It can either be a request or a folder.
