@@ -13,7 +13,7 @@ type Item struct {
 	Description             string      `json:"description"`
 	Variable                interface{} `json:"variable"`
 	Event                   interface{} `json:"event"`
-	Request                 interface{} `json:"request"`
+	Request                 *Request    `json:"request"`
 	Response                interface{} `json:"response"`
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior"`
 }

@@ -8,7 +8,8 @@ func main() {
 	})
 
 	c.AddItem(&Item{
-		Name: "This is a request",
+		Name:    "This is a request",
+		Request: NewRequest("http://www.google.fr", "GET"),
 	})
 
 	c.AddItemGroup("Empty folder")
