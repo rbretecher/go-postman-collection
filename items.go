@@ -3,51 +3,32 @@ package postman
 // Items are the basic unit for a Postman collection.
 // It can either be a request (Item) or a folder (ItemGroup).
 type Items interface {
-	getName() string
+	IsGroup() bool
 }
 
-// An Item is an entity which contain an actual HTTP request, and sample responses attached to it.
-type Item struct {
-	ID                      string      `json:"id"`
-	Name                    string      `json:"name"`
-	Description             string      `json:"description,omitempty"`
-	Variable                interface{} `json:"variable,omitempty"`
-	Event                   interface{} `json:"event,omitempty"`
-	Request                 *Request    `json:"request,omitempty"`
-	Response                interface{} `json:"response,omitempty"`
-	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
-}
+func createItemCollection(items []interface{}) (itemCollection []Items, err error) {
 
-func (i *Item) getName() string {
-	return i.Name
-}
+	for _, i := range items {
+		item, err := createItem(i)
 
-// A ItemGroup is an ordered set of requests.
-type ItemGroup struct {
-	Name                    string      `json:"name"`
-	Description             string      `json:"description,omitempty"`
-	Variable                interface{} `json:"variable,omitempty"`
-	Item                    []Items     `json:"item"`
-	Event                   interface{} `json:"event,omitempty"`
-	Auth                    interface{} `json:"auth,omitempty"`
-	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
-}
+		if err != nil {
+			return nil, err
+		}
 
-func (f *ItemGroup) getName() string {
-	return f.Name
-}
-
-func (f *ItemGroup) AddItem(item Items) {
-	f.Item = append(f.Item, item)
-}
-
-func (c *ItemGroup) AddItemGroup(name string) (f *ItemGroup) {
-	f = &ItemGroup{
-		Name: name,
-		Item: make([]Items, 0),
+		itemCollection = append(itemCollection, item)
 	}
 
-	c.Item = append(c.Item, f)
+	return itemCollection, nil
+}
+
+func createItem(i interface{}) (item Items, err error) {
+	dict := i.(map[string]interface{})
+
+	if _, found := dict["item"]; found {
+		item, err = createItemGroupFromMap(dict)
+	} else {
+		item, err = createItemFromMap(dict)
+	}
 
 	return
 }

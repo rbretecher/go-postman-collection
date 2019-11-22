@@ -62,3 +62,41 @@ func (c *Collection) Write(filename string) (err error) {
 
 	return
 }
+
+// ParseCollection reads the content of the provided file and
+//  parse the data into a Collection object.
+func ParseCollection(filename string) (c *Collection, err error) {
+	file, err := ioutil.ReadFile(filename)
+
+	if err != nil {
+		return
+	}
+
+	err = json.Unmarshal([]byte(file), &c)
+
+	return
+}
+
+// CollectionUnmarshal is used only during unmarshalling process.
+// It is used as a temporary object in order to be able to deserialize
+//	properly Items objects.
+type CollectionUnmarshal struct {
+	Info Info          `json:"info"`
+	Item []interface{} `json:"item"`
+}
+
+// UnmarshalJSON deserializes a JSON into a Collection object.
+func (c *Collection) UnmarshalJSON(b []byte) (err error) {
+
+	var collection CollectionUnmarshal
+	err = json.Unmarshal(b, &collection)
+
+	if err != nil {
+		return
+	}
+
+	c.Info = collection.Info
+	c.Item, err = createItemCollection(collection.Item)
+
+	return
+}
