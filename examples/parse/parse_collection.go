@@ -25,7 +25,7 @@ func exploreItems(items []postman.Items) {
 			exploreItems(folder.Item)
 		} else {
 			item := i.(*postman.Item)
-			println(fmt.Sprintf("[%s] - %s - %s", item.Request.Method, item.Request.URL.(map[string]interface{})["raw"], item.Name))
+			println(fmt.Sprintf("[%s] - %s - %s", item.Request.Method, item.Request.URL.Raw, item.Name))
 		}
 	}
 }

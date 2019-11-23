@@ -1,7 +1,7 @@
 package postman
 
 type Request struct {
-	URL         interface{} `json:"url"`
+	URL         URL         `json:"url"`
 	Auth        interface{} `json:"auth,omitempty"`
 	Proxy       interface{} `json:"proxy,omitempty"`
 	Certificate interface{} `json:"certificate,omitempty"`
@@ -11,9 +11,11 @@ type Request struct {
 	Body        *Body       `json:"body,omitempty"`
 }
 
-func NewRequest(URL string, method Method) *Request {
+func NewRequest(u string, method Method) *Request {
 	return &Request{
-		URL:    URL,
+		URL: URL{
+			Raw: u,
+		},
 		Method: method.String(),
 	}
 }
