@@ -52,8 +52,9 @@ func createItemGroupFromMap(m map[string]interface{}) (ig *ItemGroup, err error)
 	}
 
 	decoder, err := mapstructure.NewDecoder(config)
+
 	if err != nil {
-		panic(err)
+		return
 	}
 
 	err = decoder.Decode(m)
