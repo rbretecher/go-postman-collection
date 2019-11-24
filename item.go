@@ -1,6 +1,10 @@
 package postman
 
-import "github.com/mitchellh/mapstructure"
+import (
+	"reflect"
+
+	"github.com/mitchellh/mapstructure"
+)
 
 // An Item is an entity which contain an actual HTTP request, and sample responses attached to it.
 type Item struct {
@@ -19,7 +23,26 @@ func (i *Item) IsGroup() bool {
 }
 
 func createItemFromMap(m map[string]interface{}) (item *Item, err error) {
-	err = mapstructure.Decode(m, &item)
+	config := &mapstructure.DecoderConfig{
+		TagName: "json",
+		Result:  &item,
+		DecodeHook: func(from reflect.Type, to reflect.Type, v interface{}) (interface{}, error) {
+			if to.Name() == "Request" {
+				req, err := createRequestFromInterface(v)
+				return req, err
+			}
+
+			return v, nil
+		},
+	}
+
+	decoder, err := mapstructure.NewDecoder(config)
+
+	if err != nil {
+		return
+	}
+
+	err = decoder.Decode(m)
 
 	return
 }

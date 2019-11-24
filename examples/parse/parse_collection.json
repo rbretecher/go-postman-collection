@@ -9,6 +9,10 @@
       "name": "DEV",
       "item": [
         {
+          "name": "GET request",
+          "request": "http://www.google.fr"
+        },
+        {
           "name": "getLatestQuestions",
           "request": {
             "method": "POST",
