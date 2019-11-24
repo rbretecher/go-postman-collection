@@ -3,15 +3,15 @@ package postman
 type AuthType string
 
 const (
-	APIKEY AuthType = "apikey"
+	ApiKey AuthType = "apikey"
 	AWSV4  AuthType = "awsv4"
-	BASIC  AuthType = "basic"
-	BEARER AuthType = "bearer"
-	DIGEST AuthType = "digest"
-	HAWK   AuthType = "hawk"
-	NOAUTH AuthType = "noauth"
-	OAUTH1 AuthType = "oauth1"
-	OAUTH2 AuthType = "oauth2"
+	Basic  AuthType = "basic"
+	Bearer AuthType = "bearer"
+	Digest AuthType = "digest"
+	Hawk   AuthType = "hawk"
+	NoAuth AuthType = "noauth"
+	OAuth1 AuthType = "oauth1"
+	Oauth2 AuthType = "oauth2"
 	NTLM   AuthType = "ntlm"
 )
 
@@ -37,23 +37,23 @@ type Auth struct {
 
 func (a *Auth) GetParams() []*AuthParam {
 	switch a.Type {
-	case APIKEY:
+	case ApiKey:
 		return a.Apikey
 	case AWSV4:
 		return a.AWSV4
-	case BASIC:
+	case Basic:
 		return a.Basic
-	case BEARER:
+	case Bearer:
 		return a.Bearer
-	case DIGEST:
+	case Digest:
 		return a.Digest
-	case HAWK:
+	case Hawk:
 		return a.Hawk
-	case NOAUTH:
+	case NoAuth:
 		return a.NoAuth
-	case OAUTH1:
+	case OAuth1:
 		return a.OAuth1
-	case OAUTH2:
+	case Oauth2:
 		return a.OAuth2
 	case NTLM:
 		return a.NTLM
