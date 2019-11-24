@@ -27,6 +27,10 @@ func exploreItems(items []postman.Items) {
 			item := i.(*postman.Item)
 			if item.Request != nil {
 				println(fmt.Sprintf("[%s] - %s - %s", item.Request.Method, item.Request.URL, item.Name))
+
+				for _, p := range item.Request.Auth.GetParams() {
+					println(p.Key, ":", fmt.Sprintf("%v", p.Value))
+				}
 			}
 		}
 	}

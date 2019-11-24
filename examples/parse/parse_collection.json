@@ -12,6 +12,21 @@
           "name": "getLatestQuestions",
           "request": {
             "method": "POST",
+            "auth": {
+              "type": "basic",
+              "basic": [
+                {
+                  "key": "password",
+                  "value": "my-password",
+                  "type": "string"
+                },
+                {
+                  "key": "username",
+                  "value": "my-username",
+                  "type": "string"
+                }
+              ]
+            },
             "header": [
               {
                 "key": "Content-Type",
