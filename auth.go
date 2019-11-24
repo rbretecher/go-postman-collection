@@ -16,13 +16,13 @@ const (
 )
 
 type AuthParam struct {
-	Key   string      `json:"key"`
-	Value interface{} `json:"value"`
-	Type  AuthType    `json:"type"`
+	Key   string      `json:"key,omitempty"`
+	Value interface{} `json:"value,omitempty"`
+	Type  AuthType    `json:"type,omitempty"`
 }
 
 type Auth struct {
-	Type   AuthType
+	Type   AuthType     `json:"type,omitempty"`
 	Apikey []*AuthParam `json:"apikey,omitempty"`
 	AWSV4  []*AuthParam `json:"awsv4,omitempty"`
 	Basic  []*AuthParam `json:"basic,omitempty"`

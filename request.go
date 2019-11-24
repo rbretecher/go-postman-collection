@@ -9,7 +9,7 @@ import (
 // A Request represents an HTTP request.
 type Request struct {
 	URL         URL         `json:"url"`
-	Auth        Auth        `json:"auth,omitempty"`
+	Auth        *Auth       `json:"auth,omitempty"`
 	Proxy       interface{} `json:"proxy,omitempty"`
 	Certificate interface{} `json:"certificate,omitempty"`
 	Method      string      `json:"method"`

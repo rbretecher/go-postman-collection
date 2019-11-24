@@ -13,7 +13,7 @@ type ItemGroup struct {
 	Variable                interface{} `json:"variable,omitempty"`
 	Items                   []Items     `json:"item"`
 	Event                   interface{} `json:"event,omitempty"`
-	Auth                    Auth        `json:"auth,omitempty"`
+	Auth                    *Auth       `json:"auth,omitempty"`
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 }
 

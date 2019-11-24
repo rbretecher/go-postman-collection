@@ -28,8 +28,10 @@ func exploreItems(items []postman.Items) {
 			if item.Request != nil {
 				println(fmt.Sprintf("[%s] - %s - %s", item.Request.Method, item.Request.URL, item.Name))
 
-				for _, p := range item.Request.Auth.GetParams() {
-					println(p.Key, ":", fmt.Sprintf("%v", p.Value))
+				if item.Request.Auth != nil {
+					for _, p := range item.Request.Auth.GetParams() {
+						println(p.Key, ":", fmt.Sprintf("%v", p.Value))
+					}
 				}
 			}
 		}

@@ -27,7 +27,7 @@ Development is under progress and for now it only supports partially Postman Col
 | Response           | No        |
 | Event              | No        |
 | Variable           | No        |
-| Auth               | Partial   |
+| Auth               | Yes       |
 
 ### Useful resources
 
