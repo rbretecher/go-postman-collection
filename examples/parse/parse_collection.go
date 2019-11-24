@@ -14,7 +14,7 @@ func main() {
 		panic(err)
 	}
 
-	exploreItems(c.Item)
+	exploreItems(c.Items)
 }
 
 func exploreItems(items []postman.Items) {
@@ -22,10 +22,12 @@ func exploreItems(items []postman.Items) {
 		if i.IsGroup() {
 			folder := i.(*postman.ItemGroup)
 			println(">", folder.Name)
-			exploreItems(folder.Item)
+			exploreItems(folder.Items)
 		} else {
 			item := i.(*postman.Item)
-			println(fmt.Sprintf("[%s] - %s - %s", item.Request.Method, item.Request.URL.Raw, item.Name))
+			if item.Request != nil {
+				println(fmt.Sprintf("[%s] - %s - %s", item.Request.Method, item.Request.URL, item.Name))
+			}
 		}
 	}
 }

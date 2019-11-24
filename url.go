@@ -10,3 +10,7 @@ type URL struct {
 	Hash     string      `json:"hash,omitempty"`
 	Variable interface{} `json:"variable,omitempty"`
 }
+
+func (u URL) String() string {
+	return u.Raw
+}

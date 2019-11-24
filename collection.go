@@ -18,8 +18,8 @@ type Info struct {
 
 // Collection represents a Postman Collection.
 type Collection struct {
-	Info Info    `json:"info"`
-	Item []Items `json:"item"`
+	Info  Info    `json:"info"`
+	Items []Items `json:"item"`
 }
 
 // CreateCollection returns a new Collection.
@@ -31,21 +31,21 @@ func CreateCollection(name string, desc string) *Collection {
 			Description: desc,
 			Schema:      fmt.Sprintf("https://schema.getpostman.com/json/collection/%s/", version),
 		},
-		Item: make([]Items, 0),
+		Items: make([]Items, 0),
 	}
 }
 
 func (c *Collection) AddItem(item Items) {
-	c.Item = append(c.Item, item)
+	c.Items = append(c.Items, item)
 }
 
 func (c *Collection) AddItemGroup(name string) (f *ItemGroup) {
 	f = &ItemGroup{
-		Name: name,
-		Item: make([]Items, 0),
+		Name:  name,
+		Items: make([]Items, 0),
 	}
 
-	c.Item = append(c.Item, f)
+	c.Items = append(c.Items, f)
 
 	return
 }
@@ -81,8 +81,8 @@ func ParseCollection(filename string) (c *Collection, err error) {
 // It is used as a temporary object in order to be able to deserialize
 //	properly Items objects.
 type CollectionUnmarshal struct {
-	Info Info          `json:"info"`
-	Item []interface{} `json:"item"`
+	Info  Info          `json:"info"`
+	Items []interface{} `json:"item"`
 }
 
 // UnmarshalJSON deserializes a JSON into a Collection object.
@@ -96,7 +96,7 @@ func (c *Collection) UnmarshalJSON(b []byte) (err error) {
 	}
 
 	c.Info = collection.Info
-	c.Item, err = createItemCollection(collection.Item)
+	c.Items, err = createItemCollection(collection.Items)
 
 	return
 }

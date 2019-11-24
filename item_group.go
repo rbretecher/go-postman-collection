@@ -11,7 +11,7 @@ type ItemGroup struct {
 	Name                    string      `json:"name"`
 	Description             string      `json:"description,omitempty"`
 	Variable                interface{} `json:"variable,omitempty"`
-	Item                    []Items     `json:"item"`
+	Items                   []Items     `json:"item"`
 	Event                   interface{} `json:"event,omitempty"`
 	Auth                    interface{} `json:"auth,omitempty"`
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
@@ -22,24 +22,24 @@ func (ig *ItemGroup) IsGroup() bool {
 }
 
 func (ig *ItemGroup) AddItem(item Items) {
-	ig.Item = append(ig.Item, item)
+	ig.Items = append(ig.Items, item)
 }
 
 func (c *ItemGroup) AddItemGroup(name string) (f *ItemGroup) {
 	f = &ItemGroup{
-		Name: name,
-		Item: make([]Items, 0),
+		Name:  name,
+		Items: make([]Items, 0),
 	}
 
-	c.Item = append(c.Item, f)
+	c.Items = append(c.Items, f)
 
 	return
 }
 
 func createItemGroupFromMap(m map[string]interface{}) (ig *ItemGroup, err error) {
-
 	config := &mapstructure.DecoderConfig{
-		Result: &ig,
+		TagName: "json",
+		Result:  &ig,
 		DecodeHook: func(from reflect.Type, to reflect.Type, v interface{}) (interface{}, error) {
 			// We need to manually take care of Items as it can be an Item or an ItemGroup.
 			if to.Name() == "Items" {
