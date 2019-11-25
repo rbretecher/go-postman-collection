@@ -13,7 +13,7 @@ func main() {
 
 	c.AddItem(&postman.Item{
 		Name:    "This is a request",
-		Request: postman.NewRequest("http://www.google.fr", postman.GET),
+		Request: postman.NewRequest("http://www.google.fr", postman.Get),
 	})
 
 	r := &postman.Request{

@@ -1,28 +1,41 @@
 package postman
 
-type AuthType string
+type authType string
 
 const (
-	ApiKey AuthType = "apikey"
-	AWSV4  AuthType = "awsv4"
-	Basic  AuthType = "basic"
-	Bearer AuthType = "bearer"
-	Digest AuthType = "digest"
-	Hawk   AuthType = "hawk"
-	NoAuth AuthType = "noauth"
-	OAuth1 AuthType = "oauth1"
-	Oauth2 AuthType = "oauth2"
-	NTLM   AuthType = "ntlm"
+	// APIKey stands for API Key Authentication.
+	APIKey authType = "apikey"
+	// AWSV4 is Amazon AWS Authentication.
+	AWSV4 authType = "awsv4"
+	// Basic Authentication.
+	Basic authType = "basic"
+	// Bearer Token Authentication.
+	Bearer authType = "bearer"
+	// Digest Authentication.
+	Digest authType = "digest"
+	// Hawk Authentication.
+	Hawk authType = "hawk"
+	// NoAuth Authentication.
+	NoAuth authType = "noauth"
+	// OAuth1 Authentication.
+	OAuth1 authType = "oauth1"
+	// Oauth2 Authentication.
+	Oauth2 authType = "oauth2"
+	// NTLM Authentication.
+	NTLM authType = "ntlm"
 )
 
+// AuthParam represents an attribute for any authentication method provided by Postman.
+// For example "username" and "password" are set as auth attributes for Basic Authentication method.
 type AuthParam struct {
 	Key   string      `json:"key,omitempty"`
 	Value interface{} `json:"value,omitempty"`
-	Type  AuthType    `json:"type,omitempty"`
+	Type  authType    `json:"type,omitempty"`
 }
 
+// Auth contains the authentication method used and its associated parameters.
 type Auth struct {
-	Type   AuthType     `json:"type,omitempty"`
+	Type   authType     `json:"type,omitempty"`
 	Apikey []*AuthParam `json:"apikey,omitempty"`
 	AWSV4  []*AuthParam `json:"awsv4,omitempty"`
 	Basic  []*AuthParam `json:"basic,omitempty"`
@@ -35,9 +48,10 @@ type Auth struct {
 	NTLM   []*AuthParam `json:"ntlm,omitempty"`
 }
 
+// GetParams returns the parameters related to the authentication method in use.
 func (a *Auth) GetParams() []*AuthParam {
 	switch a.Type {
-	case ApiKey:
+	case APIKey:
 		return a.Apikey
 	case AWSV4:
 		return a.AWSV4

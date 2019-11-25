@@ -35,10 +35,12 @@ func CreateCollection(name string, desc string) *Collection {
 	}
 }
 
+// AddItem appends an item (Item or ItemGroup) to the existing items slice.
 func (c *Collection) AddItem(item Items) {
 	c.Items = append(c.Items, item)
 }
 
+// AddItemGroup creates a new ItemGroup and appends it to the existing items slice.
 func (c *Collection) AddItemGroup(name string) (f *ItemGroup) {
 	f = &ItemGroup{
 		Name:  name,
@@ -77,10 +79,10 @@ func ParseCollection(filename string) (c *Collection, err error) {
 	return
 }
 
-// CollectionUnmarshal is used only during unmarshalling process.
+// collectionUnmarshal is used only during unmarshalling process.
 // It is used as a temporary object in order to be able to deserialize
 //	properly Items objects.
-type CollectionUnmarshal struct {
+type collectionUnmarshal struct {
 	Info  Info          `json:"info"`
 	Items []interface{} `json:"item"`
 }
@@ -88,7 +90,7 @@ type CollectionUnmarshal struct {
 // UnmarshalJSON deserializes a JSON into a Collection object.
 func (c *Collection) UnmarshalJSON(b []byte) (err error) {
 
-	var collection CollectionUnmarshal
+	var collection collectionUnmarshal
 	err = json.Unmarshal(b, &collection)
 
 	if err != nil {

@@ -5,24 +5,24 @@ import "testing"
 func TestString(t *testing.T) {
 
 	tables := []struct {
-		method       Method
+		method       method
 		methodString string
 	}{
-		{GET, "GET"},
-		{PUT, "PUT"},
-		{POST, "POST"},
-		{PATCH, "PATCH"},
-		{DELETE, "DELETE"},
-		{COPY, "COPY"},
-		{HEAD, "HEAD"},
-		{OPTIONS, "OPTIONS"},
-		{LINK, "LINK"},
-		{UNLINK, "UNLINK"},
-		{PURGE, "PURGE"},
-		{LOCK, "LOCK"},
-		{UNLOCK, "UNLOCK"},
-		{PROPFIND, "PROPFIND"},
-		{VIEW, "VIEW"},
+		{Get, "GET"},
+		{Put, "PUT"},
+		{Post, "POST"},
+		{Patch, "PATCH"},
+		{Delete, "DELETE"},
+		{Copy, "COPY"},
+		{Head, "HEAD"},
+		{Options, "OPTIONS"},
+		{Link, "LINK"},
+		{Unlink, "UNLINK"},
+		{Purge, "PURGE"},
+		{Lock, "LOCK"},
+		{Unlock, "UNLOCK"},
+		{Propfind, "PROPFIND"},
+		{View, "VIEW"},
 	}
 
 	for _, table := range tables {

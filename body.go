@@ -1,5 +1,6 @@
 package postman
 
+// Body represents the data usually contained in the request body.
 type Body struct {
 	Mode       string      `json:"mode"`
 	Raw        string      `json:"raw,omitempty"`

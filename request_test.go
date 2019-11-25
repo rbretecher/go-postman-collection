@@ -1,17 +1,19 @@
 package postman
 
-import "testing"
+import (
+	"testing"
 
-import "github.com/stretchr/testify/assert"
+	"github.com/stretchr/testify/assert"
+)
 
 func TestNewRequest(t *testing.T) {
 	var tests = []struct {
-		Method               Method
+		Method               method
 		URL                  string
 		ExpectedMethodString string
 	}{
-		{GET, "an-url", "GET"},
-		{POST, "another-url", "POST"},
+		{Get, "an-url", "GET"},
+		{Post, "another-url", "POST"},
 	}
 
 	for _, test := range tests {

@@ -19,12 +19,12 @@ type Request struct {
 }
 
 // NewRequest creates a new request.
-func NewRequest(u string, method Method) *Request {
+func NewRequest(u string, m method) *Request {
 	return &Request{
 		URL: URL{
 			Raw: u,
 		},
-		Method: method.String(),
+		Method: m.String(),
 	}
 }
 
@@ -33,7 +33,7 @@ func NewRequest(u string, method Method) *Request {
 func createRequestFromInterface(i interface{}) (*Request, error) {
 	switch i.(type) {
 	case string:
-		return NewRequest(i.(string), GET), nil
+		return NewRequest(i.(string), Get), nil
 	case map[string]interface{}:
 		req := new(Request)
 		err := mapstructure.Decode(i, &req)

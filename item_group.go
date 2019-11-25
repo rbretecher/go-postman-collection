@@ -17,21 +17,24 @@ type ItemGroup struct {
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 }
 
+// IsGroup returns true as an ItemGroup is a group.
 func (ig *ItemGroup) IsGroup() bool {
 	return true
 }
 
+// AddItem appends an item (Item or ItemGroup) to the existing items slice.
 func (ig *ItemGroup) AddItem(item Items) {
 	ig.Items = append(ig.Items, item)
 }
 
-func (c *ItemGroup) AddItemGroup(name string) (f *ItemGroup) {
+// AddItemGroup creates a new ItemGroup and appends it to the existing items slice.
+func (ig *ItemGroup) AddItemGroup(name string) (f *ItemGroup) {
 	f = &ItemGroup{
 		Name:  name,
 		Items: make([]Items, 0),
 	}
 
-	c.Items = append(c.Items, f)
+	ig.Items = append(ig.Items, f)
 
 	return
 }

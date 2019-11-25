@@ -18,6 +18,7 @@ type Item struct {
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 }
 
+// IsGroup returns false as an Item is not a group.
 func (i *Item) IsGroup() bool {
 	return false
 }

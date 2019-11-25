@@ -1,5 +1,7 @@
 package postman
 
+// URL is a struct that contains an URL in a "broken-down way".
+// Raw contains the complete URL.
 type URL struct {
 	Raw      string      `json:"raw"`
 	Protocol string      `json:"protocol,omitempty"`
@@ -11,6 +13,7 @@ type URL struct {
 	Variable interface{} `json:"variable,omitempty"`
 }
 
+// String returns the raw version of the URL.
 func (u URL) String() string {
 	return u.Raw
 }
