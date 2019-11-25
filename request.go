@@ -12,7 +12,7 @@ type Request struct {
 	Auth        *Auth       `json:"auth,omitempty"`
 	Proxy       interface{} `json:"proxy,omitempty"`
 	Certificate interface{} `json:"certificate,omitempty"`
-	Method      string      `json:"method"`
+	Method      method      `json:"method"`
 	Description interface{} `json:"description,omitempty"`
 	Header      []*Header   `json:"header,omitempty"`
 	Body        *Body       `json:"body,omitempty"`
@@ -24,7 +24,7 @@ func NewRequest(u string, m method) *Request {
 		URL: URL{
 			Raw: u,
 		},
-		Method: m.String(),
+		Method: m,
 	}
 }
 

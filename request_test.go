@@ -7,22 +7,21 @@ import (
 )
 
 func TestNewRequest(t *testing.T) {
-	var tests = []struct {
-		Method               method
-		URL                  string
-		ExpectedMethodString string
+	var cases = []struct {
+		Method method
+		URL    string
 	}{
-		{Get, "an-url", "GET"},
-		{Post, "another-url", "POST"},
+		{Get, "an-url"},
+		{Post, "another-url"},
 	}
 
-	for _, test := range tests {
-		req := NewRequest(test.URL, test.Method)
+	for _, tc := range cases {
+		req := NewRequest(tc.URL, tc.Method)
 
-		assert.Equal(t, test.ExpectedMethodString, req.Method)
+		assert.Equal(t, tc.Method, req.Method)
 
 		if assert.NotNil(t, req.URL) {
-			assert.Equal(t, test.URL, req.URL.Raw)
+			assert.Equal(t, tc.URL, req.URL.Raw)
 		}
 	}
 }
@@ -32,7 +31,7 @@ func TestCreateRequestFromInterfaceWithString(t *testing.T) {
 
 	assert.Nil(t, err)
 	assert.NotNil(t, req)
-	assert.Equal(t, "GET", req.Method)
+	assert.Equal(t, Get, req.Method)
 
 	if assert.NotNil(t, req.URL) {
 		assert.Equal(t, "request-from-a-string", req.URL.Raw)
@@ -41,15 +40,15 @@ func TestCreateRequestFromInterfaceWithString(t *testing.T) {
 
 func TestCreateRequestFromInterfaceWithUnsupportedInterface(t *testing.T) {
 
-	var tests = []struct {
+	var cases = []struct {
 		UnsupportedInterface interface{}
 	}{
 		{666},
 		{[]string{"not-a-request"}},
 	}
 
-	for _, test := range tests {
-		_, err := createRequestFromInterface(test.UnsupportedInterface)
+	for _, tc := range cases {
+		_, err := createRequestFromInterface(tc.UnsupportedInterface)
 
 		assert.NotNil(t, err)
 		assert.Equal(t, "Unsupported interface type", err.Error())

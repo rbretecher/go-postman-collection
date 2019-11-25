@@ -1,58 +1,36 @@
 package postman
 
-type method int
+type method string
 
 const (
 	// Get HTTP method.
-	Get method = iota
+	Get method = "GET"
 	// Put HTTP method.
-	Put method = iota
+	Put method = "PUT"
 	// Post HTTP method.
-	Post method = iota
+	Post method = "POST"
 	// Patch HTTP method.
-	Patch method = iota
+	Patch method = "PATCH"
 	// Delete HTTP method.
-	Delete method = iota
+	Delete method = "DELETE"
 	// Copy HTTP method.
-	Copy method = iota
+	Copy method = "COPY"
 	// Head HTTP method.
-	Head method = iota
+	Head method = "HEAD"
 	// Options HTTP method.
-	Options method = iota
+	Options method = "OPTIONS"
 	// Link HTTP method.
-	Link method = iota
+	Link method = "LINK"
 	// Unlink HTTP method.
-	Unlink method = iota
+	Unlink method = "UNLINK"
 	// Purge HTTP method.
-	Purge method = iota
+	Purge method = "PURGE"
 	// Lock HTTP method.
-	Lock method = iota
+	Lock method = "LOCK"
 	// Unlock HTTP method.
-	Unlock method = iota
+	Unlock method = "UNLOCK"
 	// Propfind HTTP method.
-	Propfind method = iota
+	Propfind method = "PROPFIND"
 	// View HTTP method.
-	View method = iota
+	View method = "VIEW"
 )
-
-func (m method) String() string {
-	names := []string{
-		"GET",
-		"PUT",
-		"POST",
-		"PATCH",
-		"DELETE",
-		"COPY",
-		"HEAD",
-		"OPTIONS",
-		"LINK",
-		"UNLINK",
-		"PURGE",
-		"LOCK",
-		"UNLOCK",
-		"PROPFIND",
-		"VIEW",
-	}
-
-	return names[m]
-}
