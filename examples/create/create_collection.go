@@ -22,7 +22,7 @@ func main() {
 		},
 		Method: "POST",
 		Header: []*postman.Header{
-			&postman.Header{
+			{
 				Key:   "Content-Type",
 				Value: "application/json",
 			},
