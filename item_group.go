@@ -18,7 +18,7 @@ type ItemGroup struct {
 }
 
 // IsGroup returns true as an ItemGroup is a group.
-func (ig *ItemGroup) IsGroup() bool {
+func (ig ItemGroup) IsGroup() bool {
 	return true
 }
 

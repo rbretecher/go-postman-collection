@@ -49,7 +49,7 @@ type Auth struct {
 }
 
 // GetParams returns the parameters related to the authentication method in use.
-func (a *Auth) GetParams() []*AuthParam {
+func (a Auth) GetParams() []*AuthParam {
 	switch a.Type {
 	case APIKey:
 		return a.Apikey

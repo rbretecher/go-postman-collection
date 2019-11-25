@@ -19,7 +19,7 @@ type Item struct {
 }
 
 // IsGroup returns false as an Item is not a group.
-func (i *Item) IsGroup() bool {
+func (i Item) IsGroup() bool {
 	return false
 }
 

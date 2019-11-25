@@ -54,7 +54,7 @@ func (c *Collection) AddItemGroup(name string) (f *ItemGroup) {
 }
 
 // Write the collection to a file named by filename.
-func (c *Collection) Write(filename string) (err error) {
+func (c Collection) Write(filename string) (err error) {
 	file, err := json.MarshalIndent(c, "", "    ")
 
 	if err != nil {
