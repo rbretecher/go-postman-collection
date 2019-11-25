@@ -39,6 +39,6 @@ func createRequestFromInterface(i interface{}) (*Request, error) {
 		err := mapstructure.Decode(i, &req)
 		return req, err
 	default:
-		return nil, errors.New("Unsupported request type")
+		return nil, errors.New("Unsupported interface type")
 	}
 }

@@ -36,3 +36,20 @@ func TestCreateRequestFromInterfaceWithString(t *testing.T) {
 		assert.Equal(t, "request-from-a-string", req.URL.Raw)
 	}
 }
+
+func TestCreateRequestFromInterfaceWithUnsupportedInterface(t *testing.T) {
+
+	var tests = []struct {
+		UnsupportedInterface interface{}
+	}{
+		{666},
+		{[]string{"not-a-request"}},
+	}
+
+	for _, test := range tests {
+		_, err := createRequestFromInterface(test.UnsupportedInterface)
+
+		assert.NotNil(t, err)
+		assert.Equal(t, "Unsupported interface type", err.Error())
+	}
+}
