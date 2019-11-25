@@ -3,6 +3,7 @@ package postman
 import (
 	"encoding/json"
 	"fmt"
+	"io"
 	"io/ioutil"
 )
 
@@ -65,23 +66,16 @@ func (c *Collection) Write(filename string) (err error) {
 	return
 }
 
-// ParseCollection reads the content of the provided file and
-//  parse the data into a Collection object.
-func ParseCollection(filename string) (c *Collection, err error) {
-	file, err := ioutil.ReadFile(filename)
+// ParseCollection parses the content of the provided data stream into a Collection object.
+func ParseCollection(r io.Reader) (c *Collection, err error) {
 
-	if err != nil {
-		return
-	}
-
-	err = json.Unmarshal([]byte(file), &c)
+	err = json.NewDecoder(r).Decode(&c)
 
 	return
 }
 
 // collectionUnmarshal is used only during unmarshalling process.
-// It is used as a temporary object in order to be able to deserialize
-//	properly Items objects.
+// It is used as a temporary object in order to be able to deserialize properly Items objects.
 type collectionUnmarshal struct {
 	Info  Info          `json:"info"`
 	Items []interface{} `json:"item"`

@@ -2,13 +2,21 @@ package main
 
 import (
 	"fmt"
+	"os"
 
 	"github.com/rbretecher/go-postman-collection"
 )
 
 func main() {
 
-	c, err := postman.ParseCollection("examples/parse/parse_collection.json")
+	file, err := os.Open("examples/parse/parse_collection.json")
+	defer file.Close()
+
+	if err != nil {
+		panic(err)
+	}
+
+	c, err := postman.ParseCollection(file)
 
 	if err != nil {
 		panic(err)
