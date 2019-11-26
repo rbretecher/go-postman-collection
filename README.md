@@ -2,6 +2,7 @@
 
 [![Test](https://github.com/rbretecher/go-postman-collection/workflows/test/badge.svg)](https://github.com/rbretecher/go-postman-collection/actions?query=workflow=test)
 [![Go Report Card](https://goreportcard.com/badge/github.com/rbretecher/go-postman-collection)](https://goreportcard.com/report/github.com/rbretecher/go-postman-collection)
+[![GoDoc](https://godoc.org/github.com/rbretecher/go-postman-collection?status.svg)](https://godoc.org/github.com/rbretecher/go-postman-collection)
 
 Go module to work with Postman Collections.
 
