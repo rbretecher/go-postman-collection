@@ -30,13 +30,13 @@ const (
 type AuthParam struct {
 	Key   string      `json:"key,omitempty"`
 	Value interface{} `json:"value,omitempty"`
-	Type  authType    `json:"type,omitempty"`
+	Type  string      `json:"type,omitempty"`
 }
 
 // Auth contains the authentication method used and its associated parameters.
 type Auth struct {
 	Type   authType     `json:"type,omitempty"`
-	Apikey []*AuthParam `json:"apikey,omitempty"`
+	APIKey []*AuthParam `json:"apikey,omitempty"`
 	AWSV4  []*AuthParam `json:"awsv4,omitempty"`
 	Basic  []*AuthParam `json:"basic,omitempty"`
 	Bearer []*AuthParam `json:"bearer,omitempty"`
@@ -52,7 +52,7 @@ type Auth struct {
 func (a Auth) GetParams() []*AuthParam {
 	switch a.Type {
 	case APIKey:
-		return a.Apikey
+		return a.APIKey
 	case AWSV4:
 		return a.AWSV4
 	case Basic:
