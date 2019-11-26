@@ -7,9 +7,6 @@ import (
 )
 
 func TestGetParams(t *testing.T) {
-
-	const anUnimplementedType authType = "an-unimplemented-type"
-
 	auth := Auth{
 		Type: APIKey,
 		APIKey: []*AuthParam{
@@ -85,10 +82,12 @@ func TestGetParams(t *testing.T) {
 	}
 
 	cases := []struct {
+		scenario       string
 		authType       authType
 		expectedParams []*AuthParam
 	}{
 		{
+			"GetParams for ApiKey",
 			APIKey,
 			[]*AuthParam{
 				{
@@ -99,6 +98,7 @@ func TestGetParams(t *testing.T) {
 			},
 		},
 		{
+			"GetParams for AWSV4",
 			AWSV4,
 			[]*AuthParam{
 				{
@@ -109,6 +109,7 @@ func TestGetParams(t *testing.T) {
 			},
 		},
 		{
+			"GetParams for Basic",
 			Basic,
 			[]*AuthParam{
 				{
@@ -119,6 +120,7 @@ func TestGetParams(t *testing.T) {
 			},
 		},
 		{
+			"GetParams for Bearer",
 			Bearer,
 			[]*AuthParam{
 				{
@@ -129,6 +131,7 @@ func TestGetParams(t *testing.T) {
 			},
 		},
 		{
+			"GetParams for Digest",
 			Digest,
 			[]*AuthParam{
 				{
@@ -139,6 +142,7 @@ func TestGetParams(t *testing.T) {
 			},
 		},
 		{
+			"GetParams for Hawk",
 			Hawk,
 			[]*AuthParam{
 				{
@@ -149,6 +153,7 @@ func TestGetParams(t *testing.T) {
 			},
 		},
 		{
+			"GetParams for NoAuth",
 			NoAuth,
 			[]*AuthParam{
 				{
@@ -159,6 +164,7 @@ func TestGetParams(t *testing.T) {
 			},
 		},
 		{
+			"GetParams for OAuth1",
 			OAuth1,
 			[]*AuthParam{
 				{
@@ -169,6 +175,7 @@ func TestGetParams(t *testing.T) {
 			},
 		},
 		{
+			"GetParams for Oauth2",
 			Oauth2,
 			[]*AuthParam{
 				{
@@ -179,6 +186,7 @@ func TestGetParams(t *testing.T) {
 			},
 		},
 		{
+			"GetParams for NTLM",
 			NTLM,
 			[]*AuthParam{
 				{
@@ -189,7 +197,8 @@ func TestGetParams(t *testing.T) {
 			},
 		},
 		{
-			anUnimplementedType,
+			"GetParams for an unimplemented authentication method",
+			"an-unimplemented-authentication-method",
 			nil,
 		},
 	}
@@ -200,8 +209,9 @@ func TestGetParams(t *testing.T) {
 
 		assert.Equal(
 			t,
-			auth.GetParams(),
 			tc.expectedParams,
+			auth.GetParams(),
+			tc.scenario,
 		)
 	}
 }
