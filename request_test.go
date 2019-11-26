@@ -1,56 +1,109 @@
 package postman
 
 import (
+	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestNewRequest(t *testing.T) {
-	var cases = []struct {
-		Method method
-		URL    string
+	cases := []struct {
+		method          method
+		url             string
+		expectedRequest *Request
 	}{
-		{Get, "an-url"},
-		{Post, "another-url"},
+		{
+			Get,
+			"an-url",
+			&Request{
+				Method: Get,
+				URL: URL{
+					Raw: "an-url",
+				},
+			},
+		},
 	}
 
 	for _, tc := range cases {
-		req := NewRequest(tc.URL, tc.Method)
+		req := NewRequest(tc.url, tc.method)
 
-		assert.Equal(t, tc.Method, req.Method)
-
-		if assert.NotNil(t, req.URL) {
-			assert.Equal(t, tc.URL, req.URL.Raw)
-		}
+		assert.Equal(t, tc.expectedRequest, req)
 	}
 }
 
-func TestCreateRequestFromInterfaceWithString(t *testing.T) {
-	req, err := createRequestFromInterface("request-from-a-string")
-
-	assert.Nil(t, err)
-	assert.NotNil(t, req)
-	assert.Equal(t, Get, req.Method)
-
-	if assert.NotNil(t, req.URL) {
-		assert.Equal(t, "request-from-a-string", req.URL.Raw)
-	}
-}
-
-func TestCreateRequestFromInterfaceWithUnsupportedInterface(t *testing.T) {
-
-	var cases = []struct {
-		UnsupportedInterface interface{}
+func TestCreateRequestFromInterface(t *testing.T) {
+	cases := []struct {
+		scenario        string
+		i               interface{}
+		expectedRequest *Request
+		expectedError   error
 	}{
-		{666},
-		{[]string{"not-a-request"}},
+		{
+			"Request from a string",
+			"http://www.google.fr",
+			&Request{
+				Method: Get,
+				URL: URL{
+					Raw: "http://www.google.fr",
+				},
+			},
+			nil,
+		},
+		{
+			"Request from an interface",
+			map[string]interface{}{
+				"method": "POST",
+				"header": []map[string]interface{}{
+					{
+						"key":   "Content-Type",
+						"value": "application/json",
+					},
+				},
+				"url": map[string]interface{}{
+					"raw":      "https://gurujsonrpc.appspot.com/guru",
+					"protocol": "https",
+					"host":     []string{"gurujsonrpc", "appspot", "com"},
+					"path":     []string{"path"},
+				},
+				"body": map[string]interface{}{
+					"mode": "raw",
+					"raw":  "some-raw-body",
+				},
+			},
+			&Request{
+				Method: Post,
+				Header: []*Header{
+					{
+						Key:   "Content-Type",
+						Value: "application/json",
+					},
+				},
+				URL: URL{
+					Raw:      "https://gurujsonrpc.appspot.com/guru",
+					Protocol: "https",
+					Host:     []string{"gurujsonrpc", "appspot", "com"},
+					Path:     []string{"path"},
+				},
+				Body: &Body{
+					Mode: "raw",
+					Raw:  "some-raw-body",
+				},
+			},
+			nil,
+		},
+		{
+			"Request from an unsupported interface",
+			[]string{"not-a-request"},
+			nil,
+			errors.New("Unsupported interface type"),
+		},
 	}
 
 	for _, tc := range cases {
-		_, err := createRequestFromInterface(tc.UnsupportedInterface)
+		req, err := createRequestFromInterface(tc.i)
 
-		assert.NotNil(t, err)
-		assert.Equal(t, "Unsupported interface type", err.Error())
+		assert.Equal(t, tc.expectedError, err, tc.scenario)
+		assert.Equal(t, tc.expectedRequest, req, tc.scenario)
 	}
 }
