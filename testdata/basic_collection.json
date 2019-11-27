@@ -1,0 +1,61 @@
+{
+  "info": {
+    "name": "Go Collection",
+    "description": "Awesome description",
+    "version": "v2.1.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/"
+  },
+  "item": [
+    {
+      "name": "This is a folder",
+      "item": [
+        {
+          "name": "An item inside a folder"
+        }
+      ]
+    },
+    {
+      "name": "This is a request",
+      "request": {
+        "url": "http://www.google.fr",
+        "method": "GET"
+      }
+    },
+    {
+      "name": "JSON-RPC Request",
+      "request": {
+        "url": "https://gurujsonrpc.appspot.com/guru",
+        "auth": {
+          "type": "basic",
+          "basic": [
+            {
+              "key": "password",
+              "value": "my-password",
+              "type": "string"
+            },
+            {
+              "key": "username",
+              "value": "my-username",
+              "type": "string"
+            }
+          ]
+        },
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\"aKey\":\"a-value\"}"
+        }
+      }
+    },
+    {
+      "name": "An empty folder",
+      "item": []
+    }
+  ]
+}
