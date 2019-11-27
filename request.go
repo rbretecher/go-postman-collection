@@ -2,6 +2,7 @@ package postman
 
 import (
 	"errors"
+	"reflect"
 
 	"github.com/mitchellh/mapstructure"
 )
@@ -35,10 +36,35 @@ func createRequestFromInterface(i interface{}) (*Request, error) {
 	case string:
 		return NewRequest(i.(string), Get), nil
 	case map[string]interface{}:
-		req := new(Request)
-		err := mapstructure.Decode(i, &req)
+		req, err := decodeRequest(i.(map[string]interface{}))
 		return req, err
 	default:
 		return nil, errors.New("Unsupported interface type")
 	}
+}
+
+func decodeRequest(m map[string]interface{}) (req *Request, err error) {
+
+	config := &mapstructure.DecoderConfig{
+		TagName: "json",
+		Result:  &req,
+		DecodeHook: func(from reflect.Type, to reflect.Type, v interface{}) (interface{}, error) {
+			if to.Name() == "URL" {
+				url, err := createURLFromInterface(v)
+				return url, err
+			}
+
+			return v, nil
+		},
+	}
+
+	decoder, err := mapstructure.NewDecoder(config)
+
+	if err != nil {
+		return
+	}
+
+	err = decoder.Decode(m)
+
+	return
 }
