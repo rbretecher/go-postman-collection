@@ -9,7 +9,7 @@ import (
 
 // A Request represents an HTTP request.
 type Request struct {
-	URL         URL         `json:"url"`
+	URL         *URL        `json:"url"`
 	Auth        *Auth       `json:"auth,omitempty"`
 	Proxy       interface{} `json:"proxy,omitempty"`
 	Certificate interface{} `json:"certificate,omitempty"`
@@ -22,7 +22,7 @@ type Request struct {
 // NewRequest creates a new request.
 func NewRequest(u string, m method) *Request {
 	return &Request{
-		URL: URL{
+		URL: &URL{
 			Raw: u,
 		},
 		Method: m,

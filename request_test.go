@@ -18,7 +18,7 @@ func TestNewRequest(t *testing.T) {
 			"an-url",
 			&Request{
 				Method: Get,
-				URL: URL{
+				URL: &URL{
 					Raw: "an-url",
 				},
 			},
@@ -44,7 +44,7 @@ func TestCreateRequestFromInterface(t *testing.T) {
 			"http://www.google.fr",
 			&Request{
 				Method: Get,
-				URL: URL{
+				URL: &URL{
 					Raw: "http://www.google.fr",
 				},
 			},
@@ -79,7 +79,7 @@ func TestCreateRequestFromInterface(t *testing.T) {
 						Value: "application/json",
 					},
 				},
-				URL: URL{
+				URL: &URL{
 					Raw:      "https://gurujsonrpc.appspot.com/guru",
 					Protocol: "https",
 					Host:     []string{"gurujsonrpc", "appspot", "com"},

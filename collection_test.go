@@ -84,7 +84,7 @@ func TestParseCollection(t *testing.T) {
 					&Item{
 						Name: "This is a request",
 						Request: &Request{
-							URL: URL{
+							URL: &URL{
 								Raw: "http://www.google.fr",
 							},
 							Method: Get,
@@ -93,7 +93,7 @@ func TestParseCollection(t *testing.T) {
 					&Item{
 						Name: "JSON-RPC Request",
 						Request: &Request{
-							URL: URL{
+							URL: &URL{
 								Raw: "https://gurujsonrpc.appspot.com/guru",
 							},
 							Auth: &Auth{

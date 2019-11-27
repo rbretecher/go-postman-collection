@@ -17,7 +17,7 @@ func main() {
 	})
 
 	r := &postman.Request{
-		URL: postman.URL{
+		URL: &postman.URL{
 			Raw: "https://gurujsonrpc.appspot.com/guru",
 		},
 		Method: "POST",
