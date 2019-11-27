@@ -9,7 +9,7 @@ type Items interface {
 func createItemCollection(items []interface{}) (itemCollection []Items, err error) {
 
 	for _, i := range items {
-		item, err := createItem(i)
+		item, err := createItemFromInterface(i)
 
 		if err != nil {
 			return nil, err
@@ -21,13 +21,13 @@ func createItemCollection(items []interface{}) (itemCollection []Items, err erro
 	return itemCollection, nil
 }
 
-func createItem(i interface{}) (item Items, err error) {
+func createItemFromInterface(i interface{}) (item Items, err error) {
 	dict := i.(map[string]interface{})
 
 	if _, found := dict["item"]; found {
-		item, err = createItemGroupFromMap(dict)
+		item, err = decodeItemGroup(dict)
 	} else {
-		item, err = createItemFromMap(dict)
+		item, err = decodeItem(dict)
 	}
 
 	return

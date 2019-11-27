@@ -39,14 +39,14 @@ func (ig *ItemGroup) AddItemGroup(name string) (f *ItemGroup) {
 	return
 }
 
-func createItemGroupFromMap(m map[string]interface{}) (ig *ItemGroup, err error) {
+func decodeItemGroup(m map[string]interface{}) (ig *ItemGroup, err error) {
 	config := &mapstructure.DecoderConfig{
 		TagName: "json",
 		Result:  &ig,
 		DecodeHook: func(from reflect.Type, to reflect.Type, v interface{}) (interface{}, error) {
 			// We need to manually take care of Items as it can be an Item or an ItemGroup.
 			if to.Name() == "Items" {
-				i, err := createItem(v)
+				i, err := createItemFromInterface(v)
 				return i, err
 			}
 

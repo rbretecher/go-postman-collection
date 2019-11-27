@@ -23,7 +23,7 @@ func (i Item) IsGroup() bool {
 	return false
 }
 
-func createItemFromMap(m map[string]interface{}) (item *Item, err error) {
+func decodeItem(m map[string]interface{}) (item *Item, err error) {
 	config := &mapstructure.DecoderConfig{
 		TagName: "json",
 		Result:  &item,
