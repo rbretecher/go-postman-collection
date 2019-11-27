@@ -1,7 +1,6 @@
 package postman
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -24,14 +23,15 @@ func TestCollectionTestSuite(t *testing.T) {
 func TestCreateCollection(t *testing.T) {
 	c := CreateCollection("a-name", "a-desc")
 
-	assert.Equal(t, "a-name", c.Info.Name)
-	assert.Equal(t, "a-desc", c.Info.Description)
-	assert.Equal(t, version, c.Info.Version)
-	assert.Equal(t, fmt.Sprintf("https://schema.getpostman.com/json/collection/%s/", version), c.Info.Schema)
-
-	if assert.NotNil(t, c.Items) {
-		assert.Equal(t, 0, len(c.Items), "Slice should be empty")
-	}
+	assert.Equal(t, &Collection{
+		Info: Info{
+			Name:        "a-name",
+			Description: "a-desc",
+			Version:     "v2.1.0",
+			Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/",
+		},
+		Items: []Items{},
+	}, c)
 }
 
 func (suite *CollectionTestSuite) TestAddItem() {
