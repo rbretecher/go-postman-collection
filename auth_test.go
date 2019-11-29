@@ -204,7 +204,6 @@ func TestGetParams(t *testing.T) {
 	}
 
 	for _, tc := range cases {
-
 		auth.Type = tc.authType
 
 		assert.Equal(
