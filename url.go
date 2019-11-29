@@ -44,7 +44,7 @@ func createURLFromInterface(i interface{}) (*URL, error) {
 	}
 }
 
-// MarshalJSON marshalls the URL as a string if it does not contain any variable.
+// MarshalJSON encodes the URL as a string if it does not contain any variable.
 // In case it contains any variable, it gets marshalled as a struct.
 func (u *URL) MarshalJSON() ([]byte, error) {
 
