@@ -6,31 +6,80 @@
 
 Go module to work with Postman Collections.
 
-Development is under progress and for now it only supports partially Postman Collection format v2.1.0
+This module aims to provide a simple way to work with Postman collections. Using this module, you can create collections, update them and export them into a the Postman Collection format v2.1.0
+
+### Examples
+
+#### Read a Postman collection
+
+```go
+package main
+
+import (
+	"os"
+
+	postman "github.com/rbretecher/go-postman-collection"
+)
+
+func main() {
+	file, err := os.Open("postman_collection.json")
+	defer file.Close()
+
+	if err != nil {
+		panic(err)
+	}
+
+	c, err := postman.ParseCollection(file)
+
+	_ = c
+}
+```
+
+#### Create and save a Postman collection
+
+```go
+package main
+
+import (
+	"os"
+
+	postman "github.com/rbretecher/go-postman-collection"
+)
+
+func main() {
+    c := postman.CreateCollection("My collection", "My awesome collection")
+
+	c.AddItemGroup("A folder").AddItem(&postman.Item{
+		Name:    "This is a request",
+		Request: postman.NewRequest("http://www.google.fr", postman.Get),
+    })
+
+    file, err := os.Create("postman_collection.json")
+	defer file.Close()
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = c.Write(file)
+
+	if err != nil {
+		panic(err)
+	}
+}
+```
 
 ### Current support
 
-#### Postman Collection Schema
-
-| Schema Version | Supported |
-| -------------- | --------- |
-| 1.0            | No        |
-| 2.0 < 3.0      | No        |
-| 2.1 >= 3.0     | Partial   |
-
-#### Postman Objects
+Development is under progress and for now it only supports partially Postman Collection format v2.1.0
 
 |  Object            | Supported |
 | ------------------ | --------- |
 | Collection         | Yes       |
-| ItemGroup (Folder) | Partial   |
-| Item               | Partial   |
-| Request            | Partial   |
+| ItemGroup (Folder) | Yes       |
+| Item               | Yes       |
+| Request            | Yes       |
 | Response           | No        |
 | Event              | No        |
 | Variable           | No        |
 | Auth               | Yes       |
-
-### Useful resources
-
-https://schema.getpostman.com/json/collection/latest/docs/index.html
