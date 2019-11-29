@@ -40,7 +40,7 @@ func TestCreateRequestFromInterface(t *testing.T) {
 		expectedError   error
 	}{
 		{
-			"Request from a string",
+			"Succesfully creating a request from a string",
 			"http://www.google.fr",
 			&Request{
 				Method: Get,
@@ -51,7 +51,7 @@ func TestCreateRequestFromInterface(t *testing.T) {
 			nil,
 		},
 		{
-			"Request from an interface",
+			"Succesfully creating a request from a map[string]interface{}",
 			map[string]interface{}{
 				"method": "POST",
 				"header": []map[string]interface{}{
