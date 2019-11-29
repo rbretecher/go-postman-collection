@@ -6,7 +6,7 @@
 
 Go module to work with Postman Collections.
 
-This module aims to provide a simple way to work with Postman collections. Using this module, you can create collections, update them and export them into a the Postman Collection format v2.1.0
+This module aims to provide a simple way to work with Postman collections. Using this module, you can create collections, update them and export them into the Postman Collection format v2.1.0
 
 ### Examples
 
@@ -49,23 +49,23 @@ import (
 func main() {
     c := postman.CreateCollection("My collection", "My awesome collection")
 
-	c.AddItemGroup("A folder").AddItem(&postman.Item{
-		Name:    "This is a request",
-		Request: postman.NewRequest("http://www.google.fr", postman.Get),
+    c.AddItemGroup("A folder").AddItem(&postman.Item{
+        Name:    "This is a request",
+        Request: postman.NewRequest("http://www.google.fr", postman.Get),
     })
 
     file, err := os.Create("postman_collection.json")
-	defer file.Close()
+    defer file.Close()
 
-	if err != nil {
-		panic(err)
-	}
+    if err != nil {
+        panic(err)
+    }
 
-	err = c.Write(file)
+    err = c.Write(file)
 
-	if err != nil {
-		panic(err)
-	}
+    if err != nil {
+        panic(err)
+    }
 }
 ```
 
