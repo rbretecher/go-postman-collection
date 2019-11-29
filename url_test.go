@@ -61,3 +61,33 @@ func TestCreateURLFromInterface(t *testing.T) {
 		assert.Equal(t, tc.expectedURL, req, tc.scenario)
 	}
 }
+
+func TestURLMarsalJSON(t *testing.T) {
+	cases := []struct {
+		scenario       string
+		url            *URL
+		expectedOutput string
+	}{
+		{
+			"Succesfully unmarshalling an URL",
+			&URL{
+				Raw: "http://www.google.fr",
+			},
+			"\"http://www.google.fr\"",
+		},
+		{
+			"Succesfully unmarshalling an URL with variables",
+			&URL{
+				Raw:      "http://www.google.fr",
+				Variable: "some-variables",
+			},
+			"{\"raw\":\"http://www.google.fr\",\"variable\":\"some-variables\"}",
+		},
+	}
+
+	for _, tc := range cases {
+		bytes, _ := tc.url.MarshalJSON()
+
+		assert.Equal(t, tc.expectedOutput, string(bytes), tc.scenario)
+	}
+}
