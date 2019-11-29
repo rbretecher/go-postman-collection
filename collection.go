@@ -31,7 +31,6 @@ func CreateCollection(name string, desc string) *Collection {
 			Description: desc,
 			Schema:      fmt.Sprintf("https://schema.getpostman.com/json/collection/%s/", version),
 		},
-		Items: make([]Items, 0),
 	}
 }
 
@@ -43,8 +42,7 @@ func (c *Collection) AddItem(item Items) {
 // AddItemGroup creates a new ItemGroup and appends it to the existing items slice.
 func (c *Collection) AddItemGroup(name string) (f *ItemGroup) {
 	f = &ItemGroup{
-		Name:  name,
-		Items: make([]Items, 0),
+		Name: name,
 	}
 
 	c.Items = append(c.Items, f)

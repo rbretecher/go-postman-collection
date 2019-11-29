@@ -33,8 +33,7 @@ func (ig *ItemGroup) AddItem(item Items) {
 // AddItemGroup creates a new ItemGroup and appends it to the existing items slice.
 func (ig *ItemGroup) AddItemGroup(name string) (f *ItemGroup) {
 	f = &ItemGroup{
-		Name:  name,
-		Items: make([]Items, 0),
+		Name: name,
 	}
 
 	ig.Items = append(ig.Items, f)

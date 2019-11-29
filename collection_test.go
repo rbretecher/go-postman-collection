@@ -99,26 +99,31 @@ func TestCreateCollection(t *testing.T) {
 			Version:     "v2.1.0",
 			Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/",
 		},
-		Items: []Items{},
 	}, c)
 }
 
-func (suite *CollectionTestSuite) TestAddItem() {
-	suite.Collection.AddItem(new(Item))
-	suite.Collection.AddItem(new(ItemGroup))
-	suite.Collection.AddItem(new(Item))
+func (suite *CollectionTestSuite) TestAddItemIntoCollection() {
+	suite.Collection.AddItem(&Item{Name: "Item1"})
+	suite.Collection.AddItem(&ItemGroup{Name: "Item2"})
+	suite.Collection.AddItem(&Item{Name: "Item3"})
 
-	assert.Equal(suite.T(), 3, len(suite.Collection.Items))
+	assert.Equal(suite.T(), []Items{
+		&Item{Name: "Item1"},
+		&ItemGroup{Name: "Item2"},
+		&Item{Name: "Item3"},
+	}, suite.Collection.Items)
 }
 
-func (suite *CollectionTestSuite) TestAddItemGroup() {
+func (suite *CollectionTestSuite) TestAddItemGroupIntoCollection() {
 	suite.Collection.AddItemGroup("new-item-group")
 	suite.Collection.AddItemGroup("another-new-item-group")
 
 	if assert.NotNil(suite.T(), suite.Collection.Items) {
-		assert.Equal(suite.T(), 2, len(suite.Collection.Items))
-		assert.Equal(suite.T(), "new-item-group", suite.Collection.Items[0].(*ItemGroup).Name)
-		assert.Equal(suite.T(), "another-new-item-group", suite.Collection.Items[1].(*ItemGroup).Name)
+
+		assert.Equal(suite.T(), []Items{
+			&ItemGroup{Name: "new-item-group"},
+			&ItemGroup{Name: "another-new-item-group"},
+		}, suite.Collection.Items)
 	}
 }
 
