@@ -46,7 +46,7 @@ func createURLFromInterface(i interface{}) (*URL, error) {
 
 // MarshalJSON encodes the URL as a string if it does not contain any variable.
 // In case it contains any variable, it gets marshalled as a struct.
-func (u *URL) MarshalJSON() ([]byte, error) {
+func (u URL) MarshalJSON() ([]byte, error) {
 
 	if u.Variable == nil {
 		return []byte(fmt.Sprintf("\"%s\"", u.Raw)), nil

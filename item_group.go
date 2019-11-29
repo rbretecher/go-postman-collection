@@ -70,7 +70,7 @@ func decodeItemGroup(m map[string]interface{}) (ig *ItemGroup, err error) {
 
 // MarshalJSON returns JSON encoding of the ItemGroup.
 // If the Items slice is nil, it creates an empty one to avoid `null` value in the JSON.
-func (ig *ItemGroup) MarshalJSON() ([]byte, error) {
+func (ig ItemGroup) MarshalJSON() ([]byte, error) {
 
 	items := ig.Items
 	if ig.Items == nil {
