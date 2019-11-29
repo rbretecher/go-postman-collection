@@ -69,14 +69,14 @@ func TestURLMarsalJSON(t *testing.T) {
 		expectedOutput string
 	}{
 		{
-			"Succesfully unmarshalling an URL as a string",
+			"Successfully marshalling an URL as a string",
 			&URL{
 				Raw: "http://www.google.fr",
 			},
 			"\"http://www.google.fr\"",
 		},
 		{
-			"Succesfully unmarshalling an URL with variables as a struct",
+			"Successfully marshalling an URL with variables as a struct",
 			&URL{
 				Raw:      "http://www.google.fr",
 				Variable: "some-variables",
