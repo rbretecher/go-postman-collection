@@ -1,6 +1,7 @@
 package postman
 
 import (
+	"io/ioutil"
 	"os"
 	"testing"
 
@@ -10,11 +11,76 @@ import (
 
 type CollectionTestSuite struct {
 	suite.Suite
-	Collection *Collection
+	Collection      *Collection
+	BasicCollection *Collection
 }
 
 func (suite *CollectionTestSuite) SetupTest() {
 	suite.Collection = CreateCollection("a-name", "a-desc")
+	suite.BasicCollection = &Collection{
+		Info: Info{
+			Name:        "Go Collection",
+			Description: "Awesome description",
+			Version:     "v2.1.0",
+			Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/",
+		},
+		Items: []Items{
+			&ItemGroup{
+				Name: "This is a folder",
+				Items: []Items{
+					&Item{
+						Name: "An item inside a folder",
+					},
+				},
+			},
+			&Item{
+				Name: "This is a request",
+				Request: &Request{
+					URL: &URL{
+						Raw: "http://www.google.fr",
+					},
+					Method: Get,
+				},
+			},
+			&Item{
+				Name: "JSON-RPC Request",
+				Request: &Request{
+					URL: &URL{
+						Raw: "https://gurujsonrpc.appspot.com/guru",
+					},
+					Auth: &Auth{
+						Type: Basic,
+						Basic: []*AuthParam{
+							{
+								Key:   "password",
+								Value: "my-password",
+								Type:  "string",
+							},
+							{
+								Key:   "username",
+								Value: "my-username",
+								Type:  "string",
+							},
+						},
+					},
+					Method: Post,
+					Header: []*Header{
+						{
+							Key:   "Content-Type",
+							Value: "application/json",
+						},
+					},
+					Body: &Body{
+						Mode: "raw",
+						Raw:  "{\"aKey\":\"a-value\"}",
+					},
+				},
+			},
+			&ItemGroup{
+				Name: "An empty folder",
+			},
+		},
+	}
 }
 
 func TestCollectionTestSuite(t *testing.T) {
@@ -54,8 +120,7 @@ func (suite *CollectionTestSuite) TestAddItemGroup() {
 	}
 }
 
-func TestParseCollection(t *testing.T) {
-
+func (suite *CollectionTestSuite) TestParseCollection() {
 	cases := []struct {
 		scenario           string
 		testFile           string
@@ -65,70 +130,7 @@ func TestParseCollection(t *testing.T) {
 		{
 			"Basic collection",
 			"testdata/basic_collection.json",
-			&Collection{
-				Info: Info{
-					Name:        "Go Collection",
-					Description: "Awesome description",
-					Version:     "v2.1.0",
-					Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/",
-				},
-				Items: []Items{
-					&ItemGroup{
-						Name: "This is a folder",
-						Items: []Items{
-							&Item{
-								Name: "An item inside a folder",
-							},
-						},
-					},
-					&Item{
-						Name: "This is a request",
-						Request: &Request{
-							URL: &URL{
-								Raw: "http://www.google.fr",
-							},
-							Method: Get,
-						},
-					},
-					&Item{
-						Name: "JSON-RPC Request",
-						Request: &Request{
-							URL: &URL{
-								Raw: "https://gurujsonrpc.appspot.com/guru",
-							},
-							Auth: &Auth{
-								Type: Basic,
-								Basic: []*AuthParam{
-									{
-										Key:   "password",
-										Value: "my-password",
-										Type:  "string",
-									},
-									{
-										Key:   "username",
-										Value: "my-username",
-										Type:  "string",
-									},
-								},
-							},
-							Method: Post,
-							Header: []*Header{
-								{
-									Key:   "Content-Type",
-									Value: "application/json",
-								},
-							},
-							Body: &Body{
-								Mode: "raw",
-								Raw:  "{\"aKey\":\"a-value\"}",
-							},
-						},
-					},
-					&ItemGroup{
-						Name: "An empty folder",
-					},
-				},
-			},
+			suite.BasicCollection,
 			nil,
 		},
 	}
@@ -138,7 +140,45 @@ func TestParseCollection(t *testing.T) {
 
 		c, err := ParseCollection(file)
 
-		assert.Equal(t, tc.expectedError, err)
-		assert.Equal(t, tc.expectedCollection, c)
+		assert.Equal(suite.T(), tc.expectedError, err)
+		assert.Equal(suite.T(), tc.expectedCollection, c)
+	}
+}
+
+func (suite *CollectionTestSuite) TestUnmarshalJSON() {
+	cases := []struct {
+		scenario           string
+		testFile           string
+		expectedCollection *Collection
+		expectedError      error
+	}{
+		{
+			"Unmarshal valid JSON file should not return any error",
+			"testdata/basic_collection.json",
+			suite.BasicCollection,
+			nil,
+		},
+		{
+			"Unmarshal invalid JSON file should return an error",
+			"testdata/malformed_json.json",
+			&Collection{},
+			assert.AnError,
+		},
+	}
+
+	for _, tc := range cases {
+		c := new(Collection)
+
+		file, _ := ioutil.ReadFile(tc.testFile)
+
+		err := c.UnmarshalJSON(file)
+
+		assert.Equal(suite.T(), tc.expectedCollection, c, tc.scenario)
+
+		if tc.expectedError != nil {
+			assert.Error(suite.T(), err, tc.scenario)
+		} else {
+			assert.NoError(suite.T(), err, tc.scenario)
+		}
 	}
 }
