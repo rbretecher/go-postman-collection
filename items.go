@@ -1,5 +1,7 @@
 package postman
 
+import "errors"
+
 // Items are the basic unit for a Postman collection.
 // It can either be a request (Item) or a folder (ItemGroup).
 type Items interface {
@@ -7,7 +9,6 @@ type Items interface {
 }
 
 func createItemCollection(items []interface{}) (itemCollection []Items, err error) {
-
 	for _, i := range items {
 		item, err := createItemFromInterface(i)
 
@@ -22,7 +23,11 @@ func createItemCollection(items []interface{}) (itemCollection []Items, err erro
 }
 
 func createItemFromInterface(i interface{}) (item Items, err error) {
-	dict := i.(map[string]interface{})
+	dict, ok := i.(map[string]interface{})
+
+	if !ok {
+		return nil, errors.New("Unsupported interface")
+	}
 
 	if _, found := dict["item"]; found {
 		item, err = decodeItemGroup(dict)
