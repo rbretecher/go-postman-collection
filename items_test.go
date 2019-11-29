@@ -39,7 +39,7 @@ func TestCreateItemCollection(t *testing.T) {
 		expectedError          error
 	}{
 		{
-			"Successfully creating item collection from compatible interfaces",
+			"Successfully creating item collection from compatible interface",
 			[]interface{}{
 				map[string]interface{}{
 					"name": "An Item",
