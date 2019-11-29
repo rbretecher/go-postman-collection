@@ -8,7 +8,7 @@ import (
 
 // An Item is an entity which contain an actual HTTP request, and sample responses attached to it.
 type Item struct {
-	ID                      string      `json:"id"`
+	ID                      string      `json:"id,omitempty"`
 	Name                    string      `json:"name"`
 	Description             string      `json:"description,omitempty"`
 	Variable                interface{} `json:"variable,omitempty"`

@@ -1,7 +1,9 @@
 package postman
 
 import (
+	"encoding/json"
 	"errors"
+	"fmt"
 
 	"github.com/mitchellh/mapstructure"
 )
@@ -18,6 +20,9 @@ type URL struct {
 	Hash     string      `json:"hash,omitempty"`
 	Variable interface{} `json:"variable,omitempty"`
 }
+
+// Used to Marshall the URL without calling the URL.MarshalJSON function.
+type marshalledURL URL
 
 // String returns the raw version of the URL.
 func (u URL) String() string {
@@ -37,4 +42,24 @@ func createURLFromInterface(i interface{}) (*URL, error) {
 	default:
 		return nil, errors.New("Unsupported interface type")
 	}
+}
+
+// MarshalJSON marshalls the URL as a string if it does not contain any variable.
+// In case it contains any variable, it gets marshalled as a struct.
+func (u *URL) MarshalJSON() ([]byte, error) {
+
+	if u.Variable == nil {
+		return []byte(fmt.Sprintf("\"%s\"", u.Raw)), nil
+	}
+
+	return json.Marshal(marshalledURL{
+		Raw:      u.Raw,
+		Protocol: u.Protocol,
+		Host:     u.Host,
+		Path:     u.Path,
+		Port:     u.Port,
+		Query:    u.Query,
+		Hash:     u.Hash,
+		Variable: u.Variable,
+	})
 }

@@ -1,6 +1,8 @@
 package postman
 
 import (
+	"bytes"
+	"fmt"
 	"io/ioutil"
 	"os"
 	"testing"
@@ -169,16 +171,50 @@ func (suite *CollectionTestSuite) TestUnmarshalJSON() {
 	for _, tc := range cases {
 		c := new(Collection)
 
-		file, _ := ioutil.ReadFile(tc.testFile)
+		file, err := ioutil.ReadFile(tc.testFile)
 
-		err := c.UnmarshalJSON(file)
+		if err != nil {
+			suite.Errorf(err, "Could not open test file", tc.scenario)
+		}
 
-		assert.Equal(suite.T(), tc.expectedCollection, c, tc.scenario)
+		err = c.UnmarshalJSON(file)
 
 		if tc.expectedError != nil {
 			assert.Error(suite.T(), err, tc.scenario)
 		} else {
 			assert.NoError(suite.T(), err, tc.scenario)
 		}
+
+		assert.Equal(suite.T(), tc.expectedCollection, c, tc.scenario)
+	}
+}
+
+func (suite *CollectionTestSuite) TestWriteCollection() {
+	cases := []struct {
+		scenario       string
+		testCollection *Collection
+		expectedFile   string
+		expectedError  error
+	}{
+		{
+			"Write collection struct into an io.writer",
+			suite.BasicCollection,
+			"testdata/basic_collection.json",
+			nil,
+		},
+	}
+
+	for _, tc := range cases {
+		var buf bytes.Buffer
+
+		tc.testCollection.Write(&buf)
+
+		file, err := ioutil.ReadFile(tc.expectedFile)
+
+		if err != nil {
+			suite.Errorf(err, "Could not open test file")
+		}
+
+		assert.Equal(suite.T(), string(file), fmt.Sprintf("%s\n", buf.String()))
 	}
 }

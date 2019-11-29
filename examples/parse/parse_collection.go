@@ -9,7 +9,7 @@ import (
 
 func main() {
 
-	file, err := os.Open("examples/parse/parse_collection.json")
+	file, err := os.Open("testdata/basic_collection.json")
 	defer file.Close()
 
 	if err != nil {
@@ -41,6 +41,8 @@ func exploreItems(items []postman.Items) {
 						println(p.Key, ":", fmt.Sprintf("%v", p.Value))
 					}
 				}
+			} else {
+				println(item.Name)
 			}
 		}
 	}

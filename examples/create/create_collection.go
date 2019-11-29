@@ -1,6 +1,8 @@
 package main
 
 import (
+	"os"
+
 	postman "github.com/rbretecher/go-postman-collection"
 )
 
@@ -40,5 +42,16 @@ func main() {
 
 	c.AddItemGroup("Empty folder")
 
-	c.Write("postman_collection.json")
+	file, err := os.Create("postman_collection.json")
+	defer file.Close()
+
+	if err != nil {
+		panic(err)
+	}
+
+	err = c.Write(file)
+
+	if err != nil {
+		panic(err)
+	}
 }

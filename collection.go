@@ -4,7 +4,6 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
-	"io/ioutil"
 )
 
 const version = "v2.1.0"
@@ -53,15 +52,15 @@ func (c *Collection) AddItemGroup(name string) (f *ItemGroup) {
 	return
 }
 
-// Write the collection to a file named by filename.
-func (c *Collection) Write(filename string) (err error) {
+// Write encodes the Collection struct in JSON and writes it into the provided io.Writer.
+func (c *Collection) Write(w io.Writer) (err error) {
 	file, err := json.MarshalIndent(c, "", "    ")
 
 	if err != nil {
 		return
 	}
 
-	err = ioutil.WriteFile(filename, file, 0644)
+	_, err = w.Write(file)
 
 	return
 }
