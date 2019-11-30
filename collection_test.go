@@ -34,6 +34,12 @@ func (suite *CollectionTestSuite) SetupTest() {
 						Name: "An item inside a folder",
 					},
 				},
+				Variables: []*Variable{
+					{
+						Name:  "api-key",
+						Value: "abcd1234",
+					},
+				},
 			},
 			&Item{
 				Name: "This is a request",
@@ -49,6 +55,12 @@ func (suite *CollectionTestSuite) SetupTest() {
 				Request: &Request{
 					URL: &URL{
 						Raw: "https://gurujsonrpc.appspot.com/guru",
+						Variables: []*Variable{
+							{
+								Name:  "an-url-variable",
+								Value: "an-url-variable-value",
+							},
+						},
 					},
 					Auth: &Auth{
 						Type: Basic,
@@ -80,6 +92,12 @@ func (suite *CollectionTestSuite) SetupTest() {
 			},
 			&ItemGroup{
 				Name: "An empty folder",
+			},
+		},
+		Variables: []*Variable{
+			{
+				Name:  "a-global-collection-variable",
+				Value: "a-global-value",
 			},
 		},
 	}

@@ -11,7 +11,7 @@ type Item struct {
 	ID                      string      `json:"id,omitempty"`
 	Name                    string      `json:"name"`
 	Description             string      `json:"description,omitempty"`
-	Variable                interface{} `json:"variable,omitempty"`
+	Variables               []*Variable `json:"variable,omitempty"`
 	Event                   interface{} `json:"event,omitempty"`
 	Request                 *Request    `json:"request,omitempty"`
 	Response                interface{} `json:"response,omitempty"`

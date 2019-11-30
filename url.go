@@ -11,14 +11,14 @@ import (
 // URL is a struct that contains an URL in a "broken-down way".
 // Raw contains the complete URL.
 type URL struct {
-	Raw      string      `json:"raw"`
-	Protocol string      `json:"protocol,omitempty"`
-	Host     []string    `json:"host,omitempty"`
-	Path     []string    `json:"path,omitempty"`
-	Port     string      `json:"port,omitempty"`
-	Query    interface{} `json:"query,omitempty"`
-	Hash     string      `json:"hash,omitempty"`
-	Variable interface{} `json:"variable,omitempty"`
+	Raw       string      `json:"raw"`
+	Protocol  string      `json:"protocol,omitempty"`
+	Host      []string    `json:"host,omitempty"`
+	Path      []string    `json:"path,omitempty"`
+	Port      string      `json:"port,omitempty"`
+	Query     interface{} `json:"query,omitempty"`
+	Hash      string      `json:"hash,omitempty"`
+	Variables []*Variable `json:"variable,omitempty" mapstructure:"variable"`
 }
 
 // Used to Marshall the URL without calling the URL.MarshalJSON function.
@@ -48,18 +48,18 @@ func createURLFromInterface(i interface{}) (*URL, error) {
 // In case it contains any variable, it gets marshalled as a struct.
 func (u URL) MarshalJSON() ([]byte, error) {
 
-	if u.Variable == nil {
+	if u.Variables == nil {
 		return []byte(fmt.Sprintf("\"%s\"", u.Raw)), nil
 	}
 
 	return json.Marshal(marshalledURL{
-		Raw:      u.Raw,
-		Protocol: u.Protocol,
-		Host:     u.Host,
-		Path:     u.Path,
-		Port:     u.Port,
-		Query:    u.Query,
-		Hash:     u.Hash,
-		Variable: u.Variable,
+		Raw:       u.Raw,
+		Protocol:  u.Protocol,
+		Host:      u.Host,
+		Path:      u.Path,
+		Port:      u.Port,
+		Query:     u.Query,
+		Hash:      u.Hash,
+		Variables: u.Variables,
 	})
 }

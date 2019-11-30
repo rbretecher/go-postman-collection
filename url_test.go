@@ -78,10 +78,15 @@ func TestURLMarsalJSON(t *testing.T) {
 		{
 			"Successfully marshalling an URL with variables as a struct",
 			&URL{
-				Raw:      "http://www.google.fr",
-				Variable: "some-variables",
+				Raw: "http://www.google.fr",
+				Variables: []*Variable{
+					{
+						Name:  "a-variable",
+						Value: "an-awesome-value",
+					},
+				},
 			},
-			"{\"raw\":\"http://www.google.fr\",\"variable\":\"some-variables\"}",
+			"{\"raw\":\"http://www.google.fr\",\"variable\":[{\"name\":\"a-variable\",\"value\":\"an-awesome-value\"}]}",
 		},
 	}
 

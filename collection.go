@@ -18,8 +18,9 @@ type Info struct {
 
 // Collection represents a Postman Collection.
 type Collection struct {
-	Info  Info    `json:"info"`
-	Items []Items `json:"item"`
+	Info      Info        `json:"info"`
+	Items     []Items     `json:"item"`
+	Variables []*Variable `json:"variable,omitempty"`
 }
 
 // CreateCollection returns a new Collection.
@@ -74,8 +75,9 @@ func ParseCollection(r io.Reader) (c *Collection, err error) {
 // collectionUnmarshal is used only during unmarshalling process.
 // It is used as a temporary object in order to be able to deserialize properly Items objects.
 type collectionUnmarshal struct {
-	Info  Info          `json:"info"`
-	Items []interface{} `json:"item"`
+	Info      Info          `json:"info"`
+	Items     []interface{} `json:"item"`
+	Variables []*Variable   `json:"variable"`
 }
 
 // UnmarshalJSON deserializes a JSON into a Collection object.
@@ -90,6 +92,7 @@ func (c *Collection) UnmarshalJSON(b []byte) (err error) {
 
 	c.Info = collection.Info
 	c.Items, err = createItemCollection(collection.Items)
+	c.Variables = collection.Variables
 
 	return
 }

@@ -81,5 +81,5 @@ Development is under progress and for now it only supports partially Postman Col
 | Request            | Yes       |
 | Response           | No        |
 | Event              | No        |
-| Variable           | No        |
+| Variable           | Partial   |
 | Auth               | Yes       |

@@ -8,6 +8,12 @@
     "item": [
         {
             "name": "This is a folder",
+            "variable": [
+                {
+                    "name": "api-key",
+                    "value": "abcd1234"
+                }
+            ],
             "item": [
                 {
                     "name": "An item inside a folder"
@@ -24,7 +30,15 @@
         {
             "name": "JSON-RPC Request",
             "request": {
-                "url": "https://gurujsonrpc.appspot.com/guru",
+                "url": {
+                    "raw": "https://gurujsonrpc.appspot.com/guru",
+                    "variable": [
+                        {
+                            "name": "an-url-variable",
+                            "value": "an-url-variable-value"
+                        }
+                    ]
+                },
                 "auth": {
                     "type": "basic",
                     "basic": [
@@ -56,6 +70,12 @@
         {
             "name": "An empty folder",
             "item": []
+        }
+    ],
+    "variable": [
+        {
+            "name": "a-global-collection-variable",
+            "value": "a-global-value"
         }
     ]
 }

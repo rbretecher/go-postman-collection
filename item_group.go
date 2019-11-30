@@ -11,7 +11,7 @@ import (
 type ItemGroup struct {
 	Name                    string      `json:"name"`
 	Description             string      `json:"description,omitempty"`
-	Variable                interface{} `json:"variable,omitempty"`
+	Variables               []*Variable `json:"variable,omitempty"`
 	Items                   []Items     `json:"item"`
 	Event                   interface{} `json:"event,omitempty"`
 	Auth                    *Auth       `json:"auth,omitempty"`
@@ -79,7 +79,7 @@ func (ig ItemGroup) MarshalJSON() ([]byte, error) {
 	return json.Marshal(marshalledItemGroup{
 		Name:                    ig.Name,
 		Description:             ig.Description,
-		Variable:                ig.Variable,
+		Variables:               ig.Variables,
 		Items:                   items,
 		Event:                   ig.Event,
 		Auth:                    ig.Auth,
