@@ -1,10 +1,9 @@
 package postman
 
 import (
+	"encoding/json"
 	"errors"
-	"reflect"
-
-	"github.com/mitchellh/mapstructure"
+	"fmt"
 )
 
 // A Request represents an HTTP request.
@@ -19,6 +18,9 @@ type Request struct {
 	Body        *Body       `json:"body,omitempty"`
 }
 
+// mRequest is used for marshalling/unmarshalling.
+type mRequest Request
+
 // NewRequest creates a new request.
 func NewRequest(u string, m method) *Request {
 	return &Request{
@@ -29,42 +31,40 @@ func NewRequest(u string, m method) *Request {
 	}
 }
 
-// A Request can be created from a map[string]interface{} or a string.
-// If a string, the string is assumed to be the request URL and the method is assumed to be 'GET'.
-func createRequestFromInterface(i interface{}) (*Request, error) {
-	switch i.(type) {
-	case string:
-		return NewRequest(i.(string), Get), nil
-	case map[string]interface{}:
-		req, err := decodeRequest(i.(map[string]interface{}))
-		return req, err
-	default:
-		return nil, errors.New("Unsupported interface type")
+// MarshalJSON returns the JSON encoding of a Request.
+// If the Request only contains an URL with the Get HTTP method, it is returned as a string.
+func (r Request) MarshalJSON() ([]byte, error) {
+	if r.Auth == nil && r.Proxy == nil && r.Certificate == nil && r.Description == nil && r.Header == nil && r.Body == nil && r.Method == Get {
+		return []byte(fmt.Sprintf("\"%s\"", r.URL)), nil
 	}
+
+	return json.Marshal(mRequest{
+		URL:         r.URL,
+		Auth:        r.Auth,
+		Proxy:       r.Proxy,
+		Certificate: r.Certificate,
+		Method:      r.Method,
+		Description: r.Description,
+		Header:      r.Header,
+		Body:        r.Body,
+	})
 }
 
-func decodeRequest(m map[string]interface{}) (req *Request, err error) {
-
-	config := &mapstructure.DecoderConfig{
-		TagName: "json",
-		Result:  &req,
-		DecodeHook: func(from reflect.Type, to reflect.Type, v interface{}) (interface{}, error) {
-			if to.Name() == "URL" {
-				url, err := createURLFromInterface(v)
-				return url, err
-			}
-
-			return v, nil
-		},
+// UnmarshalJSON parses the JSON-encoded data and create a Request from it.
+// A Request can be created from an object or a string.
+// If a string, the string is assumed to be the request URL and the method is assumed to be 'GET'.
+func (r *Request) UnmarshalJSON(b []byte) (err error) {
+	if b[0] == '"' {
+		r.Method = Get
+		r.URL = &URL{
+			Raw: string(string(b[1 : len(b)-1])),
+		}
+	} else if b[0] == '{' {
+		tmp := (*mRequest)(r)
+		err = json.Unmarshal(b, &tmp)
+	} else {
+		err = errors.New("Unsupported type")
 	}
-
-	decoder, err := mapstructure.NewDecoder(config)
-
-	if err != nil {
-		return
-	}
-
-	err = decoder.Decode(m)
 
 	return
 }

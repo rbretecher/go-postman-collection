@@ -19,7 +19,7 @@ type Info struct {
 // Collection represents a Postman Collection.
 type Collection struct {
 	Info      Info        `json:"info"`
-	Items     []Items     `json:"item"`
+	Items     []*Items    `json:"item"`
 	Variables []*Variable `json:"variable,omitempty"`
 }
 
@@ -36,14 +36,15 @@ func CreateCollection(name string, desc string) *Collection {
 }
 
 // AddItem appends an item (Item or ItemGroup) to the existing items slice.
-func (c *Collection) AddItem(item Items) {
+func (c *Collection) AddItem(item *Items) {
 	c.Items = append(c.Items, item)
 }
 
 // AddItemGroup creates a new ItemGroup and appends it to the existing items slice.
-func (c *Collection) AddItemGroup(name string) (f *ItemGroup) {
-	f = &ItemGroup{
-		Name: name,
+func (c *Collection) AddItemGroup(name string) (f *Items) {
+	f = &Items{
+		Name:  name,
+		Items: make([]*Items, 0),
 	}
 
 	c.Items = append(c.Items, f)
@@ -68,31 +69,6 @@ func (c *Collection) Write(w io.Writer) (err error) {
 func ParseCollection(r io.Reader) (c *Collection, err error) {
 
 	err = json.NewDecoder(r).Decode(&c)
-
-	return
-}
-
-// collectionUnmarshal is used only during unmarshalling process.
-// It is used as a temporary object in order to be able to deserialize properly Items objects.
-type collectionUnmarshal struct {
-	Info      Info          `json:"info"`
-	Items     []interface{} `json:"item"`
-	Variables []*Variable   `json:"variable"`
-}
-
-// UnmarshalJSON deserializes a JSON into a Collection object.
-func (c *Collection) UnmarshalJSON(b []byte) (err error) {
-
-	var collection collectionUnmarshal
-	err = json.Unmarshal(b, &collection)
-
-	if err != nil {
-		return
-	}
-
-	c.Info = collection.Info
-	c.Items, err = createItemCollection(collection.Items)
-	c.Variables = collection.Variables
 
 	return
 }
