@@ -15,7 +15,7 @@ func TestURLString(t *testing.T) {
 	assert.Equal(t, "a-raw-url", u.String())
 }
 
-func TestURLMarsalJSON(t *testing.T) {
+func TestURLMarshalJSON(t *testing.T) {
 	cases := []struct {
 		scenario       string
 		url            URL
