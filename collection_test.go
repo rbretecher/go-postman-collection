@@ -18,13 +18,13 @@ type CollectionTestSuite struct {
 }
 
 func (suite *CollectionTestSuite) SetupTest() {
-	suite.Collection = CreateCollection("a-name", "a-desc")
+	suite.Collection = CreateCollection("a-name", "a-desc", V210)
 	suite.BasicCollection = &Collection{
 		Info: Info{
 			Name:        "Go Collection",
 			Description: "Awesome description",
 			Version:     "v2.1.0",
-			Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/",
+			Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		},
 		Items: []*Items{
 			&Items{
@@ -109,16 +109,17 @@ func TestCollectionTestSuite(t *testing.T) {
 }
 
 func TestCreateCollection(t *testing.T) {
-	c := CreateCollection("a-name", "a-desc")
+	c := CreateCollection("a-name", "a-desc", V210)
 
 	assert.Equal(
 		t,
 		&Collection{
+			version: V210,
 			Info: Info{
 				Name:        "a-name",
 				Description: "a-desc",
 				Version:     "v2.1.0",
-				Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/",
+				Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 			},
 		},
 		c,

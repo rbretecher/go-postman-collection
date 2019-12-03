@@ -6,7 +6,14 @@ import (
 	"io"
 )
 
-const version = "v2.1.0"
+type version string
+
+const (
+	// V210 : v2.1.0
+	V210 version = "v2.1.0"
+	// V200 : v2.0.0
+	V200 version = "v2.0.0"
+)
 
 // Info stores data about the collection.
 type Info struct {
@@ -18,19 +25,21 @@ type Info struct {
 
 // Collection represents a Postman Collection.
 type Collection struct {
+	version   version
 	Info      Info        `json:"info"`
 	Items     []*Items    `json:"item"`
 	Variables []*Variable `json:"variable,omitempty"`
 }
 
 // CreateCollection returns a new Collection.
-func CreateCollection(name string, desc string) *Collection {
+func CreateCollection(name string, desc string, v version) *Collection {
 	return &Collection{
+		version: v,
 		Info: Info{
 			Name:        name,
-			Version:     version,
+			Version:     string(v),
 			Description: desc,
-			Schema:      fmt.Sprintf("https://schema.getpostman.com/json/collection/%s/", version),
+			Schema:      fmt.Sprintf("https://schema.getpostman.com/json/collection/%s/collection.json", string(v)),
 		},
 	}
 }
