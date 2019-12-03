@@ -1,39 +1,97 @@
 package postman
 
-import "errors"
+import "encoding/json"
 
 // Items are the basic unit for a Postman collection.
 // It can either be a request (Item) or a folder (ItemGroup).
-type Items interface {
-	IsGroup() bool
+type Items struct {
+	// Common fields.
+	Name                    string      `json:"name"`
+	Description             string      `json:"description,omitempty"`
+	Variables               []*Variable `json:"variable,omitempty"`
+	Event                   interface{} `json:"event,omitempty"`
+	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
+	// Fields specific to Item
+	ID       string      `json:"id,omitempty"`
+	Request  *Request    `json:"request,omitempty"`
+	Response interface{} `json:"response,omitempty"`
+	// Fields specific to ItemGroup
+	Items []*Items `json:"item"`
+	Auth  *Auth    `json:"auth,omitempty"`
 }
 
-func createItemCollection(items []interface{}) (itemCollection []Items, err error) {
-	for _, i := range items {
-		item, err := createItemFromInterface(i)
-
-		if err != nil {
-			return nil, err
-		}
-
-		itemCollection = append(itemCollection, item)
-	}
-
-	return itemCollection, nil
+// An Item is an entity which contain an actual HTTP request, and sample responses attached to it.
+type Item struct {
+	Name                    string      `json:"name"`
+	Description             string      `json:"description,omitempty"`
+	Variables               []*Variable `json:"variable,omitempty"`
+	Event                   interface{} `json:"event,omitempty"`
+	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
+	ID                      string      `json:"id,omitempty"`
+	Request                 *Request    `json:"request,omitempty"`
+	Response                interface{} `json:"response,omitempty"`
 }
 
-func createItemFromInterface(i interface{}) (item Items, err error) {
-	dict, ok := i.(map[string]interface{})
+// A ItemGroup is an ordered set of requests.
+type ItemGroup struct {
+	Name                    string      `json:"name"`
+	Description             string      `json:"description,omitempty"`
+	Variables               []*Variable `json:"variable,omitempty"`
+	Event                   interface{} `json:"event,omitempty"`
+	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
+	Items                   []*Items    `json:"item"`
+	Auth                    *Auth       `json:"auth,omitempty"`
+}
 
-	if !ok {
-		return nil, errors.New("Unsupported interface")
+// IsGroup returns false as an Item is not a group.
+func (i Items) IsGroup() bool {
+	if i.Items != nil {
+		return true
 	}
 
-	if _, found := dict["item"]; found {
-		item, err = decodeItemGroup(dict)
-	} else {
-		item, err = decodeItem(dict)
+	return false
+}
+
+// AddItem appends an item to the existing items slice.
+func (i *Items) AddItem(item *Items) {
+	i.Items = append(i.Items, item)
+}
+
+// AddItemGroup creates a new Item folder and appends it to the existing items slice.
+func (i *Items) AddItemGroup(name string) (f *Items) {
+	f = &Items{
+		Name:  name,
+		Items: make([]*Items, 0),
 	}
+
+	i.Items = append(i.Items, f)
 
 	return
+}
+
+// MarshalJSON returns the JSON encoding of an Item/ItemGroup.
+func (i Items) MarshalJSON() ([]byte, error) {
+
+	if i.Items != nil {
+		return json.Marshal(ItemGroup{
+			Name:                    i.Name,
+			Description:             i.Description,
+			Variables:               i.Variables,
+			Event:                   i.Event,
+			ProtocolProfileBehavior: i.ProtocolProfileBehavior,
+			Items:                   i.Items,
+			Auth:                    i.Auth,
+		})
+	}
+
+	return json.Marshal(Item{
+		Name:                    i.Name,
+		Description:             i.Description,
+		Variables:               i.Variables,
+		Event:                   i.Event,
+		ProtocolProfileBehavior: i.ProtocolProfileBehavior,
+		ID:                      i.ID,
+		Request:                 i.Request,
+		Response:                i.Response,
+	})
 }

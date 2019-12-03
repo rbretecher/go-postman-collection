@@ -22,10 +22,7 @@
         },
         {
             "name": "This is a request",
-            "request": {
-                "url": "http://www.google.fr",
-                "method": "GET"
-            }
+            "request": "http://www.google.fr"
         },
         {
             "name": "JSON-RPC Request",

@@ -26,11 +26,11 @@ func (suite *CollectionTestSuite) SetupTest() {
 			Version:     "v2.1.0",
 			Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/",
 		},
-		Items: []Items{
-			&ItemGroup{
+		Items: []*Items{
+			&Items{
 				Name: "This is a folder",
-				Items: []Items{
-					&Item{
+				Items: []*Items{
+					&Items{
 						Name: "An item inside a folder",
 					},
 				},
@@ -41,7 +41,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 					},
 				},
 			},
-			&Item{
+			&Items{
 				Name: "This is a request",
 				Request: &Request{
 					URL: &URL{
@@ -50,7 +50,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 					Method: Get,
 				},
 			},
-			&Item{
+			&Items{
 				Name: "JSON-RPC Request",
 				Request: &Request{
 					URL: &URL{
@@ -90,8 +90,9 @@ func (suite *CollectionTestSuite) SetupTest() {
 					},
 				},
 			},
-			&ItemGroup{
-				Name: "An empty folder",
+			&Items{
+				Name:  "An empty folder",
+				Items: make([]*Items, 0),
 			},
 		},
 		Variables: []*Variable{
@@ -110,26 +111,34 @@ func TestCollectionTestSuite(t *testing.T) {
 func TestCreateCollection(t *testing.T) {
 	c := CreateCollection("a-name", "a-desc")
 
-	assert.Equal(t, &Collection{
-		Info: Info{
-			Name:        "a-name",
-			Description: "a-desc",
-			Version:     "v2.1.0",
-			Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/",
+	assert.Equal(
+		t,
+		&Collection{
+			Info: Info{
+				Name:        "a-name",
+				Description: "a-desc",
+				Version:     "v2.1.0",
+				Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/",
+			},
 		},
-	}, c)
+		c,
+	)
 }
 
 func (suite *CollectionTestSuite) TestAddItemIntoCollection() {
-	suite.Collection.AddItem(&Item{Name: "Item1"})
-	suite.Collection.AddItem(&ItemGroup{Name: "Item2"})
-	suite.Collection.AddItem(&Item{Name: "Item3"})
+	suite.Collection.AddItem(&Items{Name: "Item1"})
+	suite.Collection.AddItem(&Items{Name: "Item2"})
+	suite.Collection.AddItem(&Items{Name: "Item3"})
 
-	assert.Equal(suite.T(), []Items{
-		&Item{Name: "Item1"},
-		&ItemGroup{Name: "Item2"},
-		&Item{Name: "Item3"},
-	}, suite.Collection.Items)
+	assert.Equal(
+		suite.T(),
+		[]*Items{
+			&Items{Name: "Item1"},
+			&Items{Name: "Item2"},
+			&Items{Name: "Item3"},
+		},
+		suite.Collection.Items,
+	)
 }
 
 func (suite *CollectionTestSuite) TestAddItemGroupIntoCollection() {
@@ -138,10 +147,14 @@ func (suite *CollectionTestSuite) TestAddItemGroupIntoCollection() {
 
 	if assert.NotNil(suite.T(), suite.Collection.Items) {
 
-		assert.Equal(suite.T(), []Items{
-			&ItemGroup{Name: "new-item-group"},
-			&ItemGroup{Name: "another-new-item-group"},
-		}, suite.Collection.Items)
+		assert.Equal(
+			suite.T(),
+			[]*Items{
+				&Items{Name: "new-item-group", Items: make([]*Items, 0)},
+				&Items{Name: "another-new-item-group", Items: make([]*Items, 0)},
+			},
+			suite.Collection.Items,
+		)
 	}
 }
 
@@ -165,49 +178,7 @@ func (suite *CollectionTestSuite) TestParseCollection() {
 
 		c, err := ParseCollection(file)
 
-		assert.Equal(suite.T(), tc.expectedError, err)
-		assert.Equal(suite.T(), tc.expectedCollection, c)
-	}
-}
-
-func (suite *CollectionTestSuite) TestUnmarshalJSON() {
-	cases := []struct {
-		scenario           string
-		testFile           string
-		expectedCollection *Collection
-		expectedError      error
-	}{
-		{
-			"Unmarshal valid JSON file should not return any error",
-			"testdata/basic_collection.json",
-			suite.BasicCollection,
-			nil,
-		},
-		{
-			"Unmarshal invalid JSON file should return an error",
-			"testdata/malformed_json.json",
-			&Collection{},
-			assert.AnError,
-		},
-	}
-
-	for _, tc := range cases {
-		c := new(Collection)
-
-		file, err := ioutil.ReadFile(tc.testFile)
-
-		if err != nil {
-			suite.Errorf(err, "Could not open test file", tc.scenario)
-		}
-
-		err = c.UnmarshalJSON(file)
-
-		if tc.expectedError != nil {
-			assert.Error(suite.T(), err, tc.scenario)
-		} else {
-			assert.NoError(suite.T(), err, tc.scenario)
-		}
-
+		assert.Equal(suite.T(), tc.expectedError, err, tc.scenario)
 		assert.Equal(suite.T(), tc.expectedCollection, c, tc.scenario)
 	}
 }
@@ -238,6 +209,6 @@ func (suite *CollectionTestSuite) TestWriteCollection() {
 			suite.Errorf(err, "Could not open test file")
 		}
 
-		assert.Equal(suite.T(), string(file), fmt.Sprintf("%s\n", buf.String()))
+		assert.Equal(suite.T(), string(file), fmt.Sprintf("%s\n", buf.String()), tc.scenario)
 	}
 }

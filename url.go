@@ -4,8 +4,6 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-
-	"github.com/mitchellh/mapstructure"
 )
 
 // URL is a struct that contains an URL in a "broken-down way".
@@ -21,38 +19,24 @@ type URL struct {
 	Variables []*Variable `json:"variable,omitempty" mapstructure:"variable"`
 }
 
-// Used to Marshall the URL without calling the URL.MarshalJSON function.
-type marshalledURL URL
+// mURL is used for marshalling/unmarshalling.
+type mURL URL
 
 // String returns the raw version of the URL.
 func (u URL) String() string {
 	return u.Raw
 }
 
-// An URL can be created from a map[string]interface{} or a string.
-// If a string, the string is assumed to be the Raw attribute.
-func createURLFromInterface(i interface{}) (*URL, error) {
-	switch i.(type) {
-	case string:
-		return &URL{Raw: i.(string)}, nil
-	case map[string]interface{}:
-		url := new(URL)
-		err := mapstructure.Decode(i, &url)
-		return url, err
-	default:
-		return nil, errors.New("Unsupported interface type")
-	}
-}
-
-// MarshalJSON encodes the URL as a string if it does not contain any variable.
-// In case it contains any variable, it gets marshalled as a struct.
+// MarshalJSON returns the JSON encoding of an URL.
+// It encodes the URL as a string if it does not contain any variable.
+// In case it contains any variable, it gets encoded as an object.
 func (u URL) MarshalJSON() ([]byte, error) {
 
 	if u.Variables == nil {
 		return []byte(fmt.Sprintf("\"%s\"", u.Raw)), nil
 	}
 
-	return json.Marshal(marshalledURL{
+	return json.Marshal(mURL{
 		Raw:       u.Raw,
 		Protocol:  u.Protocol,
 		Host:      u.Host,
@@ -62,4 +46,20 @@ func (u URL) MarshalJSON() ([]byte, error) {
 		Hash:      u.Hash,
 		Variables: u.Variables,
 	})
+}
+
+// UnmarshalJSON parses the JSON-encoded data and create an URL from it.
+// An URL can be created from an object or a string.
+// If a string, the value is assumed to be the Raw attribute of the URL.
+func (u *URL) UnmarshalJSON(b []byte) (err error) {
+	if b[0] == '"' {
+		u.Raw = string(b[1 : len(b)-1])
+	} else if b[0] == '{' {
+		tmp := (*mURL)(u)
+		err = json.Unmarshal(b, &tmp)
+	} else {
+		err = errors.New("Unsupported type")
+	}
+
+	return
 }

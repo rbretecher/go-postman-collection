@@ -25,24 +25,22 @@ func main() {
 	exploreItems(c.Items)
 }
 
-func exploreItems(items []postman.Items) {
+func exploreItems(items []*postman.Items) {
 	for _, i := range items {
 		if i.IsGroup() {
-			folder := i.(*postman.ItemGroup)
-			println(">", folder.Name)
-			exploreItems(folder.Items)
+			println(">", i.Name)
+			exploreItems(i.Items)
 		} else {
-			item := i.(*postman.Item)
-			if item.Request != nil {
-				println(fmt.Sprintf("[%s] - %s - %s", item.Request.Method, item.Request.URL, item.Name))
+			if i.Request != nil {
+				println(fmt.Sprintf("[%s] - %s - %s", i.Request.Method, i.Request.URL, i.Name))
 
-				if item.Request.Auth != nil {
-					for _, p := range item.Request.Auth.GetParams() {
+				if i.Request.Auth != nil {
+					for _, p := range i.Request.Auth.GetParams() {
 						println(p.Key, ":", fmt.Sprintf("%v", p.Value))
 					}
 				}
 			} else {
-				println(item.Name)
+				println(i.Name)
 			}
 		}
 	}

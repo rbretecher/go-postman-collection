@@ -1,79 +1,128 @@
 package postman
 
 import (
-	"errors"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
 )
 
 func TestIsGroup(t *testing.T) {
+
 	cases := []struct {
-		scenario       string
-		i              Items
-		expectedOutput bool
+		scenario        string
+		item            Items
+		expectedIsGroup bool
 	}{
 		{
-			"Item is not a group",
-			new(Item),
-			false,
+			"An item with Items is a group",
+			Items{
+				Name:  "a-name",
+				Items: make([]*Items, 0),
+			},
+			true,
 		},
 		{
-			"ItemGroup is a group",
-			new(ItemGroup),
-			true,
+			"An item without Items is not a group",
+			Items{
+				Name: "a-name",
+			},
+			false,
 		},
 	}
 
 	for _, tc := range cases {
-		assert.Equal(t, tc.expectedOutput, tc.i.IsGroup())
+		assert.Equal(t, tc.expectedIsGroup, tc.item.IsGroup(), tc.scenario)
 	}
 }
 
-func TestCreateItemCollection(t *testing.T) {
+func TestAddItem(t *testing.T) {
+	itemGroup := Items{
+		Name:  "A group of items",
+		Items: make([]*Items, 0),
+	}
 
+	itemGroup.AddItem(&Items{
+		Name: "A basic item",
+	})
+
+	itemGroup.AddItem(&Items{
+		Name:  "A basic group item",
+		Items: make([]*Items, 0),
+	})
+
+	assert.Equal(
+		t,
+		Items{
+			Name: "A group of items",
+			Items: []*Items{
+				&Items{
+					Name: "A basic item",
+				},
+				&Items{
+					Name:  "A basic group item",
+					Items: make([]*Items, 0),
+				},
+			},
+		},
+		itemGroup,
+	)
+}
+
+func TestAddItemGroup(t *testing.T) {
+	itemGroup := Items{
+		Name:  "A group of items",
+		Items: make([]*Items, 0),
+	}
+
+	itemGroup.AddItemGroup("an-item-group")
+	itemGroup.AddItemGroup("another-item-group")
+
+	assert.Equal(
+		t,
+		Items{
+			Name: "A group of items",
+			Items: []*Items{
+				&Items{
+					Name:  "an-item-group",
+					Items: make([]*Items, 0),
+				},
+				&Items{
+					Name:  "another-item-group",
+					Items: make([]*Items, 0),
+				},
+			},
+		},
+		itemGroup,
+	)
+}
+
+func TestItemsMarshalJSON(t *testing.T) {
 	cases := []struct {
-		scenario               string
-		i                      []interface{}
-		expectedItemCollection []Items
-		expectedError          error
+		scenario       string
+		item           Items
+		expectedOutput string
 	}{
 		{
-			"Successfully creating item collection from compatible interface",
-			[]interface{}{
-				map[string]interface{}{
-					"name": "An Item",
-				},
-				map[string]interface{}{
-					"name": "An ItemGroup",
-					"item": nil,
-				},
+			"Successfully marshalling an Item",
+			Items{
+				ID:   "a-unique-id",
+				Name: "an-item",
 			},
-			[]Items{
-				&Item{
-					Name: "An Item",
-				},
-				&ItemGroup{
-					Name: "An ItemGroup",
-				},
-			},
-			nil,
+			"{\"name\":\"an-item\",\"id\":\"a-unique-id\"}",
 		},
 		{
-			"Failed to create item collection because of an incompatible interface",
-			[]interface{}{
-				"not-a-valid-item",
-				"not-a-valid-item-group",
+			"Successfully marshalling a GroupItem",
+			Items{
+				Name:  "a-group-item",
+				Items: make([]*Items, 0),
 			},
-			nil,
-			errors.New("Unsupported interface"),
+			"{\"name\":\"a-group-item\",\"item\":[]}",
 		},
 	}
 
 	for _, tc := range cases {
-		items, err := createItemCollection(tc.i)
+		bytes, _ := tc.item.MarshalJSON()
 
-		assert.Equal(t, tc.expectedError, err, tc.scenario)
-		assert.Equal(t, tc.expectedItemCollection, items, tc.scenario)
+		assert.Equal(t, tc.expectedOutput, string(bytes), tc.scenario)
 	}
 }

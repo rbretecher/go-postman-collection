@@ -9,11 +9,11 @@ import (
 func main() {
 	c := postman.CreateCollection("Go Collection", "Awesome description")
 
-	c.AddItemGroup("This is a folder").AddItem(&postman.Item{
+	c.AddItemGroup("This is a folder").AddItem(&postman.Items{
 		Name: "An item inside a folder",
 	})
 
-	c.AddItem(&postman.Item{
+	c.AddItem(&postman.Items{
 		Name:    "This is a request",
 		Request: postman.NewRequest("http://www.google.fr", postman.Get),
 	})
@@ -35,7 +35,7 @@ func main() {
 		},
 	}
 
-	c.AddItem(&postman.Item{
+	c.AddItem(&postman.Items{
 		Name:    "JSON-RPC Request",
 		Request: r,
 	})
