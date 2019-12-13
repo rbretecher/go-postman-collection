@@ -7,7 +7,7 @@ import (
 )
 
 func main() {
-	c := postman.CreateCollection("Go Collection", "Awesome description")
+	c := postman.CreateCollection("Go Collection", "Awesome description", postman.V210)
 
 	c.AddItemGroup("This is a folder").AddItem(&postman.Items{
 		Name: "An item inside a folder",
