@@ -43,17 +43,19 @@ func TestRequestMarshalJSON(t *testing.T) {
 			Request{
 				Method: Get,
 				URL: &URL{
-					Raw: "http://www.google.fr",
+					Raw:     "http://www.google.fr",
+					version: V200,
 				},
 			},
 			"\"http://www.google.fr\"",
 		},
 		{
-			"Successfully marshalling a Request as an object",
+			"Successfully marshalling a Request as an object (v2.0.0)",
 			Request{
 				Method: Post,
 				URL: &URL{
-					Raw: "http://www.google.fr",
+					Raw:     "http://www.google.fr",
+					version: V200,
 				},
 				Body: &Body{
 					Mode: "raw",
@@ -61,6 +63,21 @@ func TestRequestMarshalJSON(t *testing.T) {
 				},
 			},
 			"{\"url\":\"http://www.google.fr\",\"method\":\"POST\",\"body\":{\"mode\":\"raw\",\"raw\":\"raw-content\"}}",
+		},
+		{
+			"Successfully marshalling a Request as an object (v2.1.0)",
+			Request{
+				Method: Post,
+				URL: &URL{
+					Raw:     "http://www.google.fr",
+					version: V210,
+				},
+				Body: &Body{
+					Mode: "raw",
+					Raw:  "raw-content",
+				},
+			},
+			"{\"url\":{\"raw\":\"http://www.google.fr\"},\"method\":\"POST\",\"body\":{\"mode\":\"raw\",\"raw\":\"raw-content\"}}",
 		},
 	}
 

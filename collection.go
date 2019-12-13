@@ -65,9 +65,32 @@ func (c *Collection) AddItemGroup(name string) (f *Items) {
 func (c *Collection) Write(w io.Writer) (err error) {
 	file, _ := json.MarshalIndent(c, "", "    ")
 
+	setVersionForItems(c.Items, c.version)
+
 	_, err = w.Write(file)
 
 	return
+}
+
+// Set the version on all structs that have a different behavior depending on the version
+func setVersionForItems(items []*Items, v version) {
+	for _, i := range items {
+		if i.Auth != nil {
+			i.Auth.setVersion(v)
+		}
+		if i.IsGroup() {
+			setVersionForItems(i.Items, v)
+		} else {
+			if i.Request != nil {
+				if i.Request.Auth != nil {
+					i.Request.Auth.setVersion(v)
+				}
+				if i.Request.URL != nil {
+					i.Request.URL.setVersion(v)
+				}
+			}
+		}
+	}
 }
 
 // ParseCollection parses the content of the provided data stream into a Collection object.

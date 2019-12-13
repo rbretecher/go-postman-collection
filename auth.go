@@ -35,17 +35,22 @@ type AuthParam struct {
 
 // Auth contains the authentication method used and its associated parameters.
 type Auth struct {
-	Type   authType     `json:"type,omitempty"`
-	APIKey []*AuthParam `json:"apikey,omitempty"`
-	AWSV4  []*AuthParam `json:"awsv4,omitempty"`
-	Basic  []*AuthParam `json:"basic,omitempty"`
-	Bearer []*AuthParam `json:"bearer,omitempty"`
-	Digest []*AuthParam `json:"digest,omitempty"`
-	Hawk   []*AuthParam `json:"hawk,omitempty"`
-	NoAuth []*AuthParam `json:"noauth,omitempty"`
-	OAuth1 []*AuthParam `json:"oauth1,omitempty"`
-	OAuth2 []*AuthParam `json:"oauth2,omitempty"`
-	NTLM   []*AuthParam `json:"ntlm,omitempty"`
+	version version
+	Type    authType     `json:"type,omitempty"`
+	APIKey  []*AuthParam `json:"apikey,omitempty"`
+	AWSV4   []*AuthParam `json:"awsv4,omitempty"`
+	Basic   []*AuthParam `json:"basic,omitempty"`
+	Bearer  []*AuthParam `json:"bearer,omitempty"`
+	Digest  []*AuthParam `json:"digest,omitempty"`
+	Hawk    []*AuthParam `json:"hawk,omitempty"`
+	NoAuth  []*AuthParam `json:"noauth,omitempty"`
+	OAuth1  []*AuthParam `json:"oauth1,omitempty"`
+	OAuth2  []*AuthParam `json:"oauth2,omitempty"`
+	NTLM    []*AuthParam `json:"ntlm,omitempty"`
+}
+
+func (a *Auth) setVersion(v version) {
+	a.version = v
 }
 
 // GetParams returns the parameters related to the authentication method in use.

@@ -96,13 +96,13 @@ req := postman.Request{
 
 Development is under progress and for now it only supports partially Postman Collection format v2.0.0/v2.1.0
 
-|  Object            | v2.0.0 | v2.1.0  |
-| ------------------ | ------ | ------- |
-| Collection         | Yes    | Yes     |
-| ItemGroup (Folder) | Yes    | Yes     |
-| Item               | Yes    | Yes     |
-| Request            | Yes    | Partial |
-| Response           | No     | No      |
-| Event              | No     | No      |
-| Variable           | Yes    | Yes     |
-| Auth               | NO     | Yes     |
+|  Object            | v2.0.0 | v2.1.0 |
+| ------------------ | ------ | ------ |
+| Collection         | Yes    | Yes    |
+| ItemGroup (Folder) | Yes    | Yes    |
+| Item               | Yes    | Yes    |
+| Request            | Yes    | Yes    |
+| Response           | No     | No     |
+| Event              | No     | No     |
+| Variable           | Yes    | Yes    |
+| Auth               | NO     | Yes    |

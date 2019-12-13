@@ -9,6 +9,7 @@ import (
 // URL is a struct that contains an URL in a "broken-down way".
 // Raw contains the complete URL.
 type URL struct {
+	version   version
 	Raw       string      `json:"raw"`
 	Protocol  string      `json:"protocol,omitempty"`
 	Host      []string    `json:"host,omitempty"`
@@ -27,12 +28,17 @@ func (u URL) String() string {
 	return u.Raw
 }
 
+func (u *URL) setVersion(v version) {
+	u.version = v
+}
+
 // MarshalJSON returns the JSON encoding of an URL.
 // It encodes the URL as a string if it does not contain any variable.
 // In case it contains any variable, it gets encoded as an object.
 func (u URL) MarshalJSON() ([]byte, error) {
 
-	if u.Variables == nil {
+	// Posmtan Collection are always objects in v2.1.0 and can also be a string in v2.0.0
+	if u.version == V200 && u.Variables == nil {
 		return []byte(fmt.Sprintf("\"%s\"", u.Raw)), nil
 	}
 

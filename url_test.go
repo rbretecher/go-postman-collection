@@ -22,16 +22,40 @@ func TestURLMarshalJSON(t *testing.T) {
 		expectedOutput string
 	}{
 		{
-			"Successfully marshalling an URL as a string",
+			"Successfully marshalling a raw URL as a string (v2.0.0)",
 			URL{
-				Raw: "http://www.google.fr",
+				Raw:     "http://www.google.fr",
+				version: V200,
 			},
 			"\"http://www.google.fr\"",
 		},
 		{
-			"Successfully marshalling an URL with variables as a struct",
+			"Successfully marshalling an URL with variables as a struct (v2.0.0)",
 			URL{
-				Raw: "http://www.google.fr",
+				Raw:     "http://www.google.fr",
+				version: V200,
+				Variables: []*Variable{
+					{
+						Name:  "a-variable",
+						Value: "an-awesome-value",
+					},
+				},
+			},
+			"{\"raw\":\"http://www.google.fr\",\"variable\":[{\"name\":\"a-variable\",\"value\":\"an-awesome-value\"}]}",
+		},
+		{
+			"Successfully marshalling a raw URL as a struct (v2.1.0)",
+			URL{
+				Raw:     "http://www.google.fr",
+				version: V210,
+			},
+			"{\"raw\":\"http://www.google.fr\"}",
+		},
+		{
+			"Successfully marshalling an URL with variables as a struct (v2.1.0)",
+			URL{
+				Raw:     "http://www.google.fr",
+				version: V210,
 				Variables: []*Variable{
 					{
 						Name:  "a-variable",
