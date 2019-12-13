@@ -6,11 +6,13 @@
 
 Go module to work with Postman Collections.
 
-This module aims to provide a simple way to work with Postman collections. Using this module, you can create collections, update them and export them into the Postman Collection format v2.1.0
+This module aims to provide a simple way to work with Postman collections. Using this module, you can create collections, update them and export them into the Postman Collection format v2 (compatible with Insomnia)
+
+Postman Collections are a group of saved requests you can organize into folders. For more information about Postman Collections, you can visit the [official documentation](https://www.getpostman.com/collection).
 
 ### Examples
 
-#### Read a Postman collection
+#### Read a Postman Collection
 
 ```go
 package main
@@ -35,7 +37,7 @@ func main() {
 }
 ```
 
-#### Create and save a Postman collection
+#### Create and save a Postman Collection
 
 ```go
 package main
@@ -69,17 +71,38 @@ func main() {
 }
 ```
 
+#### Requests
+
+```go
+// Basic request
+req := postman.NewRequest("http://www.google.fr", postman.Get)
+
+...
+
+// Complex request
+req := postman.Request{
+    URL: &postman.URL{
+        Raw: "http://www.google.fr",
+    },
+    Method: postman.Post,
+    Body: &postman.Body{
+        Mode: "raw",
+        Raw:  "{\"key\": \"value\"}",
+    },
+}
+```
+
 ### Current support
 
-Development is under progress and for now it only supports partially Postman Collection format v2.1.0
+Development is under progress and for now it only supports partially Postman Collection format v2.0.0/v2.1.0
 
-|  Object            | Supported |
-| ------------------ | --------- |
-| Collection         | Yes       |
-| ItemGroup (Folder) | Yes       |
-| Item               | Yes       |
-| Request            | Yes       |
-| Response           | No        |
-| Event              | No        |
-| Variable           | Yes       |
-| Auth               | Yes       |
+|  Object            | v2.0.0 | v2.1.0  |
+| ------------------ | ------ | ------- |
+| Collection         | Yes    | Yes     |
+| ItemGroup (Folder) | Yes    | Yes     |
+| Item               | Yes    | Yes     |
+| Request            | Yes    | Partial |
+| Response           | No     | No      |
+| Event              | No     | No      |
+| Variable           | Yes    | Yes     |
+| Auth               | NO     | Yes     |
