@@ -18,7 +18,7 @@ type CollectionTestSuite struct {
 }
 
 func (suite *CollectionTestSuite) SetupTest() {
-	suite.Collection = CreateCollection("a-name", "a-desc", V210)
+	suite.Collection = CreateCollection("Postman collection", "v2.1.0", V210)
 	suite.BasicCollection = &Collection{
 		Info: Info{
 			Name:        "Go Collection",
@@ -167,8 +167,8 @@ func (suite *CollectionTestSuite) TestParseCollection() {
 		expectedError      error
 	}{
 		{
-			"Basic collection",
-			"testdata/basic_collection.json",
+			"v2.1.0 collection",
+			"testdata/collection_v2.1.0.json",
 			suite.BasicCollection,
 			nil,
 		},
@@ -192,9 +192,9 @@ func (suite *CollectionTestSuite) TestWriteCollection() {
 		expectedError  error
 	}{
 		{
-			"Write collection struct into an io.writer",
+			"v2.1.0 collection",
 			suite.BasicCollection,
-			"testdata/basic_collection.json",
+			"testdata/collection_v2.1.0.json",
 			nil,
 		},
 	}
