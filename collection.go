@@ -63,11 +63,7 @@ func (c *Collection) AddItemGroup(name string) (f *Items) {
 
 // Write encodes the Collection struct in JSON and writes it into the provided io.Writer.
 func (c *Collection) Write(w io.Writer) (err error) {
-	file, err := json.MarshalIndent(c, "", "    ")
-
-	if err != nil {
-		return
-	}
+	file, _ := json.MarshalIndent(c, "", "    ")
 
 	_, err = w.Write(file)
 
