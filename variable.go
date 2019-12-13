@@ -1,5 +1,6 @@
 package postman
 
+// A Variable allows you to store and reuse values in your requests and scripts.
 type Variable struct {
 	ID          string `json:"id,omitempty"`
 	Key         string `json:"key,omitempty"`
