@@ -37,7 +37,7 @@ func (u *URL) setVersion(v version) {
 // In case it contains any variable, it gets encoded as an object.
 func (u URL) MarshalJSON() ([]byte, error) {
 
-	// Posmtan Collection are always objects in v2.1.0 and can also be a string in v2.0.0
+	// Postman Collection are always objects in v2.1.0 but can be strings in v2.0.0
 	if u.version == V200 && u.Variables == nil {
 		return []byte(fmt.Sprintf("\"%s\"", u.Raw)), nil
 	}
