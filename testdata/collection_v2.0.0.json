@@ -31,8 +31,7 @@
                 "auth": {
                     "type": "basic",
                     "basic": {
-                        "password": "my-password",
-                        "username": "my-username"
+                        "password": "my-password"
                     }
                 },
                 "method": "POST",

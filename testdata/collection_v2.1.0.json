@@ -53,11 +53,6 @@
                             "key": "password",
                             "value": "my-password",
                             "type": "string"
-                        },
-                        {
-                            "key": "username",
-                            "value": "my-username",
-                            "type": "string"
                         }
                     ]
                 },

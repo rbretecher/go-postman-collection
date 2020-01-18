@@ -62,10 +62,8 @@ func (suite *CollectionTestSuite) SetupTest() {
 						Basic: []*AuthParam{
 							{
 								Key:   "password",
-								Value: "my-password"},
-							{
-								Key:   "username",
-								Value: "my-username"},
+								Value: "my-password",
+							},
 						},
 					},
 					Method: Post,
@@ -152,11 +150,6 @@ func (suite *CollectionTestSuite) SetupTest() {
 							{
 								Key:   "password",
 								Value: "my-password",
-								Type:  "string",
-							},
-							{
-								Key:   "username",
-								Value: "my-username",
 								Type:  "string",
 							},
 						},
