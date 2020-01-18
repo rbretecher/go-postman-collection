@@ -13,6 +13,7 @@ func TestCreateVariable(t *testing.T) {
 			Name:  "a-name",
 			Value: "a-value",
 			Type:  "string",
-		}, CreateVariable("a-name", "a-value"),
+		},
+		CreateVariable("a-name", "a-value"),
 	)
 }
