@@ -176,8 +176,8 @@ func TestGetParams(t *testing.T) {
 			},
 		},
 		{
-			"GetParams for Oauth2",
-			Oauth2,
+			"GetParams for OAuth2",
+			OAuth2,
 			[]*AuthParam{
 				{
 					Type:  "string",
@@ -320,7 +320,7 @@ func TestAuthUnmarshalJSON(t *testing.T) {
 			"Failed to unmarshal oauth2 auth because of an unsupported format",
 			[]byte("{\"type\":\"oauth2\",\"oauth2\":\"invalid-auth-param\"}"),
 			&Auth{
-				Type: Oauth2,
+				Type: OAuth2,
 			},
 			errors.New("Unsupported type"),
 		},
@@ -524,7 +524,7 @@ func TestCreateAuth(t *testing.T) {
 		},
 		{
 			scenario: "Create oauth2 auth",
-			auth: CreateAuth(Oauth2, &AuthParam{
+			auth: CreateAuth(OAuth2, &AuthParam{
 				Key:   "a-key",
 				Value: "a-value",
 			}),

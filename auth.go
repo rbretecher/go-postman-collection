@@ -24,8 +24,8 @@ const (
 	NoAuth authType = "noauth"
 	// OAuth1 Authentication.
 	OAuth1 authType = "oauth1"
-	// Oauth2 Authentication.
-	Oauth2 authType = "oauth2"
+	// OAuth2 Authentication.
+	OAuth2 authType = "oauth2"
 	// NTLM Authentication.
 	NTLM authType = "ntlm"
 )
@@ -108,7 +108,7 @@ func (a Auth) GetParams() []*AuthParam {
 		return a.NoAuth
 	case OAuth1:
 		return a.OAuth1
-	case Oauth2:
+	case OAuth2:
 		return a.OAuth2
 	case NTLM:
 		return a.NTLM
@@ -135,7 +135,7 @@ func (a *Auth) setParams(params []*AuthParam) {
 		a.NoAuth = params
 	case OAuth1:
 		a.OAuth1 = params
-	case Oauth2:
+	case OAuth2:
 		a.OAuth2 = params
 	case NTLM:
 		a.NTLM = params

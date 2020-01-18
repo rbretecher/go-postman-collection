@@ -21,8 +21,8 @@ type Request struct {
 // mRequest is used for marshalling/unmarshalling.
 type mRequest Request
 
-// NewRequest creates a new request.
-func NewRequest(u string, m method) *Request {
+// CreateRequest creates a new request.
+func CreateRequest(u string, m method) *Request {
 	return &Request{
 		URL: &URL{
 			Raw: u,

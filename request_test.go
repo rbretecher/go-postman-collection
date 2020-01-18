@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestNewRequest(t *testing.T) {
+func TestCreateRequest(t *testing.T) {
 	cases := []struct {
 		method          method
 		url             string
@@ -26,7 +26,7 @@ func TestNewRequest(t *testing.T) {
 	}
 
 	for _, tc := range cases {
-		req := NewRequest(tc.url, tc.method)
+		req := CreateRequest(tc.url, tc.method)
 
 		assert.Equal(t, tc.expectedRequest, req)
 	}
