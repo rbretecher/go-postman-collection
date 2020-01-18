@@ -117,6 +117,31 @@ func (a Auth) GetParams() []*AuthParam {
 	return nil
 }
 
+func (a *Auth) setParams(params []*AuthParam) {
+	switch a.Type {
+	case APIKey:
+		a.APIKey = params
+	case AWSV4:
+		a.AWSV4 = params
+	case Basic:
+		a.Basic = params
+	case Bearer:
+		a.Bearer = params
+	case Digest:
+		a.Digest = params
+	case Hawk:
+		a.Hawk = params
+	case NoAuth:
+		a.NoAuth = params
+	case OAuth1:
+		a.OAuth1 = params
+	case Oauth2:
+		a.OAuth2 = params
+	case NTLM:
+		a.NTLM = params
+	}
+}
+
 // UnmarshalJSON parses the JSON-encoded data and create an Auth from it.
 // Depending on the Postman Collection version, an auth property can either be an array or an object.
 //    - v2.1.0 : Array
@@ -225,4 +250,22 @@ func authParamsToMap(authParams []*AuthParam) map[string]interface{} {
 	}
 
 	return authParamsMap
+}
+
+// CreateAuth creates a new Auth struct with the given parameters.
+func CreateAuth(a authType, params ...*AuthParam) *Auth {
+	auth := &Auth{
+		Type: a,
+	}
+	auth.setParams(params)
+	return auth
+}
+
+// CreateAuthParam creates a new AuthParam of type string.
+func CreateAuthParam(key string, value string) *AuthParam {
+	return &AuthParam{
+		Key:   key,
+		Value: value,
+		Type:  "string",
+	}
 }

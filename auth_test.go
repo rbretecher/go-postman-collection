@@ -386,3 +386,189 @@ func TestAuthMarshalJSON(t *testing.T) {
 		assert.Equal(t, tc.expectedOutput, string(bytes), tc.scenario)
 	}
 }
+
+func TestCreateAuth(t *testing.T) {
+
+	cases := []struct {
+		scenario     string
+		auth         *Auth
+		expectedAuth *Auth
+	}{
+		{
+			scenario: "Create apikey auth",
+			auth: CreateAuth(APIKey, &AuthParam{
+				Key:   "a-key",
+				Value: "a-value",
+			}),
+			expectedAuth: &Auth{
+				Type: "apikey",
+				APIKey: []*AuthParam{
+					{
+						Key:   "a-key",
+						Value: "a-value",
+					},
+				},
+			},
+		},
+		{
+			scenario: "Create awsv4 auth",
+			auth: CreateAuth(AWSV4, &AuthParam{
+				Key:   "a-key",
+				Value: "a-value",
+			}),
+			expectedAuth: &Auth{
+				Type: "awsv4",
+				AWSV4: []*AuthParam{
+					{
+						Key:   "a-key",
+						Value: "a-value",
+					},
+				},
+			},
+		},
+		{
+			scenario: "Create basic auth",
+			auth: CreateAuth(Basic, &AuthParam{
+				Key:   "a-key",
+				Value: "a-value",
+			}),
+			expectedAuth: &Auth{
+				Type: "basic",
+				Basic: []*AuthParam{
+					{
+						Key:   "a-key",
+						Value: "a-value",
+					},
+				},
+			},
+		},
+		{
+			scenario: "Create bearer auth",
+			auth: CreateAuth(Bearer, &AuthParam{
+				Key:   "a-key",
+				Value: "a-value",
+			}),
+			expectedAuth: &Auth{
+				Type: "bearer",
+				Bearer: []*AuthParam{
+					{
+						Key:   "a-key",
+						Value: "a-value",
+					},
+				},
+			},
+		},
+		{
+			scenario: "Create digest auth",
+			auth: CreateAuth(Digest, &AuthParam{
+				Key:   "a-key",
+				Value: "a-value",
+			}),
+			expectedAuth: &Auth{
+				Type: "digest",
+				Digest: []*AuthParam{
+					{
+						Key:   "a-key",
+						Value: "a-value",
+					},
+				},
+			},
+		},
+		{
+			scenario: "Create hawk auth",
+			auth: CreateAuth(Hawk, &AuthParam{
+				Key:   "a-key",
+				Value: "a-value",
+			}),
+			expectedAuth: &Auth{
+				Type: "hawk",
+				Hawk: []*AuthParam{
+					{
+						Key:   "a-key",
+						Value: "a-value",
+					},
+				},
+			},
+		},
+		{
+			scenario: "Create noauth auth",
+			auth: CreateAuth(NoAuth, &AuthParam{
+				Key:   "a-key",
+				Value: "a-value",
+			}),
+			expectedAuth: &Auth{
+				Type: "noauth",
+				NoAuth: []*AuthParam{
+					{
+						Key:   "a-key",
+						Value: "a-value",
+					},
+				},
+			},
+		},
+		{
+			scenario: "Create oauth1 auth",
+			auth: CreateAuth(OAuth1, &AuthParam{
+				Key:   "a-key",
+				Value: "a-value",
+			}),
+			expectedAuth: &Auth{
+				Type: "oauth1",
+				OAuth1: []*AuthParam{
+					{
+						Key:   "a-key",
+						Value: "a-value",
+					},
+				},
+			},
+		},
+		{
+			scenario: "Create oauth2 auth",
+			auth: CreateAuth(Oauth2, &AuthParam{
+				Key:   "a-key",
+				Value: "a-value",
+			}),
+			expectedAuth: &Auth{
+				Type: "oauth2",
+				OAuth2: []*AuthParam{
+					{
+						Key:   "a-key",
+						Value: "a-value",
+					},
+				},
+			},
+		},
+		{
+			scenario: "Create ntlm auth",
+			auth: CreateAuth(NTLM, &AuthParam{
+				Key:   "a-key",
+				Value: "a-value",
+			}),
+			expectedAuth: &Auth{
+				Type: "ntlm",
+				NTLM: []*AuthParam{
+					{
+						Key:   "a-key",
+						Value: "a-value",
+					},
+				},
+			},
+		},
+	}
+
+	for _, tc := range cases {
+		assert.Equal(t, tc.expectedAuth, tc.auth, tc.scenario)
+	}
+}
+
+func TestCreateAuthParam(t *testing.T) {
+	assert.Equal(
+		t,
+		&AuthParam{
+			Key:   "key",
+			Value: "value",
+			Type:  "string",
+		},
+		CreateAuthParam("key", "value"),
+	)
+}

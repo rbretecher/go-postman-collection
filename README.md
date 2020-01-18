@@ -112,9 +112,18 @@ req := postman.Request{
 }
 ```
 
+### Auth
+
+`Auth` can be added to a `Request` or an `ItemGroup`.
+
+```go
+// Create basic auth with username and password
+auth := postman.CreateAuth(postman.Basic, postman.CreateAuthParam("username", "password"))
+```
+
 ## Current support
 
-Development is under progress and for now it only supports partially Postman Collection format v2.0.0/v2.1.0
+For now, it does not offer support for `Response` and `Event` objects. Feel free to submit a pull request if you want to add support for one of those objects.
 
 |  Object            | v2.0.0 | v2.1.0 |
 | ------------------ | ------ | ------ |
