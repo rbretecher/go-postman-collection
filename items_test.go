@@ -55,10 +55,10 @@ func TestAddItem(t *testing.T) {
 		Items{
 			Name: "A group of items",
 			Items: []*Items{
-				&Items{
+				{
 					Name: "A basic item",
 				},
-				&Items{
+				{
 					Name:  "A basic group item",
 					Items: make([]*Items, 0),
 				},
@@ -82,11 +82,11 @@ func TestAddItemGroup(t *testing.T) {
 		Items{
 			Name: "A group of items",
 			Items: []*Items{
-				&Items{
+				{
 					Name:  "an-item-group",
 					Items: make([]*Items, 0),
 				},
-				&Items{
+				{
 					Name:  "another-item-group",
 					Items: make([]*Items, 0),
 				},

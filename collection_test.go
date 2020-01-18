@@ -28,10 +28,10 @@ func (suite *CollectionTestSuite) SetupTest() {
 			Schema:      "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		},
 		Items: []*Items{
-			&Items{
+			{
 				Name: "This is a folder",
 				Items: []*Items{
-					&Items{
+					{
 						Name: "An item inside a folder",
 					},
 				},
@@ -42,7 +42,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 					},
 				},
 			},
-			&Items{
+			{
 				Name: "This is a request",
 				Request: &Request{
 					URL: &URL{
@@ -51,7 +51,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 					Method: Get,
 				},
 			},
-			&Items{
+			{
 				Name: "JSON-RPC Request",
 				Request: &Request{
 					URL: &URL{
@@ -81,7 +81,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 					},
 				},
 			},
-			&Items{
+			{
 				Name:  "An empty folder",
 				Items: make([]*Items, 0),
 			},
@@ -101,10 +101,10 @@ func (suite *CollectionTestSuite) SetupTest() {
 			Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		},
 		Items: []*Items{
-			&Items{
+			{
 				Name: "This is a folder",
 				Items: []*Items{
-					&Items{
+					{
 						Name: "An item inside a folder",
 					},
 				},
@@ -115,7 +115,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 					},
 				},
 			},
-			&Items{
+			{
 				Name: "This is a request",
 				Request: &Request{
 					URL: &URL{
@@ -124,7 +124,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 					Method: Get,
 				},
 			},
-			&Items{
+			{
 				Name: "JSON-RPC Request",
 				Request: &Request{
 					URL: &URL{
@@ -164,7 +164,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 					},
 				},
 			},
-			&Items{
+			{
 				Name:  "An empty folder",
 				Items: make([]*Items, 0),
 			},
@@ -205,9 +205,9 @@ func (suite *CollectionTestSuite) TestAddItemIntoCollection() {
 	assert.Equal(
 		suite.T(),
 		[]*Items{
-			&Items{Name: "Item1"},
-			&Items{Name: "Item2"},
-			&Items{Name: "Item3"},
+			{Name: "Item1"},
+			{Name: "Item2"},
+			{Name: "Item3"},
 		},
 		suite.Collection.Items,
 	)
@@ -222,8 +222,8 @@ func (suite *CollectionTestSuite) TestAddItemGroupIntoCollection() {
 		assert.Equal(
 			suite.T(),
 			[]*Items{
-				&Items{Name: "new-item-group", Items: make([]*Items, 0)},
-				&Items{Name: "another-new-item-group", Items: make([]*Items, 0)},
+				{Name: "new-item-group", Items: make([]*Items, 0)},
+				{Name: "another-new-item-group", Items: make([]*Items, 0)},
 			},
 			suite.Collection.Items,
 		)
