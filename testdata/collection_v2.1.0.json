@@ -18,7 +18,17 @@
                 {
                     "name": "An item inside a folder"
                 }
-            ]
+            ],
+            "auth": {
+                "type": "bearer",
+                "bearer": [
+                    {
+                        "key": "token",
+                        "value": "a-bearer-token",
+                        "type": "string"
+                    }
+                ]
+            }
         },
         {
             "name": "This is a request",

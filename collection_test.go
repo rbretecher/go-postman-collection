@@ -114,6 +114,16 @@ func (suite *CollectionTestSuite) SetupTest() {
 						Value: "abcd1234",
 					},
 				},
+				Auth: &Auth{
+					Type: Bearer,
+					Bearer: []*AuthParam{
+						{
+							Key:   "token",
+							Value: "a-bearer-token",
+							Type:  "string",
+						},
+					},
+				},
 			},
 			{
 				Name: "This is a request",
