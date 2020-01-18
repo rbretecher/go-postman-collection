@@ -93,7 +93,9 @@ folder := postman.CreateItemGroup(postman.ItemGroup{
 folder.AddItem(item)
 ```
 
-### Requests
+### Request
+
+Part of the `Item`, a `Request` represents an HTTP request.
 
 ```go
 // Basic request
