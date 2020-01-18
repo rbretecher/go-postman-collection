@@ -1,0 +1,62 @@
+{
+    "info": {
+        "name": "Go Collection",
+        "description": "Awesome description",
+        "version": "v2.0.0",
+        "schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+    },
+    "item": [
+        {
+            "name": "This is a folder",
+            "variable": [
+                {
+                    "name": "api-key",
+                    "value": "abcd1234"
+                }
+            ],
+            "item": [
+                {
+                    "name": "An item inside a folder"
+                }
+            ]
+        },
+        {
+            "name": "This is a request",
+            "request": "http://www.google.fr"
+        },
+        {
+            "name": "JSON-RPC Request",
+            "request": {
+                "url": "https://gurujsonrpc.appspot.com/guru",
+                "auth": {
+                    "type": "basic",
+                    "basic": {
+                        "password": "my-password",
+                        "username": "my-username"
+                    }
+                },
+                "method": "POST",
+                "header": [
+                    {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                    }
+                ],
+                "body": {
+                    "mode": "raw",
+                    "raw": "{\"aKey\":\"a-value\"}"
+                }
+            }
+        },
+        {
+            "name": "An empty folder",
+            "item": []
+        }
+    ],
+    "variable": [
+        {
+            "name": "a-global-collection-variable",
+            "value": "a-global-value"
+        }
+    ]
+}

@@ -13,13 +13,87 @@ import (
 
 type CollectionTestSuite struct {
 	suite.Suite
-	Collection      *Collection
-	BasicCollection *Collection
+	Collection     *Collection
+	V200Collection *Collection
+	V210Collection *Collection
 }
 
 func (suite *CollectionTestSuite) SetupTest() {
-	suite.Collection = CreateCollection("Postman collection", "v2.1.0", V210)
-	suite.BasicCollection = &Collection{
+	suite.Collection = CreateCollection("Postman collection", "v2.1.0")
+	suite.V200Collection = &Collection{
+		Info: Info{
+			Name:        "Go Collection",
+			Description: "Awesome description",
+			Version:     "v2.0.0",
+			Schema:      "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+		},
+		Items: []*Items{
+			&Items{
+				Name: "This is a folder",
+				Items: []*Items{
+					&Items{
+						Name: "An item inside a folder",
+					},
+				},
+				Variables: []*Variable{
+					{
+						Name:  "api-key",
+						Value: "abcd1234",
+					},
+				},
+			},
+			&Items{
+				Name: "This is a request",
+				Request: &Request{
+					URL: &URL{
+						Raw: "http://www.google.fr",
+					},
+					Method: Get,
+				},
+			},
+			&Items{
+				Name: "JSON-RPC Request",
+				Request: &Request{
+					URL: &URL{
+						Raw: "https://gurujsonrpc.appspot.com/guru",
+					},
+					Auth: &Auth{
+						Type: Basic,
+						Basic: []*AuthParam{
+							{
+								Key:   "password",
+								Value: "my-password"},
+							{
+								Key:   "username",
+								Value: "my-username"},
+						},
+					},
+					Method: Post,
+					Header: []*Header{
+						{
+							Key:   "Content-Type",
+							Value: "application/json",
+						},
+					},
+					Body: &Body{
+						Mode: "raw",
+						Raw:  "{\"aKey\":\"a-value\"}",
+					},
+				},
+			},
+			&Items{
+				Name:  "An empty folder",
+				Items: make([]*Items, 0),
+			},
+		},
+		Variables: []*Variable{
+			{
+				Name:  "a-global-collection-variable",
+				Value: "a-global-value",
+			},
+		},
+	}
+	suite.V210Collection = &Collection{
 		Info: Info{
 			Name:        "Go Collection",
 			Description: "Awesome description",
@@ -109,17 +183,14 @@ func TestCollectionTestSuite(t *testing.T) {
 }
 
 func TestCreateCollection(t *testing.T) {
-	c := CreateCollection("a-name", "a-desc", V210)
+	c := CreateCollection("a-name", "a-desc")
 
 	assert.Equal(
 		t,
 		&Collection{
-			version: V210,
 			Info: Info{
 				Name:        "a-name",
 				Description: "a-desc",
-				Version:     "v2.1.0",
-				Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 			},
 		},
 		c,
@@ -167,9 +238,15 @@ func (suite *CollectionTestSuite) TestParseCollection() {
 		expectedError      error
 	}{
 		{
+			"v2.0.0 collection",
+			"testdata/collection_v2.0.0.json",
+			suite.V200Collection,
+			nil,
+		},
+		{
 			"v2.1.0 collection",
 			"testdata/collection_v2.1.0.json",
-			suite.BasicCollection,
+			suite.V210Collection,
 			nil,
 		},
 	}
@@ -193,7 +270,7 @@ func (suite *CollectionTestSuite) TestWriteCollection() {
 	}{
 		{
 			"v2.1.0 collection",
-			suite.BasicCollection,
+			suite.V210Collection,
 			"testdata/collection_v2.1.0.json",
 			nil,
 		},
@@ -202,7 +279,7 @@ func (suite *CollectionTestSuite) TestWriteCollection() {
 	for _, tc := range cases {
 		var buf bytes.Buffer
 
-		tc.testCollection.Write(&buf)
+		tc.testCollection.Write(&buf, V210)
 
 		file, err := ioutil.ReadFile(tc.expectedFile)
 

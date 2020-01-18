@@ -25,21 +25,17 @@ type Info struct {
 
 // Collection represents a Postman Collection.
 type Collection struct {
-	version   version
 	Info      Info        `json:"info"`
 	Items     []*Items    `json:"item"`
 	Variables []*Variable `json:"variable,omitempty"`
 }
 
 // CreateCollection returns a new Collection.
-func CreateCollection(name string, desc string, v version) *Collection {
+func CreateCollection(name string, desc string) *Collection {
 	return &Collection{
-		version: v,
 		Info: Info{
 			Name:        name,
-			Version:     string(v),
 			Description: desc,
-			Schema:      fmt.Sprintf("https://schema.getpostman.com/json/collection/%s/collection.json", string(v)),
 		},
 	}
 }
@@ -62,17 +58,19 @@ func (c *Collection) AddItemGroup(name string) (f *Items) {
 }
 
 // Write encodes the Collection struct in JSON and writes it into the provided io.Writer.
-func (c *Collection) Write(w io.Writer) (err error) {
-	file, _ := json.MarshalIndent(c, "", "    ")
+func (c *Collection) Write(w io.Writer, v version) (err error) {
 
-	setVersionForItems(c.Items, c.version)
+	c.Info.Schema = fmt.Sprintf("https://schema.getpostman.com/json/collection/%s/collection.json", string(v))
+	setVersionForItems(c.Items, v)
+
+	file, _ := json.MarshalIndent(c, "", "    ")
 
 	_, err = w.Write(file)
 
 	return
 }
 
-// Set the version on all structs that have a different behavior depending on the version
+// Set the version on all structs that have a different behavior depending on the Postman Collection version.
 func setVersionForItems(items []*Items, v version) {
 	for _, i := range items {
 		if i.Auth != nil {

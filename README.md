@@ -105,4 +105,4 @@ Development is under progress and for now it only supports partially Postman Col
 | Response           | No     | No     |
 | Event              | No     | No     |
 | Variable           | Yes    | Yes    |
-| Auth               | NO     | Yes    |
+| Auth               | Yes    | Yes    |
