@@ -126,3 +126,97 @@ func TestItemsMarshalJSON(t *testing.T) {
 		assert.Equal(t, tc.expectedOutput, string(bytes), tc.scenario)
 	}
 }
+
+func TestCreateItem(t *testing.T) {
+	c := CreateItem(Item{
+		Name:        "An item",
+		Description: "A description",
+		Variables: []*Variable{
+			{
+				Name:  "variable-name",
+				Value: "variable-value",
+			},
+		},
+		Event:                   "an-event",
+		ProtocolProfileBehavior: "a-protocol-profile-behavior",
+		ID:                      "an-id",
+		Request: &Request{
+			URL: &URL{
+				Raw: "http://www.google.fr",
+			},
+		},
+		Response: "a-response",
+	})
+
+	assert.Equal(
+		t,
+		&Items{
+			Name:        "An item",
+			Description: "A description",
+			Variables: []*Variable{
+				{
+					Name:  "variable-name",
+					Value: "variable-value",
+				},
+			},
+			Event:                   "an-event",
+			ProtocolProfileBehavior: "a-protocol-profile-behavior",
+			ID:                      "an-id",
+			Request: &Request{
+				URL: &URL{
+					Raw: "http://www.google.fr",
+				},
+			},
+			Response: "a-response",
+		},
+		c,
+	)
+}
+
+func TestCreateItemGroup(t *testing.T) {
+	c := CreateItemGroup(ItemGroup{
+		Name:        "An item",
+		Description: "A description",
+		Variables: []*Variable{
+			{
+				Name:  "variable-name",
+				Value: "variable-value",
+			},
+		},
+		Event:                   "an-event",
+		ProtocolProfileBehavior: "a-protocol-profile-behavior",
+		Items: []*Items{
+			{
+				Name: "An item",
+			},
+		},
+		Auth: &Auth{
+			Type: Basic,
+		},
+	})
+
+	assert.Equal(
+		t,
+		&Items{
+			Name:        "An item",
+			Description: "A description",
+			Variables: []*Variable{
+				{
+					Name:  "variable-name",
+					Value: "variable-value",
+				},
+			},
+			Event:                   "an-event",
+			ProtocolProfileBehavior: "a-protocol-profile-behavior",
+			Items: []*Items{
+				{
+					Name: "An item",
+				},
+			},
+			Auth: &Auth{
+				Type: Basic,
+			},
+		},
+		c,
+	)
+}

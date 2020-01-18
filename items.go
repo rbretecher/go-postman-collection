@@ -43,6 +43,33 @@ type ItemGroup struct {
 	Auth                    *Auth       `json:"auth,omitempty"`
 }
 
+// CreateItem is a helper to create a new Item.
+func CreateItem(i Item) *Items {
+	return &Items{
+		Name:                    i.Name,
+		Description:             i.Description,
+		Variables:               i.Variables,
+		Event:                   i.Event,
+		ProtocolProfileBehavior: i.ProtocolProfileBehavior,
+		ID:                      i.ID,
+		Request:                 i.Request,
+		Response:                i.Response,
+	}
+}
+
+// CreateItemGroup is a helper to create a new ItemGroup.
+func CreateItemGroup(ig ItemGroup) *Items {
+	return &Items{
+		Name:                    ig.Name,
+		Description:             ig.Description,
+		Variables:               ig.Variables,
+		Event:                   ig.Event,
+		ProtocolProfileBehavior: ig.ProtocolProfileBehavior,
+		Items:                   ig.Items,
+		Auth:                    ig.Auth,
+	}
+}
+
 // IsGroup returns false as an Item is not a group.
 func (i Items) IsGroup() bool {
 	if i.Items != nil {

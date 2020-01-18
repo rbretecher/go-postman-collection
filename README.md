@@ -10,7 +10,9 @@ This module aims to provide a simple way to work with Postman collections. Using
 
 Postman Collections are a group of saved requests you can organize into folders. For more information about Postman Collections, you can visit the [official documentation](https://www.getpostman.com/collection).
 
-### Examples
+## Examples
+
+### Collections
 
 #### Read a Postman Collection
 
@@ -71,13 +73,31 @@ func main() {
 }
 ```
 
-#### Requests
+### Items
+
+`Items` are the basic unit for a Postman collection, it can either be a request (`Item`) or a folder (`ItemGroup`).
+
+```go
+// Create a simple item.
+item := postman.CreateItem(postman.Item{
+    Name:    "A basic request",
+    Request: postman.NewRequest("http://www.google.fr", postman.Get),
+})
+
+// Create a simple folder.
+folder := postman.CreateItemGroup(postman.ItemGroup{
+    Name: "A folder",
+})
+
+// Add the item to the folder
+folder.AddItem(item)
+```
+
+### Requests
 
 ```go
 // Basic request
 req := postman.NewRequest("http://www.google.fr", postman.Get)
-
-...
 
 // Complex request
 req := postman.Request{
@@ -92,7 +112,7 @@ req := postman.Request{
 }
 ```
 
-### Current support
+## Current support
 
 Development is under progress and for now it only supports partially Postman Collection format v2.0.0/v2.1.0
 
