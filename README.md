@@ -123,6 +123,14 @@ req := postman.Request{
 auth := postman.CreateAuth(postman.Basic, postman.CreateAuthParam("username", "password"))
 ```
 
+### Variable
+
+`Variable` can be added to `Collection`, `Item`, `ItemGroup` and `URL`.
+
+```go
+v := postman.CreateVariable("env", "prod")
+```
+
 ## Current support
 
 For now, it does not offer support for `Response` and `Event` objects. Feel free to submit a pull request if you want to add support for one of those objects.

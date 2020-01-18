@@ -11,3 +11,12 @@ type Variable struct {
 	System      bool   `json:"system,omitempty"`
 	Disabled    bool   `json:"disabled,omitempty"`
 }
+
+// CreateVariable creates a new Variable of type string.
+func CreateVariable(name string, value string) *Variable {
+	return &Variable{
+		Name:  name,
+		Value: value,
+		Type:  "string",
+	}
+}
