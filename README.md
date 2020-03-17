@@ -1,5 +1,6 @@
 # go-postman-collection
 
+[![Mentioned in Awesome Go](https://awesome.re/mentioned-badge.svg)](https://github.com/avelino/awesome-go)
 [![GoDoc](https://img.shields.io/badge/godoc-reference-blue.svg)](https://godoc.org/github.com/rbretecher/go-postman-collection)
 [![Build Status](https://travis-ci.org/rbretecher/go-postman-collection.svg?branch=master)](https://travis-ci.org/rbretecher/go-postman-collection)
 [![Report](https://goreportcard.com/badge/github.com/rbretecher/go-postman-collection)](https://goreportcard.com/report/github.com/rbretecher/go-postman-collection)
