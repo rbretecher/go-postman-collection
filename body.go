@@ -9,4 +9,10 @@ type Body struct {
 	File       interface{} `json:"file,omitempty"`
 	GraphQL    interface{} `json:"graphql,omitempty"`
 	Disabled   bool        `json:"disabled,omitempty"`
+	Options    Raw         `json:"options,omitempty"`
+}
+
+//Raw represents the data of options->language in postman
+type Raw struct {
+	Raw interface{} `json:"raw,omitempty"`
 }
