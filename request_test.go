@@ -66,7 +66,7 @@ func TestRequestMarshalJSON(t *testing.T) {
 				Body: &Body{
 					Mode:    "raw",
 					Raw:     "raw-content",
-					Options: Raw{map[string]interface{}{"language": "json"}},
+					Options: BodyOptions{BodyOptionsRaw{Language: "json"}},
 				},
 			},
 			"{\"url\":\"http://www.google.fr\",\"method\":\"POST\",\"body\":{\"mode\":\"raw\",\"raw\":\"raw-content\",\"options\":{\"raw\":{\"language\":\"json\"}}}}",
@@ -84,7 +84,7 @@ func TestRequestMarshalJSON(t *testing.T) {
 					Raw:  "raw-content",
 				},
 			},
-			"{\"url\":{\"raw\":\"http://www.google.fr\"},\"method\":\"POST\",\"body\":{\"mode\":\"raw\",\"raw\":\"raw-content\"}}",
+			"{\"url\":{\"raw\":\"http://www.google.fr\"},\"method\":\"POST\",\"body\":{\"mode\":\"raw\",\"raw\":\"raw-content\"qq}}",
 		},
 	}
 
@@ -160,7 +160,7 @@ func TestSimplePOSTItem(t *testing.T) {
 		Host:     []string{"test", "com"},
 	}
 
-	headers := []*Header{&Header{
+	headers := []*Header{{
 		Key:   "h1",
 		Value: "h1-value",
 	}}
@@ -168,7 +168,7 @@ func TestSimplePOSTItem(t *testing.T) {
 	pBody := Body{
 		Mode:    "raw",
 		Raw:     "{\"a\":\"1234\",\"b\":123}",
-		Options: Raw{map[string]interface{}{"language": "json"}},
+		Options: BodyOptions{BodyOptionsRaw{Language: "json"}},
 	}
 
 	pReq := Request{

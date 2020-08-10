@@ -1,5 +1,14 @@
 package postman
 
+//This const represents the language options->language in postman
+const (
+	HTML       string = "html"
+	Javascript string = "javascript"
+	JSON       string = "json"
+	Text       string = "text"
+	XML        string = "xml"
+)
+
 // Body represents the data usually contained in the request body.
 type Body struct {
 	Mode       string      `json:"mode"`
@@ -9,10 +18,15 @@ type Body struct {
 	File       interface{} `json:"file,omitempty"`
 	GraphQL    interface{} `json:"graphql,omitempty"`
 	Disabled   bool        `json:"disabled,omitempty"`
-	Options    Raw         `json:"options,omitempty"`
+	Options    BodyOptions `json:"options,omitempty"`
 }
 
-//Raw represents the data of options->language in postman
-type Raw struct {
-	Raw interface{} `json:"raw,omitempty"`
+//BodyOptions represents body raw language option in postman
+type BodyOptions struct {
+	Raw BodyOptionsRaw `json:"raw,omitempty"`
+}
+
+//BodyOptionsRaw represents the acutal language to use in postman. (See possible options in the cost above)
+type BodyOptionsRaw struct {
+	Language string `json:"language,omitempty"`
 }
