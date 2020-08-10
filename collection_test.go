@@ -74,9 +74,9 @@ func (suite *CollectionTestSuite) SetupTest() {
 						},
 					},
 					Body: &Body{
-						Mode: "raw",
-						Raw:  "{\"aKey\":\"a-value\"}",
-						//						Options: Raw{map[string]interface{}{"language": "json"}},
+						Mode:    "raw",
+						Raw:     "{\"aKey\":\"a-value\"}",
+						Options: BodyOptions{BodyOptionsRaw{Language: "json"}},
 					},
 				},
 			},
@@ -248,12 +248,12 @@ func (suite *CollectionTestSuite) TestParseCollection() {
 			suite.V200Collection,
 			nil,
 		},
-		// {
-		// 	"v2.1.0 collection",
-		// 	"testdata/collection_v2.1.0.json",
-		// 	suite.V210Collection,
-		// 	nil,
-		// },
+		{
+			"v2.1.0 collection",
+			"testdata/collection_v2.1.0.json",
+			suite.V210Collection,
+			nil,
+		},
 	}
 
 	for _, tc := range cases {

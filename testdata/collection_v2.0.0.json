@@ -44,11 +44,7 @@
                 "body": {
                     "mode": "raw",
                     "raw": "{\"aKey\":\"a-value\"}",
-                    "options": {
-                        "raw": {
-                            "language": "json"
-                        }
-                    }
+                    "options": "{\"raw\": {\"language\": \"json\"}"
                 }
             }
         },
