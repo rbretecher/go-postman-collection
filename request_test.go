@@ -2,7 +2,6 @@ package postman
 
 import (
 	"errors"
-	"os"
 	"testing"
 
 	"github.com/stretchr/testify/assert"
@@ -66,7 +65,7 @@ func TestRequestMarshalJSON(t *testing.T) {
 				Body: &Body{
 					Mode:    "raw",
 					Raw:     "raw-content",
-					Options: BodyOptions{BodyOptionsRaw{Language: "json"}},
+					Options: &BodyOptions{BodyOptionsRaw{Language: "json"}},
 				},
 			},
 			"{\"url\":\"http://www.google.fr\",\"method\":\"POST\",\"body\":{\"mode\":\"raw\",\"raw\":\"raw-content\",\"options\":{\"raw\":{\"language\":\"json\"}}}}",
@@ -84,7 +83,7 @@ func TestRequestMarshalJSON(t *testing.T) {
 					Raw:  "raw-content",
 				},
 			},
-			"{\"url\":{\"raw\":\"http://www.google.fr\"},\"method\":\"POST\",\"body\":{\"mode\":\"raw\",\"raw\":\"raw-content\"qq}}",
+			"{\"url\":{\"raw\":\"http://www.google.fr\"},\"method\":\"POST\",\"body\":{\"mode\":\"raw\",\"raw\":\"raw-content\"}}",
 		},
 	}
 
@@ -143,111 +142,4 @@ func TestRequestUnmarshalJSON(t *testing.T) {
 		assert.Equal(t, tc.expectedRequest, r, tc.scenario)
 		assert.Equal(t, tc.expectedError, err, tc.scenario)
 	}
-}
-
-func TestSimplePOSTItem(t *testing.T) {
-	c := CreateCollection("Test Collection", "My Test Collection")
-
-	file, err := os.Create("postman_collection.json")
-	assert.Nil(t, err)
-	assert.NotNil(t, file)
-
-	defer file.Close()
-
-	pURL := URL{
-		Raw:      "https://test.com",
-		Protocol: "https",
-		Host:     []string{"test", "com"},
-	}
-
-	headers := []*Header{{
-		Key:   "h1",
-		Value: "h1-value",
-	}}
-
-	pBody := Body{
-		Mode:    "raw",
-		Raw:     "{\"a\":\"1234\",\"b\":123}",
-		Options: BodyOptions{BodyOptionsRaw{Language: "json"}},
-	}
-
-	pReq := Request{
-		Method: Post,
-		URL:    &pURL,
-		Header: headers,
-		Body:   &pBody,
-	}
-
-	cr := Request{
-		Method: Post,
-		URL:    &pURL,
-		Header: pReq.Header,
-		Body:   pReq.Body,
-	}
-
-	item := CreateItem(Item{
-		Name:    "Test-POST",
-		Request: &cr,
-	})
-
-	c.AddItemGroup("grp1").AddItem(item)
-
-	err = c.Write(file, V210)
-	assert.Nil(t, err)
-
-	err = os.Remove("postman_collection.json")
-	assert.Nil(t, err)
-}
-
-func TestSimpleGETItem(t *testing.T) {
-	c := CreateCollection("Test Collection", "My Test Collection")
-
-	file, err := os.Create("postman_collection.json")
-	assert.Nil(t, err)
-	assert.NotNil(t, file)
-
-	defer file.Close()
-
-	m1 := map[string]interface{}{"key": "param1", "value": "value1"}
-	m2 := map[string]interface{}{"key": "param2", "value": "value2"}
-
-	var arrMaps []map[string]interface{}
-	arrMaps = append(arrMaps, m1)
-	arrMaps = append(arrMaps, m2)
-
-	pURL := URL{
-		Raw:      "https://test.com?a=3",
-		Protocol: "https",
-		Host:     []string{"test", "com"},
-		Query:    arrMaps,
-	}
-
-	headers := []*Header{}
-	headers = append(headers, &Header{
-		Key:   "h1",
-		Value: "h1-value",
-	})
-	headers = append(headers, &Header{
-		Key:   "h2",
-		Value: "h2-value",
-	})
-
-	pReq := Request{
-		Method: Get,
-		URL:    &pURL,
-		Header: headers,
-	}
-
-	item := CreateItem(Item{
-		Name:    "Test-GET",
-		Request: &pReq,
-	})
-
-	c.AddItemGroup("grp1").AddItem(item)
-
-	err = c.Write(file, V210)
-	assert.Nil(t, err)
-
-	err = os.Remove("postman_collection.json")
-	assert.Nil(t, err)
 }

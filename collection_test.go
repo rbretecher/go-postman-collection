@@ -76,7 +76,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 					Body: &Body{
 						Mode:    "raw",
 						Raw:     "{\"aKey\":\"a-value\"}",
-						Options: BodyOptions{BodyOptionsRaw{Language: "json"}},
+						Options: &BodyOptions{BodyOptionsRaw{Language: "json"}},
 					},
 				},
 			},
@@ -165,7 +165,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 					Body: &Body{
 						Mode:    "raw",
 						Raw:     "{\"aKey\":\"a-value\"}",
-						Options: BodyOptions{BodyOptionsRaw{Language: "json"}},
+						Options: &BodyOptions{BodyOptionsRaw{Language: "json"}},
 					},
 				},
 			},
@@ -293,4 +293,111 @@ func (suite *CollectionTestSuite) TestWriteCollection() {
 
 		assert.Equal(suite.T(), string(file), fmt.Sprintf("%s\n", buf.String()), tc.scenario)
 	}
+}
+
+func (suite *CollectionTestSuite) TestSimplePOSTItem() {
+	c := CreateCollection("Test Collection", "My Test Collection")
+
+	file, err := os.Create("postman_collection.json")
+	assert.Nil(suite.T(), err)
+	assert.NotNil(suite.T(), file)
+
+	defer file.Close()
+
+	pURL := URL{
+		Raw:      "https://test.com",
+		Protocol: "https",
+		Host:     []string{"test", "com"},
+	}
+
+	headers := []*Header{{
+		Key:   "h1",
+		Value: "h1-value",
+	}}
+
+	pBody := Body{
+		Mode:    "raw",
+		Raw:     "{\"a\":\"1234\",\"b\":123}",
+		Options: &BodyOptions{BodyOptionsRaw{Language: "json"}},
+	}
+
+	pReq := Request{
+		Method: Post,
+		URL:    &pURL,
+		Header: headers,
+		Body:   &pBody,
+	}
+
+	cr := Request{
+		Method: Post,
+		URL:    &pURL,
+		Header: pReq.Header,
+		Body:   pReq.Body,
+	}
+
+	item := CreateItem(Item{
+		Name:    "Test-POST",
+		Request: &cr,
+	})
+
+	c.AddItemGroup("grp1").AddItem(item)
+
+	err = c.Write(file, V210)
+	assert.Nil(suite.T(), err)
+
+	err = os.Remove("postman_collection.json")
+	assert.Nil(suite.T(), err)
+}
+
+func (suite *CollectionTestSuite) TestSimpleGETItem() {
+	c := CreateCollection("Test Collection", "My Test Collection")
+
+	file, err := os.Create("postman_collection.json")
+	assert.Nil(suite.T(), err)
+	assert.NotNil(suite.T(), file)
+
+	defer file.Close()
+
+	m1 := map[string]interface{}{"key": "param1", "value": "value1"}
+	m2 := map[string]interface{}{"key": "param2", "value": "value2"}
+
+	var arrMaps []map[string]interface{}
+	arrMaps = append(arrMaps, m1)
+	arrMaps = append(arrMaps, m2)
+
+	pURL := URL{
+		Raw:      "https://test.com?a=3",
+		Protocol: "https",
+		Host:     []string{"test", "com"},
+		Query:    arrMaps,
+	}
+
+	headers := []*Header{}
+	headers = append(headers, &Header{
+		Key:   "h1",
+		Value: "h1-value",
+	})
+	headers = append(headers, &Header{
+		Key:   "h2",
+		Value: "h2-value",
+	})
+
+	pReq := Request{
+		Method: Get,
+		URL:    &pURL,
+		Header: headers,
+	}
+
+	item := CreateItem(Item{
+		Name:    "Test-GET",
+		Request: &pReq,
+	})
+
+	c.AddItemGroup("grp1").AddItem(item)
+
+	err = c.Write(file, V210)
+	assert.Nil(suite.T(), err)
+
+	err = os.Remove("postman_collection.json")
+	assert.Nil(suite.T(), err)
 }
