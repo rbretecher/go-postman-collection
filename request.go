@@ -21,16 +21,6 @@ type Request struct {
 // mRequest is used for marshalling/unmarshalling.
 type mRequest Request
 
-// CreateRequest creates a new request.
-func CreateRequest(u string, m method) *Request {
-	return &Request{
-		URL: &URL{
-			Raw: u,
-		},
-		Method: m,
-	}
-}
-
 // MarshalJSON returns the JSON encoding of a Request.
 // If the Request only contains an URL with the Get HTTP method, it is returned as a string.
 func (r Request) MarshalJSON() ([]byte, error) {

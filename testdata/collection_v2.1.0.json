@@ -65,7 +65,12 @@
                 ],
                 "body": {
                     "mode": "raw",
-                    "raw": "{\"aKey\":\"a-value\"}"
+                    "raw": "{\"aKey\":\"a-value\"}",
+                    "options": {
+                        "raw": {
+                            "language": "json"
+                        }
+                    }
                 }
             }
         },

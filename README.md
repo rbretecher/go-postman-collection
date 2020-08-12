@@ -57,7 +57,12 @@ func main() {
 
     c.AddItemGroup("A folder").AddItem(&postman.Item{
         Name:    "This is a request",
-        Request: postman.CreateRequest("http://www.google.fr", postman.Get),
+        Request: Request{
+            URL: &URL{
+                Raw: "http://www.google.fr",
+            },
+            Method: postman.Get,
+        },
     })
 
     file, err := os.Create("postman_collection.json")
@@ -83,7 +88,12 @@ func main() {
 // Create a simple item.
 item := postman.CreateItem(postman.Item{
     Name:    "A basic request",
-    Request: postman.CreateRequest("http://www.google.fr", postman.Get),
+    Request: Request{
+        URL: &URL{
+            Raw: "http://www.google.fr",
+        },
+        Method: postman.Get,
+    }
 })
 
 // Create a simple folder.
@@ -101,7 +111,12 @@ Part of the `Item`, a `Request` represents an HTTP request.
 
 ```go
 // Basic request
-req := postman.CreateRequest("http://www.google.fr", postman.Get)
+req := Request{
+    URL: &URL{
+        Raw: "http://www.google.fr",
+    },
+    Method: postman.Get,
+}
 
 // Complex request
 req := postman.Request{

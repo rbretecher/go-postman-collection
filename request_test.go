@@ -7,31 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateRequest(t *testing.T) {
-	cases := []struct {
-		method          method
-		url             string
-		expectedRequest *Request
-	}{
-		{
-			Get,
-			"an-url",
-			&Request{
-				Method: Get,
-				URL: &URL{
-					Raw: "an-url",
-				},
-			},
-		},
-	}
-
-	for _, tc := range cases {
-		req := CreateRequest(tc.url, tc.method)
-
-		assert.Equal(t, tc.expectedRequest, req)
-	}
-}
-
 func TestRequestMarshalJSON(t *testing.T) {
 	cases := []struct {
 		scenario       string
@@ -58,11 +33,12 @@ func TestRequestMarshalJSON(t *testing.T) {
 					version: V200,
 				},
 				Body: &Body{
-					Mode: "raw",
-					Raw:  "raw-content",
+					Mode:    "raw",
+					Raw:     "raw-content",
+					Options: &BodyOptions{BodyOptionsRaw{Language: "json"}},
 				},
 			},
-			"{\"url\":\"http://www.google.fr\",\"method\":\"POST\",\"body\":{\"mode\":\"raw\",\"raw\":\"raw-content\"}}",
+			"{\"url\":\"http://www.google.fr\",\"method\":\"POST\",\"body\":{\"mode\":\"raw\",\"raw\":\"raw-content\",\"options\":{\"raw\":{\"language\":\"json\"}}}}",
 		},
 		{
 			"Successfully marshalling a Request as an object (v2.1.0)",
