@@ -7,36 +7,6 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestCreateRequest(t *testing.T) {
-	cases := []struct {
-		method          method
-		url             string
-		expectedRequest *Request
-	}{
-		{
-			Get,
-			"an-url",
-			&Request{
-				Method: Get,
-				URL: &URL{
-					Raw: "an-url",
-				},
-			},
-		},
-	}
-
-	for _, tc := range cases {
-		req := &Request{
-			URL: &URL{
-				Raw: tc.url,
-			},
-			Method: tc.method,
-		}
-
-		assert.Equal(t, tc.expectedRequest, req)
-	}
-}
-
 func TestRequestMarshalJSON(t *testing.T) {
 	cases := []struct {
 		scenario       string
