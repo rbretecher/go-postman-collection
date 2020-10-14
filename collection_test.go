@@ -174,6 +174,21 @@ func (suite *CollectionTestSuite) SetupTest() {
 				Items: make([]*Items, 0),
 			},
 		},
+		Auth: &Auth{
+			Type: APIKey,
+			APIKey: []*AuthParam{
+				{
+					Key:   "value",
+					Value: "Root",
+					Type:  "string",
+				},
+				{
+					Key:   "key",
+					Value: "Auth",
+					Type:  "string",
+				},
+			},
+		},
 		Variables: []*Variable{
 			{
 				Name:  "a-global-collection-variable",

@@ -28,6 +28,7 @@ type Collection struct {
 	Info      Info        `json:"info"`
 	Items     []*Items    `json:"item"`
 	Variables []*Variable `json:"variable,omitempty"`
+	Auth      *Auth       `json:"auth,omitempty"`
 }
 
 // CreateCollection returns a new Collection.

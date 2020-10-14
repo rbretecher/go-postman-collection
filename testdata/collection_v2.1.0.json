@@ -79,6 +79,21 @@
             "item": []
         }
     ],
+    "auth": {
+		"type": "apikey",
+		"apikey": [
+			{
+				"key": "value",
+				"value": "Root",
+				"type": "string"
+			},
+			{
+				"key": "key",
+				"value": "Auth",
+				"type": "string"
+			}
+		]
+	},
     "variable": [
         {
             "name": "a-global-collection-variable",
