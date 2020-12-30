@@ -145,7 +145,7 @@ func TestCreateItem(t *testing.T) {
 				Raw: "http://www.google.fr",
 			},
 		},
-		Response: []*Response{
+		Responses: []*Response{
 			{
 				Name: "a-response",
 			},
@@ -171,7 +171,7 @@ func TestCreateItem(t *testing.T) {
 					Raw: "http://www.google.fr",
 				},
 			},
-			Response: []*Response{
+			Responses: []*Response{
 				{
 					Name: "a-response",
 				},
