@@ -14,7 +14,7 @@ type Items struct {
 	// Fields specific to Item
 	ID       string      `json:"id,omitempty"`
 	Request  *Request    `json:"request,omitempty"`
-	Response interface{} `json:"response,omitempty"`
+	Response []*Response `json:"response,omitempty"`
 	// Fields specific to ItemGroup
 	Items []*Items `json:"item"`
 	Auth  *Auth    `json:"auth,omitempty"`
@@ -29,7 +29,7 @@ type Item struct {
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 	ID                      string      `json:"id,omitempty"`
 	Request                 *Request    `json:"request,omitempty"`
-	Response                interface{} `json:"response,omitempty"`
+	Response                []*Response `json:"response,omitempty"`
 }
 
 // A ItemGroup is an ordered set of requests.
