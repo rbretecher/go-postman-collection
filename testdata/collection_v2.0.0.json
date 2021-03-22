@@ -57,6 +57,26 @@
             "item": []
         }
     ],
+    "event": [
+        {
+            "listen": "prerequest",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "console.log(\"foo\")"
+                ]
+            }
+        },
+        {
+            "listen": "test",
+            "script": {
+                "type": "text/javascript",
+                "exec": [
+                    "console.log(\"bar\")"
+                ]
+            }
+        }
+    ],
     "variable": [
         {
             "name": "a-global-collection-variable",
