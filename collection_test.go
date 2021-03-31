@@ -85,6 +85,22 @@ func (suite *CollectionTestSuite) SetupTest() {
 				Items: make([]*Items, 0),
 			},
 		},
+		Events: []*Event{
+			{
+				Listen: prerequest,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"foo\")"},
+				},
+			},
+			{
+				Listen: test,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"bar\")"},
+				},
+			},
+		},
 		Variables: []*Variable{
 			{
 				Name:  "a-global-collection-variable",
@@ -172,6 +188,22 @@ func (suite *CollectionTestSuite) SetupTest() {
 			{
 				Name:  "An empty folder",
 				Items: make([]*Items, 0),
+			},
+		},
+		Events: []*Event{
+			{
+				Listen: prerequest,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"foo\")"},
+				},
+			},
+			{
+				Listen: test,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"bar\")"},
+				},
 			},
 		},
 		Variables: []*Variable{

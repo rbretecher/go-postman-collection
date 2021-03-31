@@ -9,7 +9,7 @@ type Items struct {
 	Name                    string      `json:"name"`
 	Description             string      `json:"description,omitempty"`
 	Variables               []*Variable `json:"variable,omitempty"`
-	Event                   interface{} `json:"event,omitempty"`
+	Event                   []*Event    `json:"event,omitempty"`
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 	// Fields specific to Item
 	ID       string      `json:"id,omitempty"`
@@ -25,7 +25,7 @@ type Item struct {
 	Name                    string      `json:"name"`
 	Description             string      `json:"description,omitempty"`
 	Variables               []*Variable `json:"variable,omitempty"`
-	Event                   interface{} `json:"event,omitempty"`
+	Event                   []*Event    `json:"event,omitempty"`
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 	ID                      string      `json:"id,omitempty"`
 	Request                 *Request    `json:"request,omitempty"`
@@ -37,7 +37,7 @@ type ItemGroup struct {
 	Name                    string      `json:"name"`
 	Description             string      `json:"description,omitempty"`
 	Variables               []*Variable `json:"variable,omitempty"`
-	Event                   interface{} `json:"event,omitempty"`
+	Event                   []*Event    `json:"event,omitempty"`
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 	Items                   []*Items    `json:"item"`
 	Auth                    *Auth       `json:"auth,omitempty"`
