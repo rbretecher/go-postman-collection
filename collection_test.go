@@ -87,14 +87,14 @@ func (suite *CollectionTestSuite) SetupTest() {
 		},
 		Events: []*Event{
 			{
-				Listen: prerequest,
+				Listen: Prerequest,
 				EventScript: &Script{
 					ScriptType: "text/javascript",
 					Exec: []string{"console.log(\"foo\")"},
 				},
 			},
 			{
-				Listen: test,
+				Listen: Test,
 				EventScript: &Script{
 					ScriptType: "text/javascript",
 					Exec: []string{"console.log(\"bar\")"},
@@ -192,14 +192,14 @@ func (suite *CollectionTestSuite) SetupTest() {
 		},
 		Events: []*Event{
 			{
-				Listen: prerequest,
+				Listen: Prerequest,
 				EventScript: &Script{
 					ScriptType: "text/javascript",
 					Exec: []string{"console.log(\"foo\")"},
 				},
 			},
 			{
-				Listen: test,
+				Listen: Test,
 				EventScript: &Script{
 					ScriptType: "text/javascript",
 					Exec: []string{"console.log(\"bar\")"},

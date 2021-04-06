@@ -4,9 +4,9 @@ type ListenType string
 
 const (
 	//prerequest script.
-	prerequest ListenType = "prerequest"
+	Prerequest ListenType = "prerequest"
 	//test script.
-	test ListenType = "test"
+	Test ListenType = "test"
 )
 
 //acutal script object inside a postman collection
