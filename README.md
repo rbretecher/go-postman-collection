@@ -148,9 +148,28 @@ auth := postman.CreateAuth(postman.Basic, postman.CreateAuthParam("username", "p
 v := postman.CreateVariable("env", "prod")
 ```
 
+### Event
+
+`Event` can be added to `Collection` and run against any `Item` in the entire `Collection`.
+
+```go
+scripts := []string{
+		`
+pm.test("Status code is 200", function () {
+	pm.response.to.have.status(200);
+});`,
+		`
+pm.test("Response time is less than 200ms", function () {
+    pm.expect(pm.response.responseTime).to.be.below(200);
+});`,
+}
+
+e := CreateEvent(EventType(EventType_Test), "text/javascript", scripts)
+```
+
 ## Current support
 
-For now, it does not offer support for `Response` and `Event` objects. Feel free to submit a pull request if you want to add support for one of those objects.
+For now, it does not offer support for `Response` object. Feel free to submit a pull request if you want to add support for one of those objects.
 
 |  Object            | v2.0.0 | v2.1.0 |
 | ------------------ | ------ | ------ |
@@ -159,6 +178,6 @@ For now, it does not offer support for `Response` and `Event` objects. Feel free
 | Item               | Yes    | Yes    |
 | Request            | Yes    | Yes    |
 | Response           | No     | No     |
-| Event              | No     | No     |
+| Event              | Yes    | Yes    |
 | Variable           | Yes    | Yes    |
 | Auth               | Yes    | Yes    |
