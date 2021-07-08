@@ -12,9 +12,9 @@ type Items struct {
 	Event                   interface{} `json:"event,omitempty"`
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 	// Fields specific to Item
-	ID       string      `json:"id,omitempty"`
-	Request  *Request    `json:"request,omitempty"`
-	Response interface{} `json:"response,omitempty"`
+	ID        string      `json:"id,omitempty"`
+	Request   *Request    `json:"request,omitempty"`
+	Responses []*Response `json:"response,omitempty"`
 	// Fields specific to ItemGroup
 	Items []*Items `json:"item"`
 	Auth  *Auth    `json:"auth,omitempty"`
@@ -29,7 +29,7 @@ type Item struct {
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 	ID                      string      `json:"id,omitempty"`
 	Request                 *Request    `json:"request,omitempty"`
-	Response                interface{} `json:"response,omitempty"`
+	Responses               []*Response `json:"response,omitempty"`
 }
 
 // A ItemGroup is an ordered set of requests.
@@ -53,7 +53,7 @@ func CreateItem(i Item) *Items {
 		ProtocolProfileBehavior: i.ProtocolProfileBehavior,
 		ID:                      i.ID,
 		Request:                 i.Request,
-		Response:                i.Response,
+		Responses:               i.Responses,
 	}
 }
 
@@ -119,6 +119,6 @@ func (i Items) MarshalJSON() ([]byte, error) {
 		ProtocolProfileBehavior: i.ProtocolProfileBehavior,
 		ID:                      i.ID,
 		Request:                 i.Request,
-		Response:                i.Response,
+		Responses:               i.Responses,
 	})
 }
