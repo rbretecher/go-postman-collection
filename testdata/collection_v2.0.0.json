@@ -1,4 +1,10 @@
 {
+    "auth": {
+        "type": "bearer",
+        "bearer": {
+            "token": "a-bearer-token"
+        }
+    },
     "info": {
         "name": "Go Collection",
         "description": "Awesome description",

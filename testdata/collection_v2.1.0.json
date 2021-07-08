@@ -1,5 +1,14 @@
 {
-    "auth": {},
+    "auth": {
+        "type": "bearer",
+        "bearer": [
+            {
+                "key": "token",
+                "value": "a-bearer-token",
+                "type": "string"
+            }
+        ]
+    },
     "info": {
         "name": "Go Collection",
         "description": "Awesome description",
