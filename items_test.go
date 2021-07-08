@@ -145,7 +145,11 @@ func TestCreateItem(t *testing.T) {
 				Raw: "http://www.google.fr",
 			},
 		},
-		Response: "a-response",
+		Responses: []*Response{
+			{
+				Name: "a-response",
+			},
+		},
 	})
 
 	assert.Equal(
@@ -167,7 +171,11 @@ func TestCreateItem(t *testing.T) {
 					Raw: "http://www.google.fr",
 				},
 			},
-			Response: "a-response",
+			Responses: []*Response{
+				{
+					Name: "a-response",
+				},
+			},
 		},
 		c,
 	)
