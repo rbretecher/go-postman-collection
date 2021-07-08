@@ -85,6 +85,15 @@ func (suite *CollectionTestSuite) SetupTest() {
 				Items: make([]*Items, 0),
 			},
 		},
+		Auth: Auth{
+			Type: "bearer",
+			Bearer: []*AuthParam{
+				{
+					Key:   "token",
+					Value: "a-bearer-token",
+				},
+			},
+		},
 		Variables: []*Variable{
 			{
 				Name:  "a-global-collection-variable",
@@ -172,6 +181,16 @@ func (suite *CollectionTestSuite) SetupTest() {
 			{
 				Name:  "An empty folder",
 				Items: make([]*Items, 0),
+			},
+		},
+		Auth: Auth{
+			Type: "bearer",
+			Bearer: []*AuthParam{
+				{
+					Type:  "string",
+					Key:   "token",
+					Value: "a-bearer-token",
+				},
 			},
 		},
 		Variables: []*Variable{
