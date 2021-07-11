@@ -50,6 +50,34 @@ func (suite *CollectionTestSuite) SetupTest() {
 					},
 					Method: Get,
 				},
+				Responses: []*Response{
+					{
+						Name: "This is a response",
+						OriginalRequest: &Request{
+							URL: &URL{
+								Raw: "http://www.google.fr",
+							},
+							Method: Get,
+						},
+						Status: "OK",
+						Code:   200,
+						Cookies: []*Cookie{
+							{
+								Domain: "a-domain",
+								Path:   "a-path",
+							},
+						},
+						Headers: &HeaderList{
+							Headers: []*Header{
+								{
+									Key:   "Content-Type",
+									Value: "application/json",
+								},
+							},
+						},
+						Body: "the-body",
+					},
+				},
 			},
 			{
 				Name: "JSON-RPC Request",
@@ -140,6 +168,34 @@ func (suite *CollectionTestSuite) SetupTest() {
 						Raw: "http://www.google.fr",
 					},
 					Method: Get,
+				},
+				Responses: []*Response{
+					{
+						Name: "This is a response",
+						OriginalRequest: &Request{
+							URL: &URL{
+								Raw: "http://www.google.fr",
+							},
+							Method: Get,
+						},
+						Status: "OK",
+						Code:   200,
+						Cookies: []*Cookie{
+							{
+								Domain: "a-domain",
+								Path:   "a-path",
+							},
+						},
+						Headers: &HeaderList{
+							Headers: []*Header{
+								{
+									Key:   "Content-Type",
+									Value: "application/json",
+								},
+							},
+						},
+						Body: "the-body",
+					},
 				},
 			},
 			{
