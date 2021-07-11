@@ -1,5 +1,6 @@
 package postman
 
+// Cookie represents a cookie that follows the Google Chrome format (https://developer.chrome.com/extensions/cookies)
 type Cookie struct {
 	Domain     string      `json:"domain"`
 	Expires    string      `json:"expires,omitempty"`
