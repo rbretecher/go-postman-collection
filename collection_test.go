@@ -22,10 +22,12 @@ func (suite *CollectionTestSuite) SetupTest() {
 	suite.Collection = CreateCollection("Postman collection", "v2.1.0")
 	suite.V200Collection = &Collection{
 		Info: Info{
-			Name:        "Go Collection",
-			Description: "Awesome description",
-			Version:     "v2.0.0",
-			Schema:      "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+			Name: "Go Collection",
+			Description: Description{
+				Content: "Awesome description",
+			},
+			Version: "v2.0.0",
+			Schema:  "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		},
 		Items: []*Items{
 			{
@@ -131,10 +133,12 @@ func (suite *CollectionTestSuite) SetupTest() {
 	}
 	suite.V210Collection = &Collection{
 		Info: Info{
-			Name:        "Go Collection",
-			Description: "Awesome description",
-			Version:     "v2.1.0",
-			Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+			Name: "Go Collection",
+			Description: Description{
+				Content: "Awesome description",
+			},
+			Version: "v2.1.0",
+			Schema:  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		},
 		Items: []*Items{
 			{
@@ -269,8 +273,10 @@ func TestCreateCollection(t *testing.T) {
 		t,
 		&Collection{
 			Info: Info{
-				Name:        "a-name",
-				Description: "a-desc",
+				Name: "a-name",
+				Description: Description{
+					Content: "a-desc",
+				},
 			},
 		},
 		c,
