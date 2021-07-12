@@ -48,7 +48,7 @@ func TestHeaderListUnmarshalJSON(t *testing.T) {
 		expectedError      error
 	}{
 		{
-			"Successfully unmarshalling a HeaderList as a string",
+			"Successfully unmarshalling a HeaderList from a string",
 			[]byte("\"Content-Type: application/json\nAuthorization: Bearer a-bearer-token\n\""),
 			HeaderList{
 				Headers: []*Header{
@@ -65,13 +65,13 @@ func TestHeaderListUnmarshalJSON(t *testing.T) {
 			nil,
 		},
 		{
-			"Successfully unmarshalling a HeaderList as an empty string",
-			[]byte(""),
+			"Successfully unmarshalling a HeaderList from an empty slice of bytes",
+			make([]byte, 0),
 			HeaderList{},
 			nil,
 		},
 		{
-			"Successfully unmarshalling a HeaderList",
+			"Successfully unmarshalling a HeaderList from an array of objects",
 			[]byte("[{\"key\": \"Content-Type\",\"value\": \"application\\/json\",\"description\": \"The content type\"},{\"key\": \"Authorization\",\"value\": \"Bearer a-bearer-token\",\"description\": \"The Bearer token\"}]"),
 			HeaderList{
 				Headers: []*Header{
