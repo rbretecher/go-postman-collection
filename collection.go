@@ -17,10 +17,10 @@ const (
 
 // Info stores data about the collection.
 type Info struct {
-	Name        string `json:"name"`
-	Description string `json:"description"`
-	Version     string `json:"version"`
-	Schema      string `json:"schema"`
+	Name        string      `json:"name"`
+	Description Description `json:"description"`
+	Version     string      `json:"version"`
+	Schema      string      `json:"schema"`
 }
 
 // Collection represents a Postman Collection.
@@ -35,8 +35,10 @@ type Collection struct {
 func CreateCollection(name string, desc string) *Collection {
 	return &Collection{
 		Info: Info{
-			Name:        name,
-			Description: desc,
+			Name: name,
+			Description: Description{
+				Content: desc,
+			},
 		},
 	}
 }
