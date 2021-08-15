@@ -1,2 +1,5 @@
 .vscode
 coverage.txt
+
+# For GoLand user
+.idea
