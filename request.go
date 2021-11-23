@@ -12,7 +12,7 @@ type Request struct {
 	Auth        *Auth       `json:"auth,omitempty"`
 	Proxy       interface{} `json:"proxy,omitempty"`
 	Certificate interface{} `json:"certificate,omitempty"`
-	Method      method      `json:"method"`
+	Method      Method      `json:"method"`
 	Description interface{} `json:"description,omitempty"`
 	Header      []*Header   `json:"header,omitempty"`
 	Body        *Body       `json:"body,omitempty"`
