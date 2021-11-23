@@ -1,4 +1,10 @@
 {
+    "auth": {
+        "type": "bearer",
+        "bearer": {
+            "token": "a-bearer-token"
+        }
+    },
     "info": {
         "name": "Go Collection",
         "description": "Awesome description",
@@ -22,7 +28,28 @@
         },
         {
             "name": "This is a request",
-            "request": "http://www.google.fr"
+            "request": "http://www.google.fr",
+            "response": [
+                {
+                    "originalRequest": "http://www.google.fr",
+                    "header": [
+                        {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                        }
+                    ],
+                    "cookie": [
+                        {
+                            "domain": "a-domain",
+                            "path": "a-path"
+                        }
+                    ],
+                    "body": "the-body",
+                    "status": "OK",
+                    "code": 200,
+                    "name": "This is a response"
+                }
+            ]
         },
         {
             "name": "JSON-RPC Request",

@@ -150,7 +150,7 @@ v := postman.CreateVariable("env", "prod")
 
 ## Current support
 
-For now, it does not offer support for `Response` and `Event` objects. Feel free to submit a pull request if you want to add support for one of those objects.
+For now, it does not offer support all objects. Feel free to submit a pull request if you want to add support for one of those objects.
 
 |  Object            | v2.0.0 | v2.1.0 |
 | ------------------ | ------ | ------ |
@@ -158,7 +158,7 @@ For now, it does not offer support for `Response` and `Event` objects. Feel free
 | ItemGroup (Folder) | Yes    | Yes    |
 | Item               | Yes    | Yes    |
 | Request            | Yes    | Yes    |
-| Response           | No     | No     |
+| Response           | Yes    | Yes    |
 | Event              | No     | No     |
 | Variable           | Yes    | Yes    |
 | Auth               | Yes    | Yes    |

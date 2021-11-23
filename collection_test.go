@@ -22,10 +22,12 @@ func (suite *CollectionTestSuite) SetupTest() {
 	suite.Collection = CreateCollection("Postman collection", "v2.1.0")
 	suite.V200Collection = &Collection{
 		Info: Info{
-			Name:        "Go Collection",
-			Description: "Awesome description",
-			Version:     "v2.0.0",
-			Schema:      "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
+			Name: "Go Collection",
+			Description: Description{
+				Content: "Awesome description",
+			},
+			Version: "v2.0.0",
+			Schema:  "https://schema.getpostman.com/json/collection/v2.0.0/collection.json",
 		},
 		Items: []*Items{
 			{
@@ -49,6 +51,34 @@ func (suite *CollectionTestSuite) SetupTest() {
 						Raw: "http://www.google.fr",
 					},
 					Method: Get,
+				},
+				Responses: []*Response{
+					{
+						Name: "This is a response",
+						OriginalRequest: &Request{
+							URL: &URL{
+								Raw: "http://www.google.fr",
+							},
+							Method: Get,
+						},
+						Status: "OK",
+						Code:   200,
+						Cookies: []*Cookie{
+							{
+								Domain: "a-domain",
+								Path:   "a-path",
+							},
+						},
+						Headers: &HeaderList{
+							Headers: []*Header{
+								{
+									Key:   "Content-Type",
+									Value: "application/json",
+								},
+							},
+						},
+						Body: "the-body",
+					},
 				},
 			},
 			{
@@ -101,6 +131,15 @@ func (suite *CollectionTestSuite) SetupTest() {
 				},
 			},
 		},
+		Auth: Auth{
+			Type: "bearer",
+			Bearer: []*AuthParam{
+				{
+					Key:   "token",
+					Value: "a-bearer-token",
+				},
+			},
+		},
 		Variables: []*Variable{
 			{
 				Name:  "a-global-collection-variable",
@@ -110,10 +149,12 @@ func (suite *CollectionTestSuite) SetupTest() {
 	}
 	suite.V210Collection = &Collection{
 		Info: Info{
-			Name:        "Go Collection",
-			Description: "Awesome description",
-			Version:     "v2.1.0",
-			Schema:      "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+			Name: "Go Collection",
+			Description: Description{
+				Content: "Awesome description",
+			},
+			Version: "v2.1.0",
+			Schema:  "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
 		},
 		Items: []*Items{
 			{
@@ -147,6 +188,34 @@ func (suite *CollectionTestSuite) SetupTest() {
 						Raw: "http://www.google.fr",
 					},
 					Method: Get,
+				},
+				Responses: []*Response{
+					{
+						Name: "This is a response",
+						OriginalRequest: &Request{
+							URL: &URL{
+								Raw: "http://www.google.fr",
+							},
+							Method: Get,
+						},
+						Status: "OK",
+						Code:   200,
+						Cookies: []*Cookie{
+							{
+								Domain: "a-domain",
+								Path:   "a-path",
+							},
+						},
+						Headers: &HeaderList{
+							Headers: []*Header{
+								{
+									Key:   "Content-Type",
+									Value: "application/json",
+								},
+							},
+						},
+						Body: "the-body",
+					},
 				},
 			},
 			{
@@ -206,6 +275,16 @@ func (suite *CollectionTestSuite) SetupTest() {
 				},
 			},
 		},
+		Auth: Auth{
+			Type: "bearer",
+			Bearer: []*AuthParam{
+				{
+					Type:  "string",
+					Key:   "token",
+					Value: "a-bearer-token",
+				},
+			},
+		},
 		Variables: []*Variable{
 			{
 				Name:  "a-global-collection-variable",
@@ -226,8 +305,10 @@ func TestCreateCollection(t *testing.T) {
 		t,
 		&Collection{
 			Info: Info{
-				Name:        "a-name",
-				Description: "a-desc",
+				Name: "a-name",
+				Description: Description{
+					Content: "a-desc",
+				},
 			},
 		},
 		c,
