@@ -115,6 +115,22 @@ func (suite *CollectionTestSuite) SetupTest() {
 				Items: make([]*Items, 0),
 			},
 		},
+		Events: []*Event{
+			{
+				Listen: prerequest,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"foo\")"},
+				},
+			},
+			{
+				Listen: test,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"bar\")"},
+				},
+			},
+		},
 		Auth: Auth{
 			Type: "bearer",
 			Bearer: []*AuthParam{
@@ -241,6 +257,22 @@ func (suite *CollectionTestSuite) SetupTest() {
 			{
 				Name:  "An empty folder",
 				Items: make([]*Items, 0),
+			},
+		},
+		Events: []*Event{
+			{
+				Listen: prerequest,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"foo\")"},
+				},
+			},
+			{
+				Listen: test,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"bar\")"},
+				},
 			},
 		},
 		Auth: Auth{

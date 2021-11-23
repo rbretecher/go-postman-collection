@@ -137,7 +137,22 @@ func TestCreateItem(t *testing.T) {
 				Value: "variable-value",
 			},
 		},
-		Event:                   "an-event",
+		Event: []*Event{
+			{
+				Listen: prerequest,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"foo\")"},
+				},
+			},
+			{
+				Listen: test,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"bar\")"},
+				},
+			},
+		},
 		ProtocolProfileBehavior: "a-protocol-profile-behavior",
 		ID:                      "an-id",
 		Request: &Request{
@@ -163,7 +178,22 @@ func TestCreateItem(t *testing.T) {
 					Value: "variable-value",
 				},
 			},
-			Event:                   "an-event",
+			Event: []*Event{
+				{
+					Listen: prerequest,
+					EventScript: &Script{
+						ScriptType: "text/javascript",
+						Exec: []string{"console.log(\"foo\")"},
+					},
+				},
+				{
+					Listen: test,
+					EventScript: &Script{
+						ScriptType: "text/javascript",
+						Exec: []string{"console.log(\"bar\")"},
+					},
+				},
+			},
 			ProtocolProfileBehavior: "a-protocol-profile-behavior",
 			ID:                      "an-id",
 			Request: &Request{
@@ -191,7 +221,22 @@ func TestCreateItemGroup(t *testing.T) {
 				Value: "variable-value",
 			},
 		},
-		Event:                   "an-event",
+		Event: []*Event{
+			{
+				Listen: prerequest,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"foo\")"},
+				},
+			},
+			{
+				Listen: test,
+				EventScript: &Script{
+					ScriptType: "text/javascript",
+					Exec: []string{"console.log(\"bar\")"},
+				},
+			},
+		},
 		ProtocolProfileBehavior: "a-protocol-profile-behavior",
 		Items: []*Items{
 			{
@@ -214,7 +259,22 @@ func TestCreateItemGroup(t *testing.T) {
 					Value: "variable-value",
 				},
 			},
-			Event:                   "an-event",
+			Event: []*Event{
+				{
+					Listen: prerequest,
+					EventScript: &Script{
+						ScriptType: "text/javascript",
+						Exec: []string{"console.log(\"foo\")"},
+					},
+				},
+				{
+					Listen: test,
+					EventScript: &Script{
+						ScriptType: "text/javascript",
+						Exec: []string{"console.log(\"bar\")"},
+					},
+				},
+			},
 			ProtocolProfileBehavior: "a-protocol-profile-behavior",
 			Items: []*Items{
 				{

@@ -28,6 +28,7 @@ type Collection struct {
 	Auth      Auth        `json:"auth"`
 	Info      Info        `json:"info"`
 	Items     []*Items    `json:"item"`
+	Events    []*Event    `json:"event,omitempty"`
 	Variables []*Variable `json:"variable,omitempty"`
 }
 
