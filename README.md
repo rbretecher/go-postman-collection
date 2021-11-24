@@ -159,6 +159,6 @@ For now, it does not offer support all objects. Feel free to submit a pull reque
 | Item               | Yes    | Yes    |
 | Request            | Yes    | Yes    |
 | Response           | Yes    | Yes    |
-| Event              | No     | No     |
+| Event              | Yes    | Yes    |
 | Variable           | Yes    | Yes    |
 | Auth               | Yes    | Yes    |
