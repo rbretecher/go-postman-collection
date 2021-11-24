@@ -9,7 +9,7 @@ type Items struct {
 	Name                    string      `json:"name"`
 	Description             string      `json:"description,omitempty"`
 	Variables               []*Variable `json:"variable,omitempty"`
-	Event                   []*Event    `json:"event,omitempty"`
+	Events                  []*Event    `json:"event,omitempty"`
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 	// Fields specific to Item
 	ID        string      `json:"id,omitempty"`
@@ -25,7 +25,7 @@ type Item struct {
 	Name                    string      `json:"name"`
 	Description             string      `json:"description,omitempty"`
 	Variables               []*Variable `json:"variable,omitempty"`
-	Event                   []*Event    `json:"event,omitempty"`
+	Events                  []*Event    `json:"event,omitempty"`
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 	ID                      string      `json:"id,omitempty"`
 	Request                 *Request    `json:"request,omitempty"`
@@ -37,7 +37,7 @@ type ItemGroup struct {
 	Name                    string      `json:"name"`
 	Description             string      `json:"description,omitempty"`
 	Variables               []*Variable `json:"variable,omitempty"`
-	Event                   []*Event    `json:"event,omitempty"`
+	Events                  []*Event    `json:"event,omitempty"`
 	ProtocolProfileBehavior interface{} `json:"protocolProfileBehavior,omitempty"`
 	Items                   []*Items    `json:"item"`
 	Auth                    *Auth       `json:"auth,omitempty"`
@@ -49,7 +49,7 @@ func CreateItem(i Item) *Items {
 		Name:                    i.Name,
 		Description:             i.Description,
 		Variables:               i.Variables,
-		Event:                   i.Event,
+		Events:                  i.Events,
 		ProtocolProfileBehavior: i.ProtocolProfileBehavior,
 		ID:                      i.ID,
 		Request:                 i.Request,
@@ -63,7 +63,7 @@ func CreateItemGroup(ig ItemGroup) *Items {
 		Name:                    ig.Name,
 		Description:             ig.Description,
 		Variables:               ig.Variables,
-		Event:                   ig.Event,
+		Events:                  ig.Events,
 		ProtocolProfileBehavior: ig.ProtocolProfileBehavior,
 		Items:                   ig.Items,
 		Auth:                    ig.Auth,
@@ -104,7 +104,7 @@ func (i Items) MarshalJSON() ([]byte, error) {
 			Name:                    i.Name,
 			Description:             i.Description,
 			Variables:               i.Variables,
-			Event:                   i.Event,
+			Events:                  i.Events,
 			ProtocolProfileBehavior: i.ProtocolProfileBehavior,
 			Items:                   i.Items,
 			Auth:                    i.Auth,
@@ -115,7 +115,7 @@ func (i Items) MarshalJSON() ([]byte, error) {
 		Name:                    i.Name,
 		Description:             i.Description,
 		Variables:               i.Variables,
-		Event:                   i.Event,
+		Events:                  i.Events,
 		ProtocolProfileBehavior: i.ProtocolProfileBehavior,
 		ID:                      i.ID,
 		Request:                 i.Request,

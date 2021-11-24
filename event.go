@@ -3,29 +3,34 @@ package postman
 type ListenType string
 
 const (
-	//prerequest script.
-	prerequest ListenType = "prerequest"
-	//test script.
-	test ListenType = "test"
+	// PreRequest script is usually executed before the HTTP request is sent.
+	PreRequest ListenType = "prerequest"
+	// Test script is usually executed after the actual HTTP request is sent, and the response is received.
+	Test ListenType = "test"
 )
 
-//acutal script object inside a postman collection
+// A script is a snippet of Javascript code that can be used to to perform setup or teardown operations on a particular response.
 type Script struct {
-	ScriptType string `json:"type"`
-	Exec []string `json:"exec"`
+	ID   string   `json:"id,omitempty"`
+	Type string   `json:"type,omitempty"`
+	Exec []string `json:"exec,omitempty"`
+	Src  *URL     `json:"src,omitempty"`
+	Name string   `json:"name,omitempty"`
 }
 
-// Event stores data that represents pre-quest and test scripts
+// An event defines a script associated with an associated event name.
 type Event struct {
-	Listen         ListenType   `json:"listen"`
-	EventScript    *Script       `json:"script"`
+	ID       string     `json:"id,omitempty"`
+	Listen   ListenType `json:"listen,omitempty"`
+	Script   *Script    `json:"script,omitempty"`
+	Disabled bool       `json:"disabled,omitempty"`
 }
 
 func CreateEvent(listenType ListenType, script []string) *Event {
 	return &Event{
-		Listen:      listenType,
-		EventScript: &Script{
-			ScriptType: "text/javascript",
+		Listen: listenType,
+		Script: &Script{
+			Type: "text/javascript",
 			Exec: script,
 		},
 	}

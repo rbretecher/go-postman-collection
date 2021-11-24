@@ -137,18 +137,18 @@ func TestCreateItem(t *testing.T) {
 				Value: "variable-value",
 			},
 		},
-		Event: []*Event{
+		Events: []*Event{
 			{
-				Listen: prerequest,
-				EventScript: &Script{
-					ScriptType: "text/javascript",
+				Listen: PreRequest,
+				Script: &Script{
+					Type: "text/javascript",
 					Exec: []string{"console.log(\"foo\")"},
 				},
 			},
 			{
-				Listen: test,
-				EventScript: &Script{
-					ScriptType: "text/javascript",
+				Listen: Test,
+				Script: &Script{
+					Type: "text/javascript",
 					Exec: []string{"console.log(\"bar\")"},
 				},
 			},
@@ -178,18 +178,18 @@ func TestCreateItem(t *testing.T) {
 					Value: "variable-value",
 				},
 			},
-			Event: []*Event{
+			Events: []*Event{
 				{
-					Listen: prerequest,
-					EventScript: &Script{
-						ScriptType: "text/javascript",
+					Listen: PreRequest,
+					Script: &Script{
+						Type: "text/javascript",
 						Exec: []string{"console.log(\"foo\")"},
 					},
 				},
 				{
-					Listen: test,
-					EventScript: &Script{
-						ScriptType: "text/javascript",
+					Listen: Test,
+					Script: &Script{
+						Type: "text/javascript",
 						Exec: []string{"console.log(\"bar\")"},
 					},
 				},
@@ -221,18 +221,18 @@ func TestCreateItemGroup(t *testing.T) {
 				Value: "variable-value",
 			},
 		},
-		Event: []*Event{
+		Events: []*Event{
 			{
-				Listen: prerequest,
-				EventScript: &Script{
-					ScriptType: "text/javascript",
+				Listen: PreRequest,
+				Script: &Script{
+					Type: "text/javascript",
 					Exec: []string{"console.log(\"foo\")"},
 				},
 			},
 			{
-				Listen: test,
-				EventScript: &Script{
-					ScriptType: "text/javascript",
+				Listen: Test,
+				Script: &Script{
+					Type: "text/javascript",
 					Exec: []string{"console.log(\"bar\")"},
 				},
 			},
@@ -259,18 +259,18 @@ func TestCreateItemGroup(t *testing.T) {
 					Value: "variable-value",
 				},
 			},
-			Event: []*Event{
+			Events: []*Event{
 				{
-					Listen: prerequest,
-					EventScript: &Script{
-						ScriptType: "text/javascript",
+					Listen: PreRequest,
+					Script: &Script{
+						Type: "text/javascript",
 						Exec: []string{"console.log(\"foo\")"},
 					},
 				},
 				{
-					Listen: test,
-					EventScript: &Script{
-						ScriptType: "text/javascript",
+					Listen: Test,
+					Script: &Script{
+						Type: "text/javascript",
 						Exec: []string{"console.log(\"bar\")"},
 					},
 				},
