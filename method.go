@@ -1,5 +1,6 @@
 package postman
 
+// Method defines common HTTP methods.
 type Method string
 
 const (
