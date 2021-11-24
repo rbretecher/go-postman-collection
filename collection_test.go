@@ -80,6 +80,15 @@ func (suite *CollectionTestSuite) SetupTest() {
 						Body: "the-body",
 					},
 				},
+				Events: []*Event{
+					{
+						Listen: PreRequest,
+						Script: &Script{
+							Type: "text/javascript",
+							Exec: []string{"console.log(\"foo\")"},
+						},
+					},
+				},
 			},
 			{
 				Name: "JSON-RPC Request",
@@ -117,16 +126,9 @@ func (suite *CollectionTestSuite) SetupTest() {
 		},
 		Events: []*Event{
 			{
-				Listen: prerequest,
-				EventScript: &Script{
-					ScriptType: "text/javascript",
-					Exec: []string{"console.log(\"foo\")"},
-				},
-			},
-			{
-				Listen: test,
-				EventScript: &Script{
-					ScriptType: "text/javascript",
+				Listen: Test,
+				Script: &Script{
+					Type: "text/javascript",
 					Exec: []string{"console.log(\"bar\")"},
 				},
 			},
@@ -217,6 +219,15 @@ func (suite *CollectionTestSuite) SetupTest() {
 						Body: "the-body",
 					},
 				},
+				Events: []*Event{
+					{
+						Listen: PreRequest,
+						Script: &Script{
+							Type: "text/javascript",
+							Exec: []string{"console.log(\"foo\")"},
+						},
+					},
+				},
 			},
 			{
 				Name: "JSON-RPC Request",
@@ -261,16 +272,9 @@ func (suite *CollectionTestSuite) SetupTest() {
 		},
 		Events: []*Event{
 			{
-				Listen: prerequest,
-				EventScript: &Script{
-					ScriptType: "text/javascript",
-					Exec: []string{"console.log(\"foo\")"},
-				},
-			},
-			{
-				Listen: test,
-				EventScript: &Script{
-					ScriptType: "text/javascript",
+				Listen: Test,
+				Script: &Script{
+					Type: "text/javascript",
 					Exec: []string{"console.log(\"bar\")"},
 				},
 			},

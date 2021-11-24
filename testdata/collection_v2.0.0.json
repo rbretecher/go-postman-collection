@@ -49,6 +49,17 @@
                     "code": 200,
                     "name": "This is a response"
                 }
+            ],
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            "console.log(\"foo\")"
+                        ]
+                    }
+                }
             ]
         },
         {
@@ -85,15 +96,6 @@
         }
     ],
     "event": [
-        {
-            "listen": "prerequest",
-            "script": {
-                "type": "text/javascript",
-                "exec": [
-                    "console.log(\"foo\")"
-                ]
-            }
-        },
         {
             "listen": "test",
             "script": {

@@ -42,6 +42,17 @@
         },
         {
             "name": "This is a request",
+            "event": [
+                {
+                    "listen": "prerequest",
+                    "script": {
+                        "type": "text/javascript",
+                        "exec": [
+                            "console.log(\"foo\")"
+                        ]
+                    }
+                }
+            ],
             "request": "http://www.google.fr",
             "response": [
                 {
@@ -111,15 +122,6 @@
         }
     ],
     "event": [
-        {
-            "listen": "prerequest",
-            "script": {
-                "type": "text/javascript",
-                "exec": [
-                    "console.log(\"foo\")"
-                ]
-            }
-        },
         {
             "listen": "test",
             "script": {
