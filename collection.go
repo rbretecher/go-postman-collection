@@ -25,7 +25,7 @@ type Info struct {
 
 // Collection represents a Postman Collection.
 type Collection struct {
-	Auth      Auth        `json:"auth"`
+	Auth      *Auth       `json:"auth,omitempty"`
 	Info      Info        `json:"info"`
 	Items     []*Items    `json:"item"`
 	Events    []*Event    `json:"event,omitempty"`
