@@ -133,7 +133,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 				},
 			},
 		},
-		Auth: Auth{
+		Auth: &Auth{
 			Type: "bearer",
 			Bearer: []*AuthParam{
 				{
@@ -279,7 +279,7 @@ func (suite *CollectionTestSuite) SetupTest() {
 				},
 			},
 		},
-		Auth: Auth{
+		Auth: &Auth{
 			Type: "bearer",
 			Bearer: []*AuthParam{
 				{
