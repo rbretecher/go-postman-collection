@@ -104,6 +104,20 @@ func TestURLUnmarshalJSON(t *testing.T) {
 			nil,
 		},
 		{
+			"Successfully unmarshalling an URL with query as a struct",
+			[]byte("{\"raw\":\"http://www.google.fr\",\"query\":[{\"key\":\"param1\",\"value\":\"an-awesome-value\"}]}"),
+			URL{
+				Raw: "http://www.google.fr",
+				Query: []*QueryParam{
+					{
+						Key:   "param1",
+						Value: "an-awesome-value",
+					},
+				},
+			},
+			nil,
+		},
+		{
 			"Failed to unmarshal an URL because of an unsupported type",
 			[]byte("not-a-valid-url"),
 			URL{},

@@ -475,18 +475,14 @@ func (suite *CollectionTestSuite) TestSimpleGETItem() {
 
 	defer file.Close()
 
-	m1 := map[string]interface{}{"key": "param1", "value": "value1"}
-	m2 := map[string]interface{}{"key": "param2", "value": "value2"}
-
-	var arrMaps []map[string]interface{}
-	arrMaps = append(arrMaps, m1)
-	arrMaps = append(arrMaps, m2)
-
 	pURL := URL{
 		Raw:      "https://test.com?a=3",
 		Protocol: "https",
 		Host:     []string{"test", "com"},
-		Query:    arrMaps,
+		Query: []*QueryParam{
+			{Key: "param1", Value: "value1"},
+			{Key: "param2", Value: "value2"},
+		},
 	}
 
 	headers := []*Header{}
