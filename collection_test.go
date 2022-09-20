@@ -479,7 +479,7 @@ func (suite *CollectionTestSuite) TestSimpleGETItem() {
 		Raw:      "https://test.com?a=3",
 		Protocol: "https",
 		Host:     []string{"test", "com"},
-		Query: []*QueryFragment{
+		Query: []*QueryParam{
 			{Key: "param1", Value: "value1"},
 			{Key: "param2", Value: "value2"},
 		},

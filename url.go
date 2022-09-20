@@ -10,20 +10,20 @@ import (
 // Raw contains the complete URL.
 type URL struct {
 	version   version
-	Raw       string           `json:"raw"`
-	Protocol  string           `json:"protocol,omitempty"`
-	Host      []string         `json:"host,omitempty"`
-	Path      []string         `json:"path,omitempty"`
-	Port      string           `json:"port,omitempty"`
-	Query     []*QueryFragment `json:"query,omitempty"`
-	Hash      string           `json:"hash,omitempty"`
-	Variables []*Variable      `json:"variable,omitempty" mapstructure:"variable"`
+	Raw       string        `json:"raw"`
+	Protocol  string        `json:"protocol,omitempty"`
+	Host      []string      `json:"host,omitempty"`
+	Path      []string      `json:"path,omitempty"`
+	Port      string        `json:"port,omitempty"`
+	Query     []*QueryParam `json:"query,omitempty"`
+	Hash      string        `json:"hash,omitempty"`
+	Variables []*Variable   `json:"variable,omitempty" mapstructure:"variable"`
 }
 
 // mURL is used for marshalling/unmarshalling.
 type mURL URL
 
-type QueryFragment struct {
+type QueryParam struct {
 	Key         string  `json:"key"`
 	Value       string  `json:"value"`
 	Description *string `json:"description"`
